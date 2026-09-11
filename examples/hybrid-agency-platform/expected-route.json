@@ -1,0 +1,31 @@
+{
+  "purpose": "hybrid",
+  "workflow": "wf-hybrid-evolution",
+  "complexity": { "score": 6, "level": "standard" },
+  "requiredAgents": [
+    "builder-chief",
+    "process-analyst",
+    "product-strategist",
+    "solution-architect",
+    "project-manager",
+    "qa-engineer",
+    "security-reviewer",
+    "documentation-handoff-specialist",
+    "ux-ui-designer",
+    "frontend-engineer",
+    "data-architect",
+    "backend-engineer",
+    "agent-architect",
+    "automation-integration-engineer"
+  ],
+  "requiredArtifacts": [
+    "internal-baseline",
+    "market-evidence",
+    "portability-adr",
+    "agent-specification",
+    "agent-evaluation-suite",
+    "integration-map",
+    "resilience-evidence"
+  ]
+}
+

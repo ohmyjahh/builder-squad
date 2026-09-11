@@ -1,0 +1,28 @@
+{
+  "purpose": "internal",
+  "workflow": "wf-internal-tool",
+  "complexity": { "score": 6, "level": "standard" },
+  "agents": [
+    "builder-chief",
+    "process-analyst",
+    "project-manager",
+    "qa-engineer",
+    "documentation-handoff-specialist",
+    "ux-ui-designer",
+    "frontend-engineer",
+    "data-architect",
+    "backend-engineer",
+    "solution-architect",
+    "automation-integration-engineer"
+  ],
+  "requiredArtifacts": [
+    "as-is-process",
+    "baseline",
+    "to-be-process",
+    "adoption-plan",
+    "integration-map",
+    "resilience-evidence"
+  ],
+  "approvals": []
+}
+

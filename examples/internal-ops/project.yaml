@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+project_id: "BS-INTERNAL-OPS"
+name: "Central de Operações da Agência"
+purpose: internal
+kind: internal_system
+delivery:
+  context: own_business
+  public_production: false
+features:
+  user_interface: true
+  persistent_data: true
+  backend_logic: true
+  generative_ai: false
+  external_integrations: true
+  payments: false
+risk:
+  sensitive_data: false
+  business_critical: true
+  level: medium
+primary_workflow: wf-internal-tool
+state: BRIEFED
+

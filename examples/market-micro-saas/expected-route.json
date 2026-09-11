@@ -1,0 +1,35 @@
+{
+  "purpose": "market",
+  "workflow": "wf-market-product",
+  "complexity": { "score": 12, "level": "complex" },
+  "agents": [
+    "builder-chief",
+    "product-strategist",
+    "project-manager",
+    "qa-engineer",
+    "security-reviewer",
+    "devops-release-engineer",
+    "growth-sales-strategist",
+    "documentation-handoff-specialist",
+    "ux-ui-designer",
+    "frontend-engineer",
+    "data-architect",
+    "backend-engineer",
+    "solution-architect",
+    "agent-architect"
+  ],
+  "gates": [
+    "market-evidence",
+    "agent-safety",
+    "payment-readiness",
+    "data-and-privacy",
+    "security-readiness",
+    "release-readiness"
+  ],
+  "approvals": [
+    "commercial-and-production-approval",
+    "production-deploy",
+    "public-release"
+  ]
+}
+

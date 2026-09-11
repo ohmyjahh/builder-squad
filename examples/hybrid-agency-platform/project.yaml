@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+project_id: "BS-HYBRID-DELIVERY"
+name: "Plataforma de Entrega com Time de Agentes"
+purpose: hybrid
+kind: client_portal
+delivery:
+  context: own_business
+  public_production: false
+features:
+  user_interface: true
+  persistent_data: true
+  backend_logic: true
+  generative_ai: true
+  external_integrations: true
+  payments: false
+risk:
+  sensitive_data: true
+  business_critical: false
+  level: high
+primary_workflow: wf-hybrid-evolution
+state: PLANNED
+

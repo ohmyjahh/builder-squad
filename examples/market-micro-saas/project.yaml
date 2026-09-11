@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+project_id: "BS-MARKET-PROPOSALS"
+name: "Copiloto de Propostas para Prestadores"
+purpose: market
+kind: micro_saas
+delivery:
+  context: market_product
+  public_production: true
+features:
+  user_interface: true
+  persistent_data: true
+  backend_logic: true
+  generative_ai: true
+  external_integrations: false
+  payments: true
+risk:
+  sensitive_data: true
+  business_critical: false
+  level: high
+primary_workflow: wf-market-product
+state: VALIDATING
+
