@@ -57,4 +57,4 @@ Representar o processo real antes da solução para evitar automatizar premissas
 - CONCERNS → medir baseline em paralelo com risco aceito
 - FAIL → complementar observação e validação
 
-**Quality gate:** internal-viability
+**Quality gate:** internal-value

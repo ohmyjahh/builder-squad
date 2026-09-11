@@ -61,4 +61,4 @@ Implementar uma unidade de serviço dentro da story aprovada, preservando contra
 - FAIL → correção local até dois retries
 - Mudança estrutural → Architect/Data/Builder Chief
 
-**Quality gate:** backend-quality
+**Quality gate:** implementation-quality

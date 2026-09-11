@@ -59,4 +59,4 @@ Projetar um agente útil, controlável e avaliável antes de escrever prompts ou
 - PASS → `define-agent-context-and-tools` e `create-agent-evaluation-suite`
 - FAIL → reduzir escopo ou usar automação determinística
 
-**Quality gate:** agent-evaluation
+**Quality gate:** agent-safety

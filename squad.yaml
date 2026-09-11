@@ -133,6 +133,34 @@ components:
     - intake-completeness.md
     - handoff-quality.md
     - orchestration-quality.md
+    - agent-safety.md
+    - architecture-fitness.md
+    - change-safety.md
+    - client-delivery.md
+    - closure-readiness.md
+    - commercial-ethics.md
+    - data-and-privacy.md
+    - data-readiness.md
+    - decision-quality.md
+    - growth-evidence.md
+    - handoff-readiness.md
+    - human-approval.md
+    - hybrid-portability.md
+    - implementation-quality.md
+    - implementation-readiness.md
+    - incident-recovery.md
+    - integration-readiness.md
+    - internal-value.md
+    - market-evidence.md
+    - market-readiness.md
+    - payment-readiness.md
+    - plan-readiness.md
+    - quality-verdict.md
+    - release-readiness.md
+    - scope-readiness.md
+    - security-readiness.md
+    - story-readiness.md
+    - ux-readiness.md
   templates:
     - intake-questionnaire.md
     - canonical-brief.md

@@ -60,4 +60,4 @@ Projetar uma automação que produza resultado repetível e recuperável mesmo d
 - CONCERNS → aceite de risco e monitoramento reforçado
 - FAIL → revisar processo ou contrato
 
-**Quality gate:** integration-resilience
+**Quality gate:** integration-readiness

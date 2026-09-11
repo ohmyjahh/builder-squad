@@ -59,4 +59,4 @@ Implementar uma unidade de interface completa, fiel ao fluxo e resiliente aos es
 - FAIL → correção local até dois retries
 - Contradição de UX/contrato → Designer ou Architect
 
-**Quality gate:** frontend-quality
+**Quality gate:** implementation-quality
