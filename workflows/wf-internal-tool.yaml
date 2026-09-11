@@ -1,0 +1,137 @@
+workflow:
+  id: wf-internal-tool
+  name: Ferramenta interna orientada a valor
+  version: "1.0.0"
+  type: conditional-delivery-pipeline
+  entry_agent: builder-chief
+  purpose: internal
+  entry_state: BRIEFED
+  exit_state: COMPLETE
+
+invariants:
+  - no_build_before_as_is_baseline
+  - process_owner_must_accept_to_be
+  - adoption_and_operation_are_part_of_scope
+  - public_exposure_requires_reclassification
+
+phases:
+  - id: understand_current_operation
+    agent: process-analyst
+    tasks:
+      - map-current-process.md
+      - design-future-process.md
+      - calculate-internal-roi.md
+      - plan-internal-adoption.md
+    outputs: [as_is_process, baseline, to_be_process, roi_hypothesis, adoption_plan]
+    gate:
+      checklist: internal-value.md
+      required_verdict: [PASS, CONCERNS]
+      approver: process_owner
+      on_fail: map-current-process
+
+  - id: plan_delivery
+    agent: project-manager
+    depends_on: [understand_current_operation]
+    tasks:
+      - create-project-plan.md
+      - decompose-into-stories.md
+      - create-risk-register.md
+    outputs: [approved_scope, project_plan, stories, risk_register]
+    gate:
+      checklist: plan-readiness.md
+      on_fail: create-project-plan
+
+  - id: design_solution
+    agent: solution-architect
+    depends_on: [plan_delivery]
+    tasks:
+      - select-technical-stack.md
+      - design-system-architecture.md
+      - define-nonfunctional-requirements.md
+      - define-service-contracts.md
+    conditional_tracks:
+      user_interface:
+        when: features.user_interface == true
+        agent: ux-ui-designer
+        tasks: [map-user-journey.md, design-user-flows.md, create-interface-specification.md]
+      persistent_data:
+        when: features.persistent_data == true
+        agent: data-architect
+        tasks: [model-domain-data.md, design-database-schema.md, define-data-access.md]
+      generative_ai:
+        when: features.generative_ai == true
+        agent: agent-architect
+        tasks: [design-ai-agent.md, define-agent-context-and-tools.md, create-agent-evaluation-suite.md]
+      integration:
+        when: features.external_integrations == true
+        agent: automation-integration-engineer
+        tasks: [map-integration.md, design-automation.md]
+    join_gate:
+      checklist: architecture-fitness.md
+      on_fail: design-system-architecture
+
+  - id: prepare_execution
+    agent: project-manager
+    depends_on: [design_solution]
+    tasks: [decompose-into-tasks.md, identify-critical-path.md]
+    qa_task: review-story-readiness.md
+    transition: READY_FOR_EXECUTION
+
+  - id: implement
+    execution: parallel_when_independent
+    max_parallel: 4
+    tracks:
+      backend:
+        when: features.backend_logic == true
+        agent: backend-engineer
+        tasks: [plan-backend-implementation.md, implement-backend-service.md, implement-auth-and-permissions.md, test-backend.md]
+      frontend:
+        when: features.user_interface == true
+        agent: frontend-engineer
+        tasks: [plan-frontend-implementation.md, implement-user-interface.md, integrate-frontend-services.md, test-frontend.md]
+      agent:
+        when: features.generative_ai == true
+        agent: agent-architect
+        tasks: [review-agent-behavior.md]
+      integration:
+        when: features.external_integrations == true
+        agent: automation-integration-engineer
+        tasks: [implement-integration.md, test-integration-resilience.md]
+    join_requires: [all_started_tracks_complete]
+
+  - id: validate
+    agent: qa-engineer
+    depends_on: [implement]
+    tasks: [create-test-strategy.md, execute-quality-gate.md, verify-regression.md]
+    security:
+      when: risk.sensitive_data == true OR delivery.production == true
+      agent: security-reviewer
+      workflow: wf-security-review
+    gate:
+      checklist: quality-verdict.md
+      max_retries: 2
+      on_fail: correct-course
+
+  - id: release_or_adopt
+    agent: devops-release-engineer
+    depends_on: [validate]
+    when: delivery.production == true
+    workflow: wf-release
+    human_approval: required
+
+  - id: operationalize
+    agent: documentation-handoff-specialist
+    tasks: [create-user-guide.md, create-operational-runbook.md, create-project-closure.md]
+    acceptance:
+      approver: process_owner
+      evidence: baseline_comparison
+    next: close-project
+
+completion:
+  requires:
+    - process_owner_acceptance
+    - quality_verdict
+    - operational_owner
+    - adoption_measurement_plan
+    - closure_report
+

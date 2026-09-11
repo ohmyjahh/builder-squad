@@ -1,0 +1,75 @@
+workflow:
+  id: wf-security-review
+  name: Revisão independente de segurança
+  version: "1.0.0"
+  type: evidence-gated-review
+  entry_agent: security-reviewer
+  purpose: security
+  entry_state: IN_REVIEW
+  exit_state: IN_REVIEW
+
+entry_conditions:
+  - architecture_or_implementation_version_identified
+  - data_flows_available
+  - reviewer_is_not_primary_implementer
+
+phases:
+  - id: threat_model
+    agent: security-reviewer
+    tasks: [create-threat-model.md]
+    outputs: [assets, trust_boundaries, abuse_cases, security_requirements]
+    when: threat_model_missing_or_stale == true
+
+  - id: application_review
+    agent: security-reviewer
+    tasks: [review-application-security.md]
+    review_surfaces:
+      - authentication
+      - authorization
+      - input_and_output
+      - secrets
+      - dependencies
+      - integrations
+      - logging
+      - agent_tool_authority
+    outputs: [security_report, vulnerability_register]
+
+  - id: privacy_review
+    when: processes_personal_or_sensitive_data == true
+    agent: security-reviewer
+    tasks: [review-privacy-and-data.md]
+    outputs: [privacy_report, data_inventory, privacy_actions]
+    legal_boundary: refer_legal_interpretation_to_qualified_professional
+
+  - id: remediation
+    when: findings_require_change == true
+    route:
+      architecture: solution-architect
+      backend: backend-engineer
+      frontend: frontend-engineer
+      data: data-architect
+      agent: agent-architect
+      integration: automation-integration-engineer
+      pipeline: devops-release-engineer
+    max_automatic_retries: 2
+    re_review_scope: changed_surface_plus_affected_controls
+
+  - id: verdict
+    agent: security-reviewer
+    tasks: [issue-security-verdict.md]
+    verdicts:
+      PASS: no_material_open_finding
+      CONCERNS: accepted_noncritical_residual_risk
+      FAIL: remediable_material_finding
+      BLOCKED: insufficient_access_or_evidence
+    gate:
+      checklist: security-readiness.md
+
+completion:
+  requires:
+    - versioned_security_report
+    - security_verdict
+    - risk_acceptance_for_concerns
+    - no_unaccepted_critical_or_high_finding
+  returns_to: parent_workflow
+

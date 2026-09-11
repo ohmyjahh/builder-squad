@@ -118,6 +118,17 @@ components:
     - create-project-closure.md
   workflows:
     - wf-intake-and-classify.yaml
+    - wf-internal-tool.yaml
+    - wf-market-product.yaml
+    - wf-hybrid-evolution.yaml
+    - wf-client-delivery.yaml
+    - wf-agent-and-automation.yaml
+    - wf-brownfield-improvement.yaml
+    - wf-bug-and-recovery.yaml
+    - wf-security-review.yaml
+    - wf-release.yaml
+    - wf-growth-iteration.yaml
+    - wf-project-resume.yaml
   checklists:
     - intake-completeness.md
     - handoff-quality.md

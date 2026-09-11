@@ -1,0 +1,107 @@
+workflow:
+  id: wf-agent-and-automation
+  name: Agentes e automações confiáveis
+  version: "1.0.0"
+  type: specialized-conditional-pipeline
+  entry_agent: builder-chief
+  purpose: ai-automation
+
+invariants:
+  - no_tool_without_justified_capability
+  - no_destructive_action_without_confirmation
+  - no_external_content_treated_as_instruction
+  - no_automation_without_idempotency_or_exception_strategy
+  - no_agent_release_without_evaluation_suite
+
+phases:
+  - id: define_use_case
+    agent: builder-chief
+    tasks: [create-canonical-brief.md, route-project.md]
+    requires:
+      - actor
+      - job_to_be_done
+      - autonomy_level
+      - allowed_actions
+      - forbidden_actions
+      - success_metric
+
+  - id: map_process_and_integrations
+    execution: parallel_when_independent
+    tracks:
+      process:
+        when: business_process_exists == true
+        agent: process-analyst
+        tasks: [map-current-process.md, design-future-process.md]
+      integration:
+        when: features.external_integrations == true
+        agent: automation-integration-engineer
+        tasks: [map-integration.md]
+    join_requires: [process_or_use_case_map, system_boundaries]
+
+  - id: design_behavior
+    agent: agent-architect
+    tasks:
+      - design-ai-agent.md
+      - define-agent-context-and-tools.md
+      - create-agent-evaluation-suite.md
+    automation:
+      when: deterministic_steps_or_integrations == true
+      agent: automation-integration-engineer
+      tasks: [design-automation.md]
+    architecture:
+      agent: solution-architect
+      tasks: [design-system-architecture.md, define-service-contracts.md]
+    gate:
+      checklist: agent-safety.md
+
+  - id: implement
+    tracks:
+      agent_runtime:
+        agent: agent-architect
+        produces: [prompt_or_policy_changes, tool_contracts, memory_contract]
+      backend:
+        when: features.backend_logic == true
+        agent: backend-engineer
+        tasks: [plan-backend-implementation.md, implement-backend-service.md, implement-auth-and-permissions.md, test-backend.md]
+      integrations:
+        when: features.external_integrations == true
+        agent: automation-integration-engineer
+        tasks: [implement-integration.md, test-integration-resilience.md]
+
+  - id: adversarial_validation
+    agent: agent-architect
+    tasks: [review-agent-behavior.md]
+    security:
+      agent: security-reviewer
+      tasks: [create-threat-model.md, review-application-security.md, issue-security-verdict.md]
+    quality:
+      agent: qa-engineer
+      tasks: [execute-quality-gate.md, verify-regression.md]
+    mandatory_cases:
+      - prompt_injection
+      - malicious_tool_output
+      - missing_context
+      - conflicting_instructions
+      - duplicate_event
+      - provider_timeout
+      - unauthorized_action
+      - human_confirmation_required
+
+  - id: release_document
+    release:
+      when: delivery.production == true
+      workflow: wf-release
+    documentation:
+      agent: documentation-handoff-specialist
+      tasks: [create-user-guide.md, create-operational-runbook.md]
+    next: return_to_parent_workflow
+
+completion:
+  requires:
+    - agent_spec
+    - context_and_tools_spec
+    - evaluation_suite
+    - resilience_evidence_when_integrated
+    - agent_verdict
+    - security_verdict
+

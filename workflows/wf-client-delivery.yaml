@@ -1,0 +1,84 @@
+workflow:
+  id: wf-client-delivery
+  name: Entrega profissional para cliente
+  version: "1.0.0"
+  type: governed-wrapper
+  entry_agent: builder-chief
+  purpose: client
+  wraps: [wf-internal-tool, wf-market-product, wf-hybrid-evolution]
+
+entry_conditions:
+  - delivery.context == client_project
+  - client_approver_identified == true
+  - commercial_scope_available == true
+
+client_contract:
+  required_artifacts:
+    - scope_baseline
+    - assumptions_and_exclusions
+    - acceptance_criteria
+    - change_control
+    - communication_cadence
+    - client_dependencies
+  secrets_rule: transfer_outside_repository_via_approved_secure_channel
+
+phases:
+  - id: baseline_scope
+    agent: builder-chief
+    tasks: [create-canonical-brief.md, route-project.md]
+    approvals:
+      - client_scope_acceptance
+      - assumptions_acceptance
+    veto:
+      - start_build_without_scope_baseline
+      - promise_unvalidated_external_result
+
+  - id: delivery_plan
+    agent: project-manager
+    tasks: [create-project-plan.md, decompose-into-stories.md, create-risk-register.md, identify-critical-path.md]
+    outputs: [delivery_plan, milestone_acceptance_plan, dependency_register]
+    gate:
+      checklist: client-delivery.md
+
+  - id: execute_primary_route
+    depends_on: [baseline_scope, delivery_plan]
+    dispatch: selected_primary_workflow
+    preserve_wrapper_state: true
+    change_control:
+      material_change:
+        task: correct-course.md
+        requires: client_scope_acceptance
+      minor_clarification:
+        task: record-architecture-decision.md
+
+  - id: milestone_acceptance
+    cadence: each_material_increment
+    agent: qa-engineer
+    tasks: [execute-quality-gate.md]
+    requires:
+      - versioned_demo_or_artifact
+      - acceptance_record
+      - open_findings
+    on_rejection: return_to_cause_owner
+
+  - id: final_handoff
+    agent: documentation-handoff-specialist
+    tasks: [create-user-guide.md, create-operational-runbook.md, prepare-client-handoff.md]
+    gate:
+      checklist: handoff-readiness.md
+    human_approval: client_acceptance_required
+
+  - id: close
+    agent: documentation-handoff-specialist
+    tasks: [create-project-closure.md]
+    next: close-project
+
+completion:
+  requires:
+    - contracted_scope_traceability
+    - quality_and_security_verdicts
+    - access_transfer_record
+    - client_acceptance
+    - support_and_warranty_boundaries
+    - closure_report
+

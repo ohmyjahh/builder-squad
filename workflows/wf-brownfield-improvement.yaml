@@ -1,0 +1,80 @@
+workflow:
+  id: wf-brownfield-improvement
+  name: Evolução segura de projeto existente
+  version: "1.0.0"
+  type: impact-first-change-pipeline
+  entry_agent: builder-chief
+  purpose: brownfield
+
+invariants:
+  - preserve_user_changes
+  - inspect_before_modify
+  - no_destructive_reset
+  - establish_baseline_before_change
+  - regression_scope_follows_impact
+
+phases:
+  - id: establish_baseline
+    agent: builder-chief
+    tasks: [start-project.md, create-canonical-brief.md]
+    inspect:
+      - repository_status
+      - instructions_and_conventions
+      - build_and_test_commands
+      - current_failures
+      - architecture_and_owners
+    outputs: [baseline, protected_user_changes, current_health]
+
+  - id: assess_impact
+    agent: solution-architect
+    tasks: [record-architecture-decision.md]
+    collaborates_with:
+      qa-engineer: create-test-strategy.md
+      project-manager: create-risk-register.md
+    outputs: [impact_map, regression_scope, change_plan]
+    gate:
+      checklist: change-safety.md
+
+  - id: prepare_story
+    agent: project-manager
+    tasks: [decompose-into-stories.md, decompose-into-tasks.md]
+    qa:
+      agent: qa-engineer
+      tasks: [review-story-readiness.md]
+    transition: READY_FOR_EXECUTION
+
+  - id: implement_change
+    route_by_ownership:
+      backend: [plan-backend-implementation.md, implement-backend-service.md, test-backend.md]
+      frontend: [plan-frontend-implementation.md, implement-user-interface.md, test-frontend.md]
+      data: [plan-data-migration.md, review-data-integrity.md]
+      agent: [design-ai-agent.md, review-agent-behavior.md]
+      integration: [design-automation.md, implement-integration.md, test-integration-resilience.md]
+    rule: do_not_revert_unrelated_changes
+
+  - id: verify_change
+    agent: qa-engineer
+    tasks: [execute-quality-gate.md, verify-regression.md]
+    security:
+      when: trust_boundary_changed == true
+      workflow: wf-security-review
+    gate:
+      checklist: quality-verdict.md
+      max_retries: 2
+
+  - id: document_release
+    agent: documentation-handoff-specialist
+    tasks: [create-user-guide.md, create-operational-runbook.md]
+    release:
+      when: release_requested == true
+      workflow: wf-release
+    next: return_to_parent_workflow
+
+completion:
+  requires:
+    - baseline
+    - protected_user_changes
+    - impact_map
+    - change_evidence
+    - regression_verdict
+

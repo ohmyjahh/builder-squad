@@ -1,0 +1,90 @@
+workflow:
+  id: wf-bug-and-recovery
+  name: Incidente, correção e recuperação
+  version: "1.0.0"
+  type: severity-driven-recovery
+  entry_agent: builder-chief
+  purpose: incident
+
+severity:
+  sev1: safety_data_loss_or_total_critical_outage
+  sev2: major_capability_degraded_no_acceptable_workaround
+  sev3: limited_impact_with_workaround
+  sev4: cosmetic_or_low_impact
+
+invariants:
+  - stabilize_before_optimize
+  - preserve_evidence
+  - no_unplanned_production_change
+  - one_incident_commander
+  - rollback_when_safer_than_forward_fix
+
+phases:
+  - id: triage
+    agent: builder-chief
+    tasks: [correct-course.md, report-project-status.md]
+    outputs: [severity, incident_commander, impact, timeline, current_state]
+    actions:
+      sev1: freeze_nonessential_changes
+      sev2: prioritize_recovery
+      sev3: schedule_controlled_fix
+      sev4: add_to_backlog
+
+  - id: contain
+    when: severity in [sev1, sev2]
+    owner: incident_commander
+    allowed_actions:
+      - disable_feature_flag
+      - revoke_compromised_access
+      - reduce_traffic
+      - switch_to_safe_fallback
+      - request_approved_rollback
+    human_approval: required_for_destructive_or_customer_impacting_action
+
+  - id: diagnose
+    lead: solution-architect
+    inputs: [logs, metrics, traces, recent_changes, reproduction]
+    outputs: [fault_domain, hypotheses, selected_hypothesis, reproduction]
+    rule: distinguish_symptom_from_root_cause
+
+  - id: choose_recovery
+    branch:
+      rollback:
+        when: known_good_version_available AND rollback_risk < forward_fix_risk
+        task: execute-rollback.md
+        agent: devops-release-engineer
+      forward_fix:
+        when: safe_scoped_fix_available
+        workflow: wf-brownfield-improvement
+      block:
+        when: authority_or_dependency_missing
+        state: BLOCKED
+
+  - id: validate_recovery
+    agent: qa-engineer
+    tasks: [execute-quality-gate.md, verify-regression.md]
+    production:
+      agent: devops-release-engineer
+      tasks: [verify-production.md]
+    gate:
+      checklist: incident-recovery.md
+
+  - id: learn
+    agent: documentation-handoff-specialist
+    outputs: [incident_report, root_cause, corrective_actions, prevention_actions]
+    required_fields:
+      - detection
+      - impact
+      - timeline
+      - contributing_factors
+      - why_controls_failed
+      - follow_up_owners
+    rule: blameless_but_accountable
+
+completion:
+  requires:
+    - service_stable_or_explicitly_blocked
+    - recovery_evidence
+    - incident_record
+    - prevention_owners
+

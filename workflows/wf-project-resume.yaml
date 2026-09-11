@@ -1,0 +1,77 @@
+workflow:
+  id: wf-project-resume
+  name: Retomada segura por memória canônica
+  version: "1.0.0"
+  type: state-reconstruction
+  entry_agent: builder-chief
+  purpose: resume
+
+invariants:
+  - files_are_source_of_truth
+  - do_not_repeat_completed_work
+  - do_not_assume_external_state_is_current
+  - preserve_user_changes
+  - revalidate_stale_high_risk_context
+
+phases:
+  - id: locate
+    agent: builder-chief
+    tasks: [resume-project.md]
+    inputs: [project_id_or_path]
+    reads:
+      - project.yaml
+      - status.yaml
+      - latest_handoffs
+      - open_decisions
+      - active_tasks
+      - quality_reports
+    output: recovered_state
+
+  - id: integrity_check
+    validates:
+      - required_files_exist
+      - current_state_is_legal
+      - artifacts_match_status
+      - active_owner_is_identifiable
+      - retry_count_is_valid
+    on_conflict:
+      task: correct-course.md
+      rule: preserve_both_versions_and_request_resolution
+
+  - id: freshness_check
+    stale_when:
+      - context_age_exceeds_config
+      - repository_changed_since_handoff
+      - external_api_or_policy_may_have_changed
+      - approval_expired
+    actions:
+      code_change: recalculate_impact
+      external_fact: reverify_authoritative_source
+      approval: request_new_approval
+      unchanged: reuse_existing_evidence
+
+  - id: rebuild_route
+    agent: builder-chief
+    tasks: [route-project.md]
+    constraints:
+      - skip_completed_passed_tasks
+      - retain_open_findings
+      - preserve_primary_workflow
+      - rerun_gate_when_inputs_changed
+    outputs: [resume_plan, next_handoff, skipped_completed_work]
+
+  - id: continue
+    dispatch: next_handoff
+    updates:
+      - status.yaml
+      - handoffs/
+      - decision_log
+    next: primary_workflow_current_phase
+
+completion:
+  requires:
+    - recovered_state
+    - integrity_verdict
+    - freshness_actions_complete
+    - next_handoff
+

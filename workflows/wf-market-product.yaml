@@ -1,0 +1,150 @@
+workflow:
+  id: wf-market-product
+  name: Produto para o mercado orientado a evidência
+  version: "1.0.0"
+  type: discovery-to-market-pipeline
+  entry_agent: builder-chief
+  purpose: market
+  entry_state: BRIEFED
+  exit_state: COMPLETE
+
+invariants:
+  - no_build_before_problem_evidence
+  - no_public_release_without_security_verdict
+  - no_launch_without_product_analytics
+  - no_claim_without_evidence
+  - no_production_without_human_approval
+
+phases:
+  - id: validate_demand
+    agent: product-strategist
+    tasks:
+      - validate-market-problem.md
+      - define-ideal-customer.md
+      - define-value-proposition.md
+    outputs: [problem_evidence, ideal_customer_profile, value_proposition, proof_plan]
+    gate:
+      checklist: market-evidence.md
+      required_verdict: [PASS, CONCERNS]
+      on_fail: validate-market-problem
+      concern_action: approve_discovery_only
+
+  - id: define_product_business
+    agent: product-strategist
+    depends_on: [validate_demand]
+    tasks: [scope-market-mvp.md, define-monetization.md]
+    growth_support:
+      agent: growth-sales-strategist
+      tasks: [design-market-offer.md, define-pricing-hypothesis.md]
+    outputs: [mvp_scope, success_metrics, monetization_hypothesis, offer, pricing_hypothesis]
+    gate:
+      checklist: market-readiness.md
+      approver: product_owner
+
+  - id: plan_and_design
+    depends_on: [define_product_business]
+    lead: project-manager
+    tasks: [create-project-plan.md, decompose-into-stories.md, create-risk-register.md]
+    design_tracks:
+      experience:
+        agent: ux-ui-designer
+        tasks: [map-user-journey.md, design-user-flows.md, create-interface-specification.md, define-design-tokens.md]
+      architecture:
+        agent: solution-architect
+        tasks: [select-technical-stack.md, design-system-architecture.md, define-nonfunctional-requirements.md, define-service-contracts.md]
+      data:
+        when: features.persistent_data == true
+        agent: data-architect
+        tasks: [model-domain-data.md, design-database-schema.md, define-data-access.md]
+      agent:
+        when: features.generative_ai == true
+        agent: agent-architect
+        tasks: [design-ai-agent.md, define-agent-context-and-tools.md, create-agent-evaluation-suite.md]
+      integrations:
+        when: features.external_integrations == true
+        agent: automation-integration-engineer
+        tasks: [map-integration.md, design-automation.md]
+    join_gate:
+      checklist: architecture-fitness.md
+
+  - id: prepare_execution
+    agent: project-manager
+    depends_on: [plan_and_design]
+    tasks: [decompose-into-tasks.md, identify-critical-path.md]
+    qa:
+      agent: qa-engineer
+      tasks: [create-test-strategy.md, review-story-readiness.md]
+    transition: READY_FOR_EXECUTION
+
+  - id: build
+    execution: parallel_when_independent
+    max_parallel: 4
+    tracks:
+      backend:
+        when: features.backend_logic == true
+        agent: backend-engineer
+        tasks: [plan-backend-implementation.md, implement-backend-service.md, implement-auth-and-permissions.md, test-backend.md]
+      frontend:
+        when: features.user_interface == true
+        agent: frontend-engineer
+        tasks: [plan-frontend-implementation.md, implement-user-interface.md, integrate-frontend-services.md, test-frontend.md]
+      ai_behavior:
+        when: features.generative_ai == true
+        agent: agent-architect
+        tasks: [review-agent-behavior.md]
+      integrations:
+        when: features.external_integrations == true
+        agent: automation-integration-engineer
+        tasks: [implement-integration.md, test-integration-resilience.md]
+
+  - id: validate_release_candidate
+    depends_on: [build]
+    quality:
+      agent: qa-engineer
+      tasks: [execute-quality-gate.md, verify-regression.md]
+    experience:
+      agent: ux-ui-designer
+      tasks: [review-usability-accessibility.md]
+    security:
+      workflow: wf-security-review
+    data:
+      when: features.persistent_data == true
+      agent: data-architect
+      tasks: [review-data-integrity.md]
+    join_gate:
+      checklist: release-readiness.md
+      max_retries: 2
+
+  - id: prepare_market
+    depends_on: [validate_release_candidate]
+    agent: growth-sales-strategist
+    tasks: [define-product-analytics.md, create-go-to-market-plan.md]
+    veto:
+      - fictitious_proof
+      - false_live_presence
+      - unsupported_financial_claim
+      - unapproved_external_publication
+
+  - id: release
+    depends_on: [prepare_market]
+    workflow: wf-release
+    human_approval: required
+
+  - id: document_measure_close
+    agent: documentation-handoff-specialist
+    tasks: [create-user-guide.md, create-operational-runbook.md, create-project-closure.md]
+    growth_loop:
+      workflow: wf-growth-iteration
+      when: measurement_window_complete == true
+    next: close-project
+
+completion:
+  requires:
+    - problem_evidence
+    - product_owner_acceptance
+    - quality_verdict
+    - security_verdict
+    - analytics_plan
+    - production_verdict_or_approved_no_release
+    - closure_report
+

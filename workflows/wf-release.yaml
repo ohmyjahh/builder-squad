@@ -1,0 +1,85 @@
+workflow:
+  id: wf-release
+  name: Release controlada e reversível
+  version: "1.0.0"
+  type: approval-gated-deployment
+  entry_agent: devops-release-engineer
+  purpose: release
+  entry_state: READY_FOR_RELEASE
+  exit_state: RELEASED
+
+invariants:
+  - no_production_deploy_without_human_approval
+  - deploy_only_immutable_identified_artifact
+  - rollback_or_accepted_irreversibility_required
+  - preserve_audit_trail
+  - stop_on_unplanned_deviation
+
+phases:
+  - id: plan
+    agent: devops-release-engineer
+    tasks: [create-release-plan.md]
+    inputs: [release_candidate, qa_verdict, security_verdict, environment_inventory]
+    gate:
+      checklist: release-readiness.md
+
+  - id: pipeline
+    when: delivery_pipeline_missing_or_changed == true
+    agent: devops-release-engineer
+    tasks: [configure-delivery-pipeline.md]
+    outputs: [pipeline_changes, pipeline_tests]
+
+  - id: approval
+    interaction:
+      required: true
+      approver: authorized_human
+      shows:
+        - artifact_and_environment
+        - impact_and_downtime
+        - open_risks
+        - migration
+        - smoke_tests
+        - rollback
+      records: approval_id
+    on_reject: return_to_planning
+    transition: RELEASING
+
+  - id: deploy
+    agent: devops-release-engineer
+    tasks: [execute-approved-deploy.md]
+    uses_exact_approval: true
+    abort_on:
+      - artifact_mismatch
+      - environment_mismatch
+      - missing_backup
+      - critical_metric_breach
+      - unplanned_step_required
+
+  - id: verify
+    agent: devops-release-engineer
+    tasks: [verify-production.md]
+    observes:
+      - availability
+      - errors
+      - latency
+      - saturation
+      - critical_business_events
+    branch:
+      healthy: RELEASED
+      unhealthy:
+        task: execute-rollback.md
+        when: rollback_trigger_met
+      uncertain: BLOCKED
+
+  - id: record
+    agent: documentation-handoff-specialist
+    outputs: [release_record, deployed_version, observation_summary, open_items]
+    returns_to: parent_workflow
+
+completion:
+  requires:
+    - approval_id
+    - deployment_evidence
+    - production_verdict
+    - deployed_version
+

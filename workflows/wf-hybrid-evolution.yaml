@@ -1,0 +1,126 @@
+workflow:
+  id: wf-hybrid-evolution
+  name: Interno agora, vendável depois
+  version: "1.0.0"
+  type: dual-horizon-pipeline
+  entry_agent: builder-chief
+  purpose: hybrid
+  entry_state: BRIEFED
+  exit_state: COMPLETE
+
+strategy:
+  horizon_one: prove_internal_value
+  horizon_two: preserve_market_option
+  default_rule: do_not_pay_full_market_complexity_before_evidence
+  portability_decisions:
+    - identity_boundary
+    - tenant_boundary
+    - data_ownership
+    - configuration_vs_customization
+    - licensing
+    - billing_extension_point
+    - support_and_observability
+
+phases:
+  - id: internal_truth
+    agent: process-analyst
+    tasks: [map-current-process.md, design-future-process.md, calculate-internal-roi.md, plan-internal-adoption.md]
+    outputs: [as_is_process, baseline, to_be_process, roi_hypothesis, adoption_plan]
+    gate:
+      checklist: internal-value.md
+
+  - id: external_option
+    agent: product-strategist
+    tasks: [validate-market-problem.md, define-ideal-customer.md, define-value-proposition.md]
+    mode: discovery_only_unless_market_evidence_passes
+    outputs: [problem_evidence, ideal_customer_profile, value_proposition]
+    gate:
+      checklist: market-evidence.md
+      allow_concerns: true
+
+  - id: portability_checkpoint
+    agent: solution-architect
+    depends_on: [internal_truth, external_option]
+    tasks: [record-architecture-decision.md]
+    required_decisions:
+      - internal_only_now
+      - portable_core_now
+      - market_grade_now
+    human_approval: required_for_cost_or_scope_change
+    veto:
+      - hardcode_internal_identity_without_decision
+      - mix_customer_data_without_tenant_boundary
+      - hide_future_migration_cost
+
+  - id: scope_plan_design
+    lead: project-manager
+    tasks: [create-project-plan.md, decompose-into-stories.md, create-risk-register.md]
+    architecture:
+      agent: solution-architect
+      tasks: [select-technical-stack.md, design-system-architecture.md, define-nonfunctional-requirements.md, define-service-contracts.md]
+    conditional_tracks:
+      experience:
+        when: features.user_interface == true
+        agent: ux-ui-designer
+        tasks: [map-user-journey.md, design-user-flows.md, create-interface-specification.md]
+      data:
+        when: features.persistent_data == true
+        agent: data-architect
+        tasks: [model-domain-data.md, design-database-schema.md, define-data-access.md]
+      ai:
+        when: features.generative_ai == true
+        agent: agent-architect
+        tasks: [design-ai-agent.md, define-agent-context-and-tools.md, create-agent-evaluation-suite.md]
+      automation:
+        when: features.external_integrations == true
+        agent: automation-integration-engineer
+        tasks: [map-integration.md, design-automation.md]
+    gate:
+      checklist: hybrid-portability.md
+
+  - id: execute_and_validate
+    agent: project-manager
+    tasks: [decompose-into-tasks.md, identify-critical-path.md]
+    implementation_tracks:
+      backend: { when: "features.backend_logic == true", agent: backend-engineer, tasks: [plan-backend-implementation.md, implement-backend-service.md, implement-auth-and-permissions.md, test-backend.md] }
+      frontend: { when: "features.user_interface == true", agent: frontend-engineer, tasks: [plan-frontend-implementation.md, implement-user-interface.md, integrate-frontend-services.md, test-frontend.md] }
+      ai: { when: "features.generative_ai == true", agent: agent-architect, tasks: [review-agent-behavior.md] }
+      integration: { when: "features.external_integrations == true", agent: automation-integration-engineer, tasks: [implement-integration.md, test-integration-resilience.md] }
+    quality:
+      agent: qa-engineer
+      tasks: [create-test-strategy.md, review-story-readiness.md, execute-quality-gate.md, verify-regression.md]
+    security:
+      workflow: wf-security-review
+
+  - id: internal_release
+    workflow: wf-release
+    when: delivery.production == true
+    human_approval: required
+
+  - id: measure_option
+    parallel_tracks:
+      internal:
+        owner: process-analyst
+        measures: [time_saved, error_reduction, adoption, realized_roi]
+      market:
+        owner: product-strategist
+        measures: [external_problem_signal, willingness_to_pay, repeated_need]
+    decision:
+      keep_internal: archive_market_hypothesis
+      evolve_to_market: reenter_at_wf-market-product.define_product_business
+      stop: document_learning
+
+  - id: close
+    agent: documentation-handoff-specialist
+    tasks: [create-user-guide.md, create-operational-runbook.md, create-project-closure.md]
+    next: close-project
+
+completion:
+  requires:
+    - process_owner_acceptance
+    - portability_decision
+    - quality_verdict
+    - security_verdict_when_applicable
+    - measurement_plan
+    - closure_report
+

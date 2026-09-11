@@ -1,0 +1,88 @@
+workflow:
+  id: wf-growth-iteration
+  name: Ciclo de crescimento orientado a aprendizagem
+  version: "1.0.0"
+  type: hypothesis-experiment-loop
+  entry_agent: growth-sales-strategist
+  purpose: growth
+
+invariants:
+  - no_experiment_without_hypothesis
+  - no_scale_without_measurement_quality
+  - no_false_proof_or_false_scarcity
+  - no_unsupported_income_claim
+  - define_loss_limit_before_spend
+
+phases:
+  - id: verify_measurement
+    agent: growth-sales-strategist
+    tasks: [define-product-analytics.md]
+    checks:
+      - event_quality
+      - identity_and_deduplication
+      - funnel_denominators
+      - cost_capture
+      - retention_window
+    gate:
+      checklist: growth-evidence.md
+
+  - id: diagnose_constraint
+    agent: growth-sales-strategist
+    tasks: [review-growth-cycle.md]
+    funnel_order:
+      - qualified_attention
+      - lead_or_trial
+      - activation
+      - purchase
+      - retained_value
+      - expansion_or_referral
+    output: primary_constraint
+
+  - id: formulate_experiment
+    requires:
+      - observation
+      - causal_hypothesis
+      - proposed_change
+      - primary_metric
+      - guardrail_metrics
+      - minimum_window
+      - budget_or_loss_cap
+      - decision_rule
+    possible_routes:
+      positioning: define-value-proposition.md
+      offer: design-market-offer.md
+      pricing: define-pricing-hypothesis.md
+      acquisition: create-go-to-market-plan.md
+      product_activation: correct-course.md
+
+  - id: approval
+    when: experiment_has_spend_or_external_publication == true
+    human_approval: required
+    records: experiment_approval
+
+  - id: execute_and_observe
+    owner: named_experiment_owner
+    rule: one_primary_hypothesis_per_experiment
+    stop_when:
+      - guardrail_breached
+      - loss_cap_reached
+      - invalid_measurement_detected
+
+  - id: decide
+    agent: growth-sales-strategist
+    tasks: [review-growth-cycle.md]
+    verdicts:
+      adopt: evidence_supports_hypothesis
+      iterate: signal_but_uncertainty_remains
+      stop: evidence_rejects_or_economics_fail
+      invalid: measurement_or_execution_failed
+    stores: experiment_log
+    next: repeat_or_return_to_parent
+
+completion:
+  requires:
+    - experiment_record
+    - evidence_quality_assessment
+    - explicit_verdict
+    - next_decision
+
