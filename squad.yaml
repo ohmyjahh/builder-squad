@@ -139,6 +139,33 @@ components:
     - handoff.md
     - decision-record.md
     - task-contract.md
+    - project-manifest.yaml
+    - project-status.yaml
+    - scope-baseline.md
+    - discovery-evidence.md
+    - process-map.md
+    - project-plan.md
+    - story.md
+    - risk-register.md
+    - architecture-spec.md
+    - service-contract.md
+    - ux-spec.md
+    - data-model.md
+    - agent-spec.md
+    - automation-spec.md
+    - test-strategy.md
+    - quality-report.md
+    - security-review.md
+    - release-plan.md
+    - gtm-plan.md
+    - analytics-plan.md
+    - runbook.md
+    - user-guide.md
+    - acceptance-record.md
+    - project-closure.md
+    - incident-report.md
+    - change-request.md
+    - experiment-record.md
   data:
     - project-ontology.yaml
     - routing-catalog.yaml

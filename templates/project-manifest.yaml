@@ -1,0 +1,37 @@
+schema_version: project.v1
+project_id: "{{project_id}}"
+name: "{{project_name}}"
+created_at: "{{created_at}}"
+updated_at: "{{updated_at}}"
+purpose: internal | market | hybrid
+delivery_context: own_project | client_project
+primary_workflow: "{{workflow_id}}"
+current_state: NEW
+complexity:
+  score: 0
+  level: simple | standard | complex | critical
+risk:
+  level: low | medium | high | critical
+  sensitive_data: false
+  payments: false
+  autonomous_actions: false
+owners:
+  sponsor: "{{sponsor}}"
+  approver: "{{approver}}"
+  process_owner: "{{process_owner}}"
+  technical_owner: "{{technical_owner}}"
+features:
+  user_interface: false
+  persistent_data: false
+  backend_logic: false
+  generative_ai: false
+  external_integrations: false
+  payments: false
+canonical_paths:
+  brief: brief.md
+  status: status.yaml
+  decisions: decisions/
+  handoffs: handoffs/
+  tasks: tasks/
+  evidence: evidence/
+

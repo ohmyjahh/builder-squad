@@ -1,0 +1,27 @@
+schema_version: status.v1
+project_id: "{{project_id}}"
+state: NEW
+state_since: "{{timestamp}}"
+primary_workflow: "{{workflow_id}}"
+current_phase: "{{phase_id}}"
+active:
+  task: null
+  owner: null
+  started_at: null
+completed_tasks: []
+open_findings: []
+blockers: []
+retry:
+  task: null
+  count: 0
+last_handoff: null
+latest_verdicts:
+  quality: null
+  security: null
+  release: null
+next:
+  task: "{{task_id}}"
+  owner: "{{agent_id}}"
+  condition: "{{entry_condition}}"
+updated_at: "{{timestamp}}"
+
