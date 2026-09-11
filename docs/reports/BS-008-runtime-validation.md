@@ -7,14 +7,14 @@
 
 - Node verificado: 25.8.1; mínimo suportado: 18.
 - Dependências externas de runtime: 0.
-- Comandos CLI: 9.
+- Comandos CLI: 12.
 - Automações declarativas: 9/9 com IDs únicos.
 - Adapters: Codex e Claude Code.
 
 ## Testes
 
-- Total: 14.
-- Passaram: 14.
+- Total: 21.
+- Passaram: 21.
 - Falharam: 0.
 - Cobertura comportamental: classificação, complexidade, rotas condicionais, state machine, aprovação de release, inicialização, handoff, instalação sidecar e integridade do repositório.
 
@@ -26,3 +26,11 @@
 4. Exige approval ID para transição a release.
 5. Detecta padrões de credencial em handoffs.
 6. Gera pacote com checksums SHA-256.
+7. Valida alinhamento entre schemas e templates principais.
+8. Verifica links locais e segredos em diretórios aninhados.
+
+## Validação estrutural
+
+- Checks: 20.
+- Passaram: 20.
+- Falharam: 0.

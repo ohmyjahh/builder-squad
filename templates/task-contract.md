@@ -1,20 +1,19 @@
-# Task — {{task_title}}
+---
+task: {{task_title}}
+responsavel: "@{{agent_id}}"
+responsavel_type: agent
+atomic_layer: task
+Entrada: |
+  - {{input}}
+Saida: |
+  - {{output}}
+Checklist:
+  - "[ ] {{acceptance_item}}"
+---
 
-```yaml
-schema_version: "1.0.0"
-id: {{task_id}}
-name: {{task_name}}
-owner: {{agent_id}}
-purpose: {{atomic_outcome}}
-inputs: []
-preconditions: []
-outputs: []
-quality_gate: {{checklist_or_null}}
-on_pass: {{next_task_or_router}}
-on_fail: {{correction_task}}
-max_retries: 2
-human_approval: {{false_or_condition}}
-```
+# Objetivo
+
+{{atomic_outcome}}
 
 ## Contexto de uso
 
@@ -45,3 +44,5 @@ human_approval: {{false_or_condition}}
 ## Recuperação
 
 ## Handoff
+
+**Quality gate:** `{{checklist_or_null}}`

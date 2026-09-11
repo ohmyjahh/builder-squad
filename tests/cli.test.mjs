@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -61,9 +61,49 @@ test("instalador cria sidecar sem alterar instruções do projeto", () => {
     assert.equal(installed.status, 0, installed.stderr);
     assert.ok(existsSync(resolve(target, ".builder-squad", "agents", "builder-chief.md")));
     assert.ok(existsSync(resolve(target, ".builder-squad", "adapter", "AGENTS.builder-squad.md")));
+    assert.ok(existsSync(resolve(target, ".builder-squad", "scripts", "validate.mjs")));
     assert.ok(!existsSync(resolve(target, "AGENTS.md")));
+
+    const validated = spawnSync(process.execPath, [resolve(target, ".builder-squad", "scripts", "validate.mjs")], { encoding: "utf8" });
+    assert.equal(validated.status, 0, validated.stderr || validated.stdout);
   } finally {
     rmSync(target, { recursive: true, force: true });
   }
 });
 
+test("update preserva backup e restore recupera a instalação anterior", () => {
+  const target = mkdtempSync(resolve(tmpdir(), "builder-squad-update-"));
+  try {
+    assert.equal(run("install.mjs", ["--adapter", "codex", "--target", target]).status, 0);
+    const marker = resolve(target, ".builder-squad", "local-marker.txt");
+    writeFileSync(marker, "versao anterior\n");
+
+    const updated = run("update.mjs", ["--adapter", "codex", "--target", target]);
+    assert.equal(updated.status, 0, updated.stderr);
+    assert.ok(!existsSync(marker));
+    const backupName = readdirSync(target).find((name) => name.startsWith(".builder-squad.backup-"));
+    assert.ok(backupName);
+    const backup = resolve(target, backupName);
+    assert.ok(existsSync(resolve(backup, "local-marker.txt")));
+
+    const restored = run("restore.mjs", ["--target", target, "--backup", backup, "--approved"]);
+    assert.equal(restored.status, 0, restored.stderr);
+    assert.ok(existsSync(resolve(target, ".builder-squad", "local-marker.txt")));
+    assert.ok(readdirSync(target).some((name) => name.startsWith(".builder-squad.displaced-")));
+  } finally {
+    rmSync(target, { recursive: true, force: true });
+  }
+});
+
+test("uninstall remove apenas a posição ativa e preserva arquivo recuperável", () => {
+  const target = mkdtempSync(resolve(tmpdir(), "builder-squad-uninstall-"));
+  try {
+    assert.equal(run("install.mjs", ["--adapter", "claude-code", "--target", target]).status, 0);
+    const uninstalled = run("uninstall.mjs", ["--target", target, "--approved"]);
+    assert.equal(uninstalled.status, 0, uninstalled.stderr);
+    assert.ok(!existsSync(resolve(target, ".builder-squad")));
+    assert.ok(readdirSync(target).some((name) => name.startsWith(".builder-squad.uninstalled-")));
+  } finally {
+    rmSync(target, { recursive: true, force: true });
+  }
+});

@@ -44,20 +44,40 @@ try {
   const target = safeTarget(args.target ?? resolve(process.cwd(), "projects", slug));
   const now = new Date().toISOString();
   const projectId = `BS-${slug.toUpperCase()}`;
+  const allowedKinds = new Set(["web_app", "internal_system", "micro_saas", "ai_agent", "automation", "integration", "landing_experience", "dashboard", "client_portal", "brownfield_improvement"]);
+  const defaultKind = profile.purpose === "internal" ? "internal_system" : profile.purpose === "market" ? "micro_saas" : "web_app";
+  const kind = String(args.kind ?? defaultKind);
+  if (!allowedKinds.has(kind)) throw new Error(`Kind desconhecido: ${kind}`);
+  const deliveryContext = profile.clientDelivery ? "client_project" : profile.purpose === "market" ? "market_product" : "own_business";
+  const riskLevel = profile.publicProduction || profile.sensitiveData || profile.features.has("payments")
+    ? "high"
+    : profile.businessCritical ? "medium" : "low";
 
   for (const directory of ["decisions", "handoffs", "tasks", "evidence", "reports"]) {
     mkdirSync(resolve(target, directory), { recursive: true });
   }
 
-  const featureLines = ["ui", "data", "backend", "ai", "integrations", "payments"]
-    .map((feature) => `    ${feature}: ${profile.features.has(feature)}`).join("\n");
+  const featureAliases = {
+    user_interface: "ui",
+    persistent_data: "data",
+    backend_logic: "backend",
+    generative_ai: "ai",
+    external_integrations: "integrations",
+    payments: "payments"
+  };
+  const featureLines = Object.entries(featureAliases)
+    .map(([field, feature]) => `  ${field}: ${profile.features.has(feature)}`).join("\n");
 
   writeFileSync(resolve(target, "project.yaml"), `schema_version: "1.0.0"
 project_id: "${projectId}"
 name: "${name.replaceAll('"', "'")}"
 purpose: ${profile.purpose}
-delivery_context: ${profile.clientDelivery ? "client_project" : "own_project"}
+kind: ${kind}
+delivery:
+  context: ${deliveryContext}
+  public_production: ${profile.publicProduction}
 primary_workflow: ${route.workflow}
+state: DISCOVERY
 created_at: "${now}"
 updated_at: "${now}"
 complexity:
@@ -68,7 +88,9 @@ ${featureLines}
 risk:
   sensitive_data: ${profile.sensitiveData}
   business_critical: ${profile.businessCritical}
-  public_production: ${profile.publicProduction}
+  level: ${riskLevel}
+  payments: ${profile.features.has("payments")}
+  autonomous_actions: ${profile.autonomousActions}
 \n`);
 
   writeFileSync(resolve(target, "status.yaml"), `schema_version: "1.0.0"
@@ -119,4 +141,3 @@ ${route.approvals.map((item) => `- ${item}`).join("\n") || "- Nenhuma identifica
 } catch (error) {
   fail(error);
 }
-

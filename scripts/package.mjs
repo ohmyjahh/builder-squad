@@ -7,7 +7,7 @@ import { SQUAD_ROOT } from "./lib/paths.mjs";
 
 const include = [
   "agents", "tasks", "workflows", "templates", "checklists", "data", "schemas",
-  "config", "automations", "adapters", "scripts", "docs/guides", "examples",
+  "config", "automations", "adapters", "scripts", "squads", "tests", "docs/guides", "examples",
   "squad.yaml", "package.json", "README.md", "AGENTS.md", "LICENSE.md",
   "CHANGELOG.md", "SECURITY.md", "SUPPORT.md"
 ];
@@ -53,4 +53,3 @@ try {
   process.stderr.write(`Erro: ${error.message}\n`);
   process.exitCode = 1;
 }
-

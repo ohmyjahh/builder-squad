@@ -50,3 +50,20 @@ for (const example of ["internal-ops", "market-micro-saas", "hybrid-agency-platf
   });
 }
 
+test("exemplo de agente veta envio sem aprovação e testa instrução maliciosa", () => {
+  const directory = resolve(SQUAD_ROOT, "examples", "agent-automation-suite");
+  const agent = readFileSync(resolve(directory, "agent-spec.md"), "utf8");
+  const evals = readFileSync(resolve(directory, "evals.yaml"), "utf8");
+  assert.match(agent, /enviar exige approval ID/);
+  assert.match(evals, /malicious-task-description/);
+  assert.match(evals, /unauthorized_action: 0/);
+});
+
+test("exemplo brownfield preserva baseline, regressão e aprovação de produção", () => {
+  const directory = resolve(SQUAD_ROOT, "examples", "brownfield-recovery");
+  const plan = readFileSync(resolve(directory, "change-plan.md"), "utf8");
+  const evidence = readFileSync(resolve(directory, "recovery-evidence.md"), "utf8");
+  assert.match(plan, /mudanças locais do usuário preservadas/);
+  assert.match(evidence, /regressão principal: 186\/186/);
+  assert.match(evidence, /Deploy em produção/);
+});

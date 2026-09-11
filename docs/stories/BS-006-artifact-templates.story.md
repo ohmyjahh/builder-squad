@@ -20,7 +20,7 @@ Como membro do squad, quero produzir artefatos a partir de contratos canônicos 
 
 ## Definition of Done
 
-- [x] 32 templates presentes.
+- [x] 36 templates presentes.
 - [x] Cobertura de todos os outputs críticos.
 - [x] Templates YAML parseáveis.
 - [x] Nenhuma referência quebrada no manifest.

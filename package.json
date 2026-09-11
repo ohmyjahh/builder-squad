@@ -19,7 +19,9 @@
     "init:project": "node scripts/init-project.mjs",
     "transition": "node scripts/transition.mjs",
     "handoff": "node scripts/create-handoff.mjs",
-    "package:squad": "node scripts/package.mjs"
+    "package:squad": "node scripts/package.mjs",
+    "update:squad": "node scripts/update.mjs",
+    "restore:squad": "node scripts/restore.mjs",
+    "uninstall:squad": "node scripts/uninstall.mjs"
   }
 }
-

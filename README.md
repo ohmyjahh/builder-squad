@@ -8,7 +8,7 @@ O Builder Squad não é uma coleção de prompts. É um sistema operacional de p
 - 15 especialistas com fronteiras claras;
 - 75 tasks atômicas;
 - 12 workflows condicionais;
-- 32 templates canônicos;
+- 36 templates canônicos;
 - 31 quality gates;
 - 9 automações de governança;
 - adapters para Codex e Claude Code;
@@ -111,7 +111,7 @@ Use `node scripts/builder-squad.mjs help` para a lista atual.
 agents/       papéis e fronteiras dos 16 agentes
 tasks/        contratos das 75 tarefas
 workflows/    12 esteiras condicionais
-templates/    32 artefatos canônicos
+templates/    36 artefatos canônicos
 checklists/   31 quality gates
 automations/  eventos, efeitos, guardas e auditoria
 data/         ontologia, roteamento e máquina de estados
@@ -133,8 +133,8 @@ docs/         PRD, arquitetura, guias, stories e relatórios
 
 ## Validação atual
 
-- Testes automatizados: 14/14.
-- Validações estruturais: 18/18.
+- Testes automatizados: 21/21.
+- Validações estruturais: 20/20.
 - Agents → tasks: 75/75 referências.
 - Blueprint → workflows: 12/12.
 - Licença: proprietária, consulte [LICENSE.md](LICENSE.md).

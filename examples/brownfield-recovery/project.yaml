@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+project_id: "BS-BROWNFIELD-RECOVERY"
+name: "Recuperação de Portal Existente"
+purpose: market
+kind: brownfield_improvement
+delivery:
+  context: market_product
+  public_production: true
+features:
+  user_interface: true
+  persistent_data: true
+  backend_logic: true
+  generative_ai: false
+  external_integrations: false
+  payments: false
+risk:
+  sensitive_data: true
+  business_critical: true
+  level: critical
+primary_workflow: wf-bug-and-recovery
+state: NEEDS_REVISION
+

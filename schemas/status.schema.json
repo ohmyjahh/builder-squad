@@ -29,6 +29,24 @@
     },
     "blocker": { "type": ["object", "null"] },
     "retry_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+    "latest_verdicts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "quality": { "type": ["string", "null"] },
+        "security": { "type": ["string", "null"] },
+        "release": { "type": ["string", "null"] }
+      }
+    },
+    "next": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "task": { "type": ["string", "null"] },
+        "owner": { "type": ["string", "null"] },
+        "condition": { "type": ["string", "null"] }
+      }
+    },
     "updated_at": { "type": "string", "format": "date-time" }
   }
 }

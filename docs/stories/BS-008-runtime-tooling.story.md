@@ -11,7 +11,7 @@ Como comprador do Builder Squad, quero inicializar, rotear, validar, instalar e 
 
 ## Critérios de aceite
 
-- [x] CLI única expõe validação, diagnóstico, rota, init, status, transição, handoff, pacote e instalação.
+- [x] CLI única expõe validação, diagnóstico, rota, init, status, transição, handoff, pacote, instalação, atualização, restauração e desinstalação recuperável.
 - [x] Runtime usa Node 18+ sem dependência externa.
 - [x] Inicialização preserva a solicitação e exige finalidade.
 - [x] State machine rejeita transição ilegal e release sem aprovação.
@@ -25,8 +25,8 @@ Como comprador do Builder Squad, quero inicializar, rotear, validar, instalar e 
 
 ## Definition of Done
 
-- [x] Validador estrutural: PASS 18/18.
-- [x] Testes automatizados: PASS 14/14.
+- [x] Validador estrutural: PASS 20/20.
+- [x] Testes automatizados: PASS 21/21.
 - [x] Doctor: PASS.
 - [x] Scripts sem dependências de runtime.
 - [x] Manifest de tooling atualizado.

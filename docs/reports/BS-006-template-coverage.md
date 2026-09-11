@@ -8,19 +8,19 @@
 | Domínio | Templates principais |
 |---|---|
 | Memória e controle | project-manifest, project-status, handoff, decision-record |
-| Intake e escopo | intake-questionnaire, canonical-brief, scope-baseline, change-request |
+| Intake e escopo | project-charter, intake-questionnaire, canonical-brief, scope-baseline, change-request |
 | Descoberta | discovery-evidence, process-map, experiment-record |
-| Planejamento | project-plan, story, task-contract, risk-register |
+| Planejamento | prd, project-plan, story, task-contract, risk-register, decision-log |
 | Produto técnico | architecture-spec, service-contract, ux-spec, data-model |
 | IA e integração | agent-spec, automation-spec |
 | Qualidade e segurança | test-strategy, quality-report, security-review |
 | Mercado | gtm-plan, analytics-plan |
-| Release e operação | release-plan, runbook, incident-report |
+| Release e operação | release-plan, rollback-plan, runbook, incident-report |
 | Entrega | user-guide, acceptance-record, project-closure |
 
 ## Resultado
 
-- Total: 32 templates.
+- Total: 36 templates.
 - YAML parseável: 2/2.
 - Referências de manifest: 32/32.
 - Contratos críticos cobertos: 100%.

@@ -194,6 +194,10 @@ components:
     - incident-report.md
     - change-request.md
     - experiment-record.md
+    - project-charter.md
+    - prd.md
+    - decision-log.md
+    - rollback-plan.md
   data:
     - project-ontology.yaml
     - routing-catalog.yaml
@@ -237,6 +241,9 @@ tooling:
     - handoff
     - package
     - install
+    - update
+    - restore
+    - uninstall
   automations:
     - intake-bootstrap.yaml
     - route-selection.yaml

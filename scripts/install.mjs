@@ -5,7 +5,7 @@ import { parse, resolve } from "node:path";
 import { fail, parseArgs, required } from "./lib/cli.mjs";
 import { SQUAD_ROOT } from "./lib/paths.mjs";
 
-const coreEntries = ["agents", "tasks", "workflows", "templates", "checklists", "data", "schemas", "config", "automations", "squad.yaml", "AGENTS.md", "README.md", "LICENSE.md"];
+const coreEntries = ["agents", "tasks", "workflows", "templates", "checklists", "data", "schemas", "config", "automations", "adapters", "scripts", "squads", "squad.yaml", "package.json", "AGENTS.md", "README.md", "LICENSE.md"];
 const adapters = new Set(["codex", "claude-code"]);
 
 function validateTarget(value) {

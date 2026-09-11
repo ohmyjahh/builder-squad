@@ -42,10 +42,10 @@ Como criador do Builder Squad, quero uma fundação documental e estrutural vali
 ## Definition of Done
 
 - [ ] Todos os critérios de aceite atendidos.
-- [ ] Links internos válidos.
-- [ ] Story e File List atualizadas.
-- [ ] Revisão estrutural sem achados críticos.
-- [ ] Commit convencional criado.
+- [x] Links internos válidos.
+- [x] Story e File List atualizadas.
+- [x] Revisão estrutural sem achados críticos.
+- [x] Commit convencional criado.
 
 ## File List
 
@@ -57,5 +57,5 @@ Como criador do Builder Squad, quero uma fundação documental e estrutural vali
 - `docs/architecture/SYSTEM-ARCHITECTURE.md`
 - `docs/roadmap/MASTER-PLAN.md`
 - `docs/stories/BS-001-foundation.story.md`
-- `squads/.designs/builder-squad-design.yaml` (pendente)
+- `squads/.designs/builder-squad-design.yaml`
 - `docs/reports/BS-002-validation.md`

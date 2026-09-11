@@ -1,18 +1,22 @@
-schema_version: project.v1
+schema_version: "1.0.0"
 project_id: "{{project_id}}"
 name: "{{project_name}}"
 created_at: "{{created_at}}"
 updated_at: "{{updated_at}}"
 purpose: internal | market | hybrid
-delivery_context: own_project | client_project
+kind: web_app | internal_system | micro_saas | ai_agent | automation | integration | landing_experience | dashboard | client_portal | brownfield_improvement
+delivery:
+  context: own_business | client_project | market_product | experiment
+  public_production: false
 primary_workflow: "{{workflow_id}}"
-current_state: NEW
+state: NEW
 complexity:
   score: 0
   level: simple | standard | complex | critical
 risk:
   level: low | medium | high | critical
   sensitive_data: false
+  business_critical: false
   payments: false
   autonomous_actions: false
 owners:
@@ -34,4 +38,3 @@ canonical_paths:
   handoffs: handoffs/
   tasks: tasks/
   evidence: evidence/
-

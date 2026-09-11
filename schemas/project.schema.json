@@ -42,9 +42,24 @@
       "properties": {
         "sensitive_data": { "type": "boolean" },
         "business_critical": { "type": "boolean" },
-        "level": { "enum": ["low", "medium", "high", "critical"] }
+        "level": { "enum": ["low", "medium", "high", "critical"] },
+        "payments": { "type": "boolean" },
+        "autonomous_actions": { "type": "boolean" }
       }
     },
+    "primary_workflow": { "type": "string", "pattern": "^wf-[a-z0-9-]+$" },
+    "state": { "type": "string" },
+    "complexity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["score", "level"],
+      "properties": {
+        "score": { "type": "integer", "minimum": 0 },
+        "level": { "enum": ["simple", "standard", "complex", "critical"] }
+      }
+    },
+    "owners": { "type": "object" },
+    "canonical_paths": { "type": "object" },
     "created_at": { "type": "string", "format": "date-time" },
     "updated_at": { "type": "string", "format": "date-time" }
   }

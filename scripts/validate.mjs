@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync } from "node:fs";
-import { basename, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { extractManifestComponents, filesIn, SQUAD_ROOT } from "./lib/paths.mjs";
+import { extractManifestComponents, filesIn, SQUAD_ROOT, walkFiles } from "./lib/paths.mjs";
 
 const directories = {
   agents: "agents",
@@ -140,14 +140,30 @@ export function runValidation(root = SQUAD_ROOT) {
 
   const schemaFiles = filesIn.call(null, "schemas", ".json");
   const invalidSchemas = [];
+  const schemas = new Map();
   for (const file of schemaFiles) {
     try {
-      JSON.parse(readFileSync(join(root, "schemas", file), "utf8"));
+      schemas.set(file, JSON.parse(readFileSync(join(root, "schemas", file), "utf8")));
     } catch (error) {
       invalidSchemas.push(`${file}: ${error.message}`);
     }
   }
   results.push(result("schemas.json", invalidSchemas.length === 0, invalidSchemas.join("; ") || `${schemaFiles.length} schemas JSON parseáveis`));
+
+  const templateContracts = [
+    ["task.schema.json", "templates/task-contract.md"],
+    ["project.schema.json", "templates/project-manifest.yaml"],
+    ["status.schema.json", "templates/project-status.yaml"]
+  ];
+  const templateSchemaMismatches = [];
+  for (const [schemaName, templatePath] of templateContracts) {
+    const schema = schemas.get(schemaName);
+    const template = readFileSync(join(root, templatePath), "utf8");
+    for (const key of schema?.required ?? []) {
+      if (!new RegExp(`^${key}:`, "m").test(template)) templateSchemaMismatches.push(`${templatePath} [${key}]`);
+    }
+  }
+  results.push(result("schemas.templates", templateSchemaMismatches.length === 0, templateSchemaMismatches.join("; ") || "Templates principais cobrem campos obrigatórios"));
 
   const requiredQuestion = "Este projeto é para uso interno, para colocar no mercado ou começa interno com intenção futura de venda?";
   const intakeSources = [
@@ -159,18 +175,26 @@ export function runValidation(root = SQUAD_ROOT) {
 
   const highConfidenceSecrets = /(ghp_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,}|sk-[A-Za-z0-9]{30,}|AKIA[A-Z0-9]{16})/;
   const secretHits = [];
-  for (const directory of ["agents", "tasks", "workflows", "templates", "data", "docs", "config"]) {
-    for (const file of filesIn.call(null, directory)) {
-      const path = join(root, directory, file);
-      try {
-        const text = readFileSync(path, "utf8");
-        if (highConfidenceSecrets.test(text)) secretHits.push(`${directory}/${file}`);
-      } catch {
-        // Diretórios aninhados são validados por outros checks.
-      }
+  for (const path of walkFiles(".", root)) {
+    try {
+      if (highConfidenceSecrets.test(readFileSync(path, "utf8"))) secretHits.push(path.slice(root.length + 1));
+    } catch {
+      // Binários não entram na inspeção textual.
     }
   }
   results.push(result("security.secrets", secretHits.length === 0, secretHits.join(", ") || "Nenhum segredo de alta confiança detectado"));
+
+  const brokenLinks = [];
+  const linkSources = [join(root, "README.md"), ...walkFiles("docs/guides", root).filter((path) => path.endsWith(".md"))];
+  for (const source of linkSources) {
+    const text = readFileSync(source, "utf8");
+    for (const match of text.matchAll(/\]\(([^)]+)\)/g)) {
+      const raw = match[1].replace(/^<|>$/g, "").split("#")[0];
+      if (!raw || /^(https?:|mailto:)/.test(raw)) continue;
+      if (!existsSync(resolve(dirname(source), raw))) brokenLinks.push(`${source.slice(root.length + 1)} → ${raw}`);
+    }
+  }
+  results.push(result("docs.links", brokenLinks.length === 0, brokenLinks.join("; ") || "Links locais principais resolvidos"));
 
   return results;
 }

@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+project_id: "BS-AGENT-FOLLOWUP"
+name: "Agente de Follow-up Operacional"
+purpose: internal
+kind: ai_agent
+delivery:
+  context: own_business
+  public_production: false
+features:
+  user_interface: false
+  persistent_data: true
+  backend_logic: true
+  generative_ai: true
+  external_integrations: true
+  payments: false
+risk:
+  sensitive_data: true
+  business_critical: false
+  level: high
+primary_workflow: wf-agent-and-automation
+state: IN_REVIEW
+

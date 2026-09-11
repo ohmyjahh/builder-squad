@@ -1,20 +1,13 @@
-schema_version: status.v1
+schema_version: "1.0.0"
 project_id: "{{project_id}}"
 state: NEW
-state_since: "{{timestamp}}"
-primary_workflow: "{{workflow_id}}"
 current_phase: "{{phase_id}}"
-active:
-  task: null
-  owner: null
-  started_at: null
+current_task: null
+current_owner: null
 completed_tasks: []
 open_findings: []
-blockers: []
-retry:
-  task: null
-  count: 0
-last_handoff: null
+blocker: null
+retry_count: 0
 latest_verdicts:
   quality: null
   security: null
@@ -24,4 +17,3 @@ next:
   owner: "{{agent_id}}"
   condition: "{{entry_condition}}"
 updated_at: "{{timestamp}}"
-

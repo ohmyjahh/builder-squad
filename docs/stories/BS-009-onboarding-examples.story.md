@@ -17,15 +17,15 @@ Como comprador, quero aprender pelo uso e comparar projetos reais de finalidades
 - [x] Builder Chief possui manual operacional.
 - [x] Customização e troubleshooting são documentados.
 - [x] Existe playbook de entrega do produto.
-- [x] Existem exemplos interno, mercado e híbrido.
+- [x] Existem exemplos interno, mercado, híbrido, agente+automação e brownfield.
 - [x] Exemplos preservam evidência contrária, limitações e questões abertas.
 - [x] Rotas dos exemplos são verificadas automaticamente.
 
 ## Definition of Done
 
 - [x] Sete guias operacionais.
-- [x] Três projetos de referência.
-- [x] Rotas dos exemplos: PASS 3/3.
+- [x] Cinco projetos de referência.
+- [x] Rotas classificáveis: PASS 3/3; cenários especializados: PASS 2/2.
 - [x] Links principais presentes no README.
 - [x] Package inclui guias e exemplos.
 
@@ -36,4 +36,3 @@ Como comprador, quero aprender pelo uso e comparar projetos reais de finalidades
 - examples/*
 - tests/examples.test.mjs
 - docs/reports/BS-009-onboarding-validation.md
-

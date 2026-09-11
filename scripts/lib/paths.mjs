@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -19,6 +19,25 @@ export function filesIn(relativeDirectory, extension = null) {
     .filter((name) => !name.startsWith("."))
     .filter((name) => !extension || name.endsWith(extension))
     .sort();
+}
+
+export function walkFiles(relativeDirectory = ".", root = SQUAD_ROOT) {
+  const start = resolve(root, relativeDirectory);
+  if (!existsSync(start)) return [];
+  const result = [];
+  const visit = (path) => {
+    const stat = statSync(path);
+    if (stat.isFile()) {
+      result.push(path);
+      return;
+    }
+    for (const name of readdirSync(path).sort()) {
+      if ([".git", "dist", "node_modules", "projects"].includes(name)) continue;
+      visit(resolve(path, name));
+    }
+  };
+  visit(start);
+  return result;
 }
 
 export function extractManifestComponents(text) {
@@ -47,4 +66,3 @@ export function extractManifestComponents(text) {
 
   return sections;
 }
-

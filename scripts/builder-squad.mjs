@@ -14,7 +14,10 @@ const commands = {
   transition: "transition.mjs",
   handoff: "create-handoff.mjs",
   package: "package.mjs",
-  install: "install.mjs"
+  install: "install.mjs",
+  update: "update.mjs",
+  restore: "restore.mjs",
+  uninstall: "uninstall.mjs"
 };
 
 if (command === "help" || !commands[command]) {
@@ -30,6 +33,9 @@ Comandos:
   handoff      Cria handoff autocontido
   package      Gera pacote com checksums
   install      Instala sidecar Codex ou Claude Code
+  update       Atualiza preservando backup recuperável
+  restore      Restaura um backup explicitamente aprovado
+  uninstall    Desinstala para arquivo recuperável
 `);
   process.exit(command === "help" ? 0 : 1);
 }
@@ -38,4 +44,3 @@ const result = spawnSync(process.execPath, [resolve(scriptsRoot, commands[comman
   stdio: "inherit"
 });
 process.exit(result.status ?? 1);
-
