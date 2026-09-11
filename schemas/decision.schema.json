@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://builder-squad.local/schemas/decision.schema.json",
+  "title": "Builder Squad Decision Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "decision_id", "project_id", "status", "context", "decision", "consequences", "owner", "decided_at"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "decision_id": { "type": "string" },
+    "project_id": { "type": "string" },
+    "status": { "enum": ["proposed", "accepted", "rejected", "superseded"] },
+    "context": { "type": "string", "minLength": 10 },
+    "decision": { "type": "string", "minLength": 5 },
+    "alternatives": { "type": "array", "items": { "type": "string" } },
+    "consequences": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "risks": { "type": "array", "items": { "type": "string" } },
+    "owner": { "type": "string" },
+    "supersedes": { "type": ["string", "null"] },
+    "decided_at": { "type": "string", "format": "date-time" }
+  }
+}

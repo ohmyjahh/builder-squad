@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://builder-squad.local/schemas/handoff.schema.json",
+  "title": "Builder Squad Handoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "handoff_id", "project_id", "from_agent", "to_agent", "completed_task", "request", "known_facts", "assumptions", "decisions", "input_artifacts", "expected_outputs", "acceptance_criteria", "open_questions", "created_at"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "handoff_id": { "type": "string" },
+    "project_id": { "type": "string" },
+    "from_agent": { "type": "string" },
+    "to_agent": { "type": "string" },
+    "completed_task": { "type": "string" },
+    "request": { "type": "string", "minLength": 10 },
+    "known_facts": { "type": "array", "items": { "type": "string" } },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "decisions": { "type": "array", "items": { "type": "string" } },
+    "input_artifacts": { "type": "array", "items": { "type": "string" } },
+    "expected_outputs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "acceptance_criteria": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "risks": { "type": "array", "items": { "type": "string" } },
+    "open_questions": { "type": "array", "items": { "type": "string" } },
+    "next_gate": { "type": ["string", "null"] },
+    "consumed": { "type": "boolean", "default": false },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}

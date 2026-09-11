@@ -1,0 +1,309 @@
+squad:
+  name: builder-squad
+  description: >-
+    Sistema multiagente task-first que diagnostica, planeja, constrói, valida e
+    prepara para operação ou mercado projetos de apps, sistemas, agentes e automações.
+  domain: ai-product-building
+
+analysis:
+  entities:
+    - Project
+    - ProjectProfile
+    - Brief
+    - Route
+    - Agent
+    - Task
+    - Artifact
+    - Handoff
+    - Decision
+    - QualityGate
+    - Risk
+    - Test
+    - Release
+    - Metric
+  project_purposes:
+    - internal
+    - market
+    - hybrid
+  workflows:
+    - intake-and-classify
+    - internal-tool
+    - market-product
+    - hybrid-evolution
+    - client-delivery
+    - agent-and-automation
+    - brownfield-improvement
+    - bug-and-recovery
+    - security-review
+    - release
+    - growth-iteration
+    - project-resume
+  integrations:
+    - git
+    - github
+    - llm-provider-adapters
+    - database-providers
+    - deployment-providers
+    - analytics-providers
+    - messaging-providers
+  stakeholders:
+    - builder
+    - entrepreneur
+    - service-provider
+    - internal-process-owner
+    - market-customer
+    - end-user
+    - project-approver
+
+architecture:
+  topology: hub-and-spoke-with-conditional-pipelines
+  entry_agent: builder-chief
+  memory: file-based-canonical-artifacts
+  execution: sequential-by-default-parallel-when-independent
+  governance:
+    human_in_the_loop: true
+    max_automatic_retries: 2
+    quality_verdicts: [PASS, CONCERNS, FAIL, BLOCKED]
+    require_approval_for:
+      - destructive-change
+      - production-deploy
+      - external-publication
+      - payment-or-purchase
+      - secret-handling
+      - material-scope-change
+
+recommendations:
+  agents:
+    - id: builder-chief
+      tier: -1
+      role: Diagnostica, classifica, cria briefings, seleciona workflows e governa o estado.
+      commands: [start-project, diagnose, route, status, resume, correct-course, close-project]
+      confidence: 0.99
+      user_added: false
+      user_modified: true
+    - id: product-strategist
+      tier: 1
+      role: Valida problema, público, proposta, escopo, monetização e viabilidade de mercado.
+      commands: [validate-problem, define-icp, define-value, scope-mvp, define-monetization]
+      confidence: 0.97
+      user_added: false
+      user_modified: false
+    - id: process-analyst
+      tier: 1
+      role: Mapeia processos internos, gargalos, baseline, futuro desejado, adoção e ROI.
+      commands: [map-current-process, design-future-process, calculate-roi, plan-adoption]
+      confidence: 0.96
+      user_added: false
+      user_modified: true
+    - id: project-manager
+      tier: 1
+      role: Converte escopo em plano, épicos, stories, tasks, dependências, riscos e marcos.
+      commands: [create-project-plan, decompose-work, prioritize-backlog, manage-risks]
+      confidence: 0.99
+      user_added: false
+      user_modified: false
+    - id: solution-architect
+      tier: 1
+      role: Define arquitetura, stack, contratos, requisitos não funcionais e ADRs.
+      commands: [design-architecture, select-stack, define-contracts, record-adr, assess-impact]
+      confidence: 0.99
+      user_added: false
+      user_modified: false
+    - id: ux-ui-designer
+      tier: 1
+      role: Define jornada, fluxos, informação, interface, estados, acessibilidade e handoff visual.
+      commands: [map-user-flow, create-ui-spec, define-design-system, review-usability]
+      confidence: 0.97
+      user_added: false
+      user_modified: false
+    - id: data-architect
+      tier: 1
+      role: Modela domínio, dados, permissões, migrações, retenção e integridade.
+      commands: [model-domain, design-schema, define-access, plan-migration, review-data]
+      confidence: 0.98
+      user_added: false
+      user_modified: false
+    - id: backend-engineer
+      tier: 1
+      role: Implementa regras, serviços, APIs, autenticação, autorização e resiliência de backend.
+      commands: [plan-backend, implement-service, implement-auth, test-backend]
+      confidence: 0.98
+      user_added: false
+      user_modified: false
+    - id: frontend-engineer
+      tier: 1
+      role: Implementa interface, estados, acessibilidade, desempenho e integração com contratos.
+      commands: [plan-frontend, implement-interface, integrate-api, test-frontend]
+      confidence: 0.98
+      user_added: false
+      user_modified: false
+    - id: agent-architect
+      tier: 1
+      role: Projeta agentes, contexto, ferramentas, memória, guardrails e avaliações.
+      commands: [design-agent, define-agent-tools, create-evaluation, review-agent]
+      confidence: 0.99
+      user_added: true
+      user_modified: false
+    - id: automation-integration-engineer
+      tier: 1
+      role: Projeta e implementa automações, integrações, eventos, retries e fallbacks.
+      commands: [map-integration, design-automation, implement-integration, test-resilience]
+      confidence: 0.99
+      user_added: false
+      user_modified: true
+    - id: qa-engineer
+      tier: 0
+      role: Define estratégia de testes, valida critérios, executa gates e governa regressões.
+      commands: [create-test-strategy, review-story, execute-tests, issue-verdict]
+      confidence: 0.99
+      user_added: false
+      user_modified: false
+    - id: security-reviewer
+      tier: 0
+      role: Modela ameaças, revisa dados, dependências, acesso, segredos e prontidão de segurança.
+      commands: [threat-model, review-security, review-privacy, issue-security-verdict]
+      confidence: 0.99
+      user_added: false
+      user_modified: false
+    - id: devops-release-engineer
+      tier: 1
+      role: Define CI/CD, ambientes, deploy, observabilidade, rollback e release.
+      commands: [plan-release, configure-pipeline, deploy, rollback, verify-production]
+      confidence: 0.97
+      user_added: false
+      user_modified: false
+    - id: growth-sales-strategist
+      tier: 1
+      role: Define oferta, preço, aquisição, ativação, vendas, analytics e iteração comercial.
+      commands: [design-offer, define-pricing, plan-gtm, define-analytics, review-growth]
+      confidence: 0.96
+      user_added: false
+      user_modified: true
+    - id: documentation-handoff-specialist
+      tier: 1
+      role: Consolida guias, decisões, operação, suporte, entrega ao cliente e encerramento.
+      commands: [create-user-guide, create-runbook, prepare-handoff, close-documentation]
+      confidence: 0.95
+      user_added: true
+      user_modified: false
+
+  tasks:
+    - { name: start-project, agent: builder-chief, entrada: [user_request], saida: [project_id, intake_session], confidence: 0.99 }
+    - { name: classify-project, agent: builder-chief, entrada: [intake_answers], saida: [project_profile, purpose, confidence], confidence: 0.99 }
+    - { name: create-canonical-brief, agent: builder-chief, entrada: [project_profile], saida: [canonical_brief], confidence: 0.99 }
+    - { name: route-project, agent: builder-chief, entrada: [canonical_brief, routing_catalog], saida: [route_plan], confidence: 0.99 }
+    - { name: report-project-status, agent: builder-chief, entrada: [project_state], saida: [status_report], confidence: 0.98 }
+    - { name: resume-project, agent: builder-chief, entrada: [project_id], saida: [resume_plan], confidence: 0.98 }
+    - { name: correct-course, agent: builder-chief, entrada: [issue, project_state], saida: [correction_route], confidence: 0.97 }
+    - { name: close-project, agent: builder-chief, entrada: [release_evidence, open_items], saida: [closure_verdict], confidence: 0.98 }
+
+    - { name: validate-market-problem, agent: product-strategist, entrada: [canonical_brief], saida: [problem_evidence], confidence: 0.97 }
+    - { name: define-ideal-customer, agent: product-strategist, entrada: [problem_evidence], saida: [icp], confidence: 0.96 }
+    - { name: define-value-proposition, agent: product-strategist, entrada: [icp, problem_evidence], saida: [value_proposition], confidence: 0.96 }
+    - { name: scope-market-mvp, agent: product-strategist, entrada: [value_proposition, constraints], saida: [mvp_scope], confidence: 0.98 }
+    - { name: define-monetization, agent: product-strategist, entrada: [mvp_scope, market_evidence], saida: [monetization_hypothesis], confidence: 0.94 }
+
+    - { name: map-current-process, agent: process-analyst, entrada: [internal_brief], saida: [as_is_process, baseline], confidence: 0.98 }
+    - { name: design-future-process, agent: process-analyst, entrada: [as_is_process, desired_outcome], saida: [to_be_process], confidence: 0.97 }
+    - { name: calculate-internal-roi, agent: process-analyst, entrada: [baseline, to_be_process], saida: [roi_hypothesis], confidence: 0.94 }
+    - { name: plan-internal-adoption, agent: process-analyst, entrada: [stakeholders, to_be_process], saida: [adoption_plan], confidence: 0.93 }
+
+    - { name: create-project-plan, agent: project-manager, entrada: [approved_scope], saida: [project_plan], confidence: 0.99 }
+    - { name: decompose-into-stories, agent: project-manager, entrada: [project_plan], saida: [epics, stories], confidence: 0.99 }
+    - { name: decompose-into-tasks, agent: project-manager, entrada: [stories], saida: [task_graph], confidence: 0.99 }
+    - { name: identify-critical-path, agent: project-manager, entrada: [task_graph], saida: [critical_path], confidence: 0.97 }
+    - { name: create-risk-register, agent: project-manager, entrada: [project_plan, architecture], saida: [risk_register], confidence: 0.97 }
+
+    - { name: select-technical-stack, agent: solution-architect, entrada: [approved_scope, constraints], saida: [stack_decision], confidence: 0.97 }
+    - { name: design-system-architecture, agent: solution-architect, entrada: [approved_scope, stack_decision], saida: [system_architecture], confidence: 0.99 }
+    - { name: define-nonfunctional-requirements, agent: solution-architect, entrada: [purpose, risk_profile], saida: [nfr_spec], confidence: 0.98 }
+    - { name: define-service-contracts, agent: solution-architect, entrada: [system_architecture], saida: [service_contracts], confidence: 0.98 }
+    - { name: record-architecture-decision, agent: solution-architect, entrada: [decision_context], saida: [adr], confidence: 0.98 }
+
+    - { name: map-user-journey, agent: ux-ui-designer, entrada: [personas, scope], saida: [user_journey], confidence: 0.97 }
+    - { name: design-user-flows, agent: ux-ui-designer, entrada: [user_journey], saida: [user_flows], confidence: 0.98 }
+    - { name: create-interface-specification, agent: ux-ui-designer, entrada: [user_flows, design_constraints], saida: [ui_spec], confidence: 0.97 }
+    - { name: define-design-tokens, agent: ux-ui-designer, entrada: [brand_context], saida: [design_tokens], confidence: 0.93 }
+    - { name: review-usability-accessibility, agent: ux-ui-designer, entrada: [implemented_interface], saida: [ux_review], confidence: 0.97 }
+
+    - { name: model-domain-data, agent: data-architect, entrada: [canonical_brief, workflows], saida: [domain_model], confidence: 0.99 }
+    - { name: design-database-schema, agent: data-architect, entrada: [domain_model, nfr_spec], saida: [database_schema], confidence: 0.99 }
+    - { name: define-data-access, agent: data-architect, entrada: [database_schema, personas], saida: [access_matrix], confidence: 0.98 }
+    - { name: plan-data-migration, agent: data-architect, entrada: [current_schema, target_schema], saida: [migration_plan, rollback_plan], confidence: 0.97 }
+    - { name: review-data-integrity, agent: data-architect, entrada: [implementation, tests], saida: [data_verdict], confidence: 0.98 }
+
+    - { name: plan-backend-implementation, agent: backend-engineer, entrada: [architecture, service_contracts, database_schema], saida: [backend_plan], confidence: 0.98 }
+    - { name: implement-backend-service, agent: backend-engineer, entrada: [backend_task, contracts], saida: [backend_changes], confidence: 0.98 }
+    - { name: implement-auth-and-permissions, agent: backend-engineer, entrada: [access_matrix, architecture], saida: [auth_changes], confidence: 0.98 }
+    - { name: test-backend, agent: backend-engineer, entrada: [backend_changes, acceptance_criteria], saida: [backend_test_evidence], confidence: 0.98 }
+
+    - { name: plan-frontend-implementation, agent: frontend-engineer, entrada: [ui_spec, service_contracts], saida: [frontend_plan], confidence: 0.98 }
+    - { name: implement-user-interface, agent: frontend-engineer, entrada: [frontend_task, ui_spec], saida: [frontend_changes], confidence: 0.98 }
+    - { name: integrate-frontend-services, agent: frontend-engineer, entrada: [frontend_changes, service_contracts], saida: [integrated_frontend], confidence: 0.97 }
+    - { name: test-frontend, agent: frontend-engineer, entrada: [integrated_frontend, acceptance_criteria], saida: [frontend_test_evidence], confidence: 0.98 }
+
+    - { name: design-ai-agent, agent: agent-architect, entrada: [agent_use_case, risk_profile], saida: [agent_spec], confidence: 0.99 }
+    - { name: define-agent-context-and-tools, agent: agent-architect, entrada: [agent_spec, available_tools], saida: [context_and_tools_spec], confidence: 0.98 }
+    - { name: create-agent-evaluation-suite, agent: agent-architect, entrada: [agent_spec], saida: [agent_evals], confidence: 0.99 }
+    - { name: review-agent-behavior, agent: agent-architect, entrada: [agent_output, agent_evals], saida: [agent_verdict], confidence: 0.98 }
+
+    - { name: map-integration, agent: automation-integration-engineer, entrada: [systems, events], saida: [integration_map], confidence: 0.99 }
+    - { name: design-automation, agent: automation-integration-engineer, entrada: [process, integration_map], saida: [automation_spec], confidence: 0.99 }
+    - { name: implement-integration, agent: automation-integration-engineer, entrada: [integration_task, contracts], saida: [integration_changes], confidence: 0.98 }
+    - { name: test-integration-resilience, agent: automation-integration-engineer, entrada: [integration_changes, failure_scenarios], saida: [resilience_evidence], confidence: 0.99 }
+
+    - { name: create-test-strategy, agent: qa-engineer, entrada: [scope, risk_profile, acceptance_criteria], saida: [test_strategy], confidence: 0.99 }
+    - { name: review-story-readiness, agent: qa-engineer, entrada: [story, dependencies], saida: [readiness_verdict], confidence: 0.99 }
+    - { name: execute-quality-gate, agent: qa-engineer, entrada: [artifacts, checklist], saida: [qa_report, verdict], confidence: 0.99 }
+    - { name: verify-regression, agent: qa-engineer, entrada: [changes, regression_suite], saida: [regression_evidence], confidence: 0.99 }
+
+    - { name: create-threat-model, agent: security-reviewer, entrada: [architecture, data_flows], saida: [threat_model], confidence: 0.99 }
+    - { name: review-application-security, agent: security-reviewer, entrada: [implementation, threat_model], saida: [security_report], confidence: 0.99 }
+    - { name: review-privacy-and-data, agent: security-reviewer, entrada: [data_model, policies], saida: [privacy_report], confidence: 0.98 }
+    - { name: issue-security-verdict, agent: security-reviewer, entrada: [security_report, risk_acceptance], saida: [security_verdict], confidence: 0.99 }
+
+    - { name: create-release-plan, agent: devops-release-engineer, entrada: [release_candidate, architecture], saida: [release_plan], confidence: 0.98 }
+    - { name: configure-delivery-pipeline, agent: devops-release-engineer, entrada: [release_plan, environment], saida: [pipeline_changes], confidence: 0.97 }
+    - { name: execute-approved-deploy, agent: devops-release-engineer, entrada: [approval, release_candidate], saida: [deployment_evidence], confidence: 0.99 }
+    - { name: execute-rollback, agent: devops-release-engineer, entrada: [rollback_approval, incident], saida: [rollback_evidence], confidence: 0.99 }
+    - { name: verify-production, agent: devops-release-engineer, entrada: [deployment_evidence, smoke_tests], saida: [production_verdict], confidence: 0.99 }
+
+    - { name: design-market-offer, agent: growth-sales-strategist, entrada: [value_proposition, market_evidence], saida: [offer], confidence: 0.96 }
+    - { name: define-pricing-hypothesis, agent: growth-sales-strategist, entrada: [offer, economics], saida: [pricing_hypothesis], confidence: 0.94 }
+    - { name: create-go-to-market-plan, agent: growth-sales-strategist, entrada: [offer, icp, constraints], saida: [gtm_plan], confidence: 0.96 }
+    - { name: define-product-analytics, agent: growth-sales-strategist, entrada: [product_goals, user_journey], saida: [analytics_plan], confidence: 0.97 }
+    - { name: review-growth-cycle, agent: growth-sales-strategist, entrada: [metrics, hypotheses], saida: [growth_recommendations], confidence: 0.95 }
+
+    - { name: create-user-guide, agent: documentation-handoff-specialist, entrada: [product, workflows], saida: [user_guide], confidence: 0.97 }
+    - { name: create-operational-runbook, agent: documentation-handoff-specialist, entrada: [architecture, operations], saida: [runbook], confidence: 0.97 }
+    - { name: prepare-client-handoff, agent: documentation-handoff-specialist, entrada: [project_artifacts, acceptance], saida: [handoff_package], confidence: 0.98 }
+    - { name: create-project-closure, agent: documentation-handoff-specialist, entrada: [release_evidence, decisions, open_items], saida: [closure_report], confidence: 0.98 }
+
+  workflows:
+    - { name: wf-intake-and-classify, entry: builder-chief, purpose: all }
+    - { name: wf-internal-tool, entry: builder-chief, purpose: internal }
+    - { name: wf-market-product, entry: builder-chief, purpose: market }
+    - { name: wf-hybrid-evolution, entry: builder-chief, purpose: hybrid }
+    - { name: wf-client-delivery, entry: builder-chief, purpose: client }
+    - { name: wf-agent-and-automation, entry: builder-chief, purpose: ai-automation }
+    - { name: wf-brownfield-improvement, entry: builder-chief, purpose: brownfield }
+    - { name: wf-bug-and-recovery, entry: builder-chief, purpose: incident }
+    - { name: wf-security-review, entry: security-reviewer, purpose: security }
+    - { name: wf-release, entry: devops-release-engineer, purpose: release }
+    - { name: wf-growth-iteration, entry: growth-sales-strategist, purpose: growth }
+    - { name: wf-project-resume, entry: builder-chief, purpose: resume }
+
+  template: custom
+  config_mode: extend
+
+metadata:
+  created_at: "2026-09-11T00:00:00-03:00"
+  source_docs:
+    - docs/prd/PRODUCT-REQUIREMENTS.md
+    - docs/architecture/SYSTEM-ARCHITECTURE.md
+    - docs/roadmap/MASTER-PLAN.md
+  user_adjustments: 2
+  overall_confidence: 0.96
+  decisions:
+    - O intake deve perguntar se o projeto é interno ou para o mercado.
+    - O produto será complexo, completo, proprietário e salvo em repositório privado.

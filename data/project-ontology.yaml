@@ -1,0 +1,113 @@
+version: "1.0.0"
+
+project_purpose:
+  internal:
+    definition: Solução usada dentro de uma operação existente.
+    primary_value:
+      - reduce_time
+      - reduce_cost
+      - reduce_error
+      - increase_capacity
+      - improve_visibility
+    mandatory_artifacts:
+      - current-process-map
+      - future-process-map
+      - operational-baseline
+      - access-matrix
+      - adoption-plan
+      - continuity-plan
+      - roi-hypothesis
+  market:
+    definition: Produto disponibilizado para clientes ou usuários externos.
+    primary_value:
+      - solve_market_problem
+      - acquire_users
+      - generate_revenue
+      - retain_customers
+      - build_differentiation
+    mandatory_artifacts:
+      - market-problem-evidence
+      - ideal-customer-profile
+      - value-proposition
+      - monetization-hypothesis
+      - product-analytics-plan
+      - support-plan
+      - go-to-market-plan
+      - commercial-readiness-report
+  hybrid:
+    definition: Solução interna com intenção plausível de futura comercialização.
+    primary_value:
+      - solve_internal_problem_first
+      - preserve_market_optionality
+    mandatory_artifacts:
+      - current-process-map
+      - future-process-map
+      - market-optionality-note
+      - tenancy-readiness-decision
+      - licensing-decision
+      - data-separation-decision
+
+project_kind:
+  - web_app
+  - internal_system
+  - micro_saas
+  - ai_agent
+  - automation
+  - integration
+  - landing_experience
+  - dashboard
+  - client_portal
+  - brownfield_improvement
+
+delivery_context:
+  - own_business
+  - client_project
+  - market_product
+  - experiment
+
+complexity_dimensions:
+  users:
+    low: single_user
+    medium: small_known_team
+    high: external_or_multi_tenant
+  data:
+    low: ephemeral_or_public
+    medium: persistent_non_sensitive
+    high: personal_financial_health_or_confidential
+  integrations:
+    low: none
+    medium: one_or_two_stable_apis
+    high: multiple_critical_or_unstable_services
+  operations:
+    low: manual_run
+    medium: scheduled_or_event_driven
+    high: continuous_business_critical
+  money:
+    low: no_payment
+    medium: pricing_without_processing
+    high: payment_billing_or_payout
+  ai:
+    low: no_generative_ai
+    medium: assistive_generation
+    high: autonomous_actions_or_high_impact_decisions
+
+artifact_status:
+  - draft
+  - ready_for_review
+  - approved
+  - superseded
+  - rejected
+
+fact_types:
+  - confirmed_fact
+  - assumption
+  - decision
+  - rejected_alternative
+  - accepted_debt
+  - open_question
+
+quality_verdict:
+  - PASS
+  - CONCERNS
+  - FAIL
+  - BLOCKED

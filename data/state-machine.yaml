@@ -1,0 +1,71 @@
+version: "1.0.0"
+
+initial_state: NEW
+terminal_states:
+  - COMPLETE
+  - CANCELLED
+
+states:
+  NEW:
+    allowed: [DISCOVERY, CANCELLED]
+    requires: [project_id]
+  DISCOVERY:
+    allowed: [CLASSIFIED, BLOCKED, CANCELLED]
+    requires: [intake_session]
+  CLASSIFIED:
+    allowed: [BRIEFED, DISCOVERY, BLOCKED, CANCELLED]
+    requires: [project_purpose, complexity, risk_profile, confidence]
+  BRIEFED:
+    allowed: [VALIDATING, PLANNED, DISCOVERY, BLOCKED, CANCELLED]
+    requires: [canonical_brief, route_plan]
+  VALIDATING:
+    allowed: [PLANNED, BRIEFED, BLOCKED, CANCELLED]
+    requires: [validation_plan]
+  PLANNED:
+    allowed: [READY_FOR_EXECUTION, BRIEFED, BLOCKED, CANCELLED]
+    requires: [approved_scope, task_graph, risk_register]
+  READY_FOR_EXECUTION:
+    allowed: [IN_EXECUTION, PLANNED, BLOCKED, CANCELLED]
+    requires: [story_readiness_verdict]
+  IN_EXECUTION:
+    allowed: [IN_REVIEW, NEEDS_REVISION, BLOCKED, CANCELLED]
+    requires: [active_task, owner]
+  IN_REVIEW:
+    allowed: [NEEDS_REVISION, READY_FOR_RELEASE, IN_EXECUTION, BLOCKED, CANCELLED]
+    requires: [quality_report, quality_verdict]
+  NEEDS_REVISION:
+    allowed: [IN_EXECUTION, BLOCKED, CANCELLED]
+    requires: [findings, correction_owner, retry_count]
+  READY_FOR_RELEASE:
+    allowed: [RELEASING, IN_EXECUTION, BLOCKED, CANCELLED]
+    requires: [release_plan, qa_verdict, security_verdict]
+  RELEASING:
+    allowed: [RELEASED, ROLLING_BACK, BLOCKED]
+    requires: [human_approval, release_candidate]
+  ROLLING_BACK:
+    allowed: [IN_EXECUTION, BLOCKED, CANCELLED]
+    requires: [rollback_plan, human_approval]
+  RELEASED:
+    allowed: [MEASURING, COMPLETE, IN_EXECUTION, BLOCKED]
+    requires: [deployment_evidence, production_verdict]
+  MEASURING:
+    allowed: [COMPLETE, IN_EXECUTION, BLOCKED, CANCELLED]
+    requires: [metrics_plan]
+  BLOCKED:
+    allowed: [DISCOVERY, BRIEFED, PLANNED, IN_EXECUTION, IN_REVIEW, READY_FOR_RELEASE, CANCELLED]
+    requires: [blocker, unblock_condition, owner]
+  COMPLETE:
+    allowed: []
+    requires: [closure_report]
+  CANCELLED:
+    allowed: []
+    requires: [cancellation_reason]
+
+global_guards:
+  - no_transition_without_required_artifacts
+  - no_public_release_without_human_approval
+  - no_critical_findings_open_at_release
+  - no_more_than_two_automatic_retries
+  - no_material_scope_change_without_rebrief
+  - no_market_build_without_problem_evidence
+  - no_internal_build_without_process_baseline

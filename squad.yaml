@@ -1,0 +1,75 @@
+name: builder-squad
+version: "0.1.0"
+short-title: "Builder Squad"
+description: >-
+  Sistema multiagente task-first para diagnosticar, planejar, construir, validar
+  e preparar para operação ou mercado apps, sistemas, agentes e automações.
+author: "Rafa"
+license: UNLICENSED
+slashPrefix: builder
+
+aios:
+  minVersion: "4.0.0"
+  type: squad
+
+tags:
+  - ai-builder
+  - product-development
+  - orchestration
+  - task-first
+  - vibe-coding
+  - agents
+  - automation
+  - proprietary
+
+components:
+  agents:
+    - builder-chief.md
+  tasks:
+    - start-project.md
+    - classify-project.md
+    - create-canonical-brief.md
+    - route-project.md
+    - report-project-status.md
+    - resume-project.md
+    - correct-course.md
+    - close-project.md
+  workflows:
+    - wf-intake-and-classify.yaml
+  checklists:
+    - intake-completeness.md
+    - handoff-quality.md
+    - orchestration-quality.md
+  templates:
+    - intake-questionnaire.md
+    - canonical-brief.md
+    - handoff.md
+    - decision-record.md
+  data:
+    - project-ontology.yaml
+    - routing-catalog.yaml
+    - state-machine.yaml
+
+config:
+  extends: none
+  runtime: config/config.yaml
+
+distribution:
+  visibility: private
+  commercial: true
+  adapters:
+    - codex
+    - claude-code
+
+entrypoint:
+  agent: builder-chief
+  command: "*start-project"
+
+governance:
+  human_in_the_loop: true
+  max_automatic_retries: 2
+  verdicts:
+    - PASS
+    - CONCERNS
+    - FAIL
+    - BLOCKED

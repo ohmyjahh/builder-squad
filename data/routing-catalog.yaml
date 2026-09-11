@@ -1,0 +1,165 @@
+version: "1.0.0"
+
+entry:
+  agent: builder-chief
+  required_question: Este projeto é para uso interno, para colocar no mercado ou começa interno com intenção futura de venda?
+  answers:
+    internal: wf-internal-tool
+    market: wf-market-product
+    hybrid: wf-hybrid-evolution
+
+universal_stages:
+  - diagnose
+  - brief
+  - plan
+  - execute
+  - review
+  - document
+  - close
+
+routes:
+  internal:
+    required_agents:
+      - builder-chief
+      - process-analyst
+      - project-manager
+      - qa-engineer
+      - documentation-handoff-specialist
+    conditional_agents:
+      - solution-architect
+      - ux-ui-designer
+      - data-architect
+      - backend-engineer
+      - frontend-engineer
+      - agent-architect
+      - automation-integration-engineer
+      - security-reviewer
+      - devops-release-engineer
+    forbidden_shortcuts:
+      - build_before_current_process_is_mapped
+      - deploy_without_process_owner_acceptance
+  market:
+    required_agents:
+      - builder-chief
+      - product-strategist
+      - project-manager
+      - qa-engineer
+      - security-reviewer
+      - devops-release-engineer
+      - growth-sales-strategist
+      - documentation-handoff-specialist
+    conditional_agents:
+      - solution-architect
+      - ux-ui-designer
+      - data-architect
+      - backend-engineer
+      - frontend-engineer
+      - agent-architect
+      - automation-integration-engineer
+    forbidden_shortcuts:
+      - build_before_problem_evidence
+      - launch_without_analytics
+      - public_release_without_security_verdict
+  hybrid:
+    required_agents:
+      - builder-chief
+      - process-analyst
+      - product-strategist
+      - solution-architect
+      - project-manager
+      - qa-engineer
+      - security-reviewer
+      - documentation-handoff-specialist
+    conditional_agents:
+      - ux-ui-designer
+      - data-architect
+      - backend-engineer
+      - frontend-engineer
+      - agent-architect
+      - automation-integration-engineer
+      - devops-release-engineer
+      - growth-sales-strategist
+    forbidden_shortcuts:
+      - couple_internal_identity_to_future_customer_identity
+      - ignore_tenancy_and_licensing_decisions
+
+conditions:
+  - id: has_user_interface
+    when: project.features.user_interface == true
+    add_agents: [ux-ui-designer, frontend-engineer]
+  - id: persists_data
+    when: project.features.persistent_data == true
+    add_agents: [data-architect]
+  - id: has_business_logic
+    when: project.features.backend_logic == true
+    add_agents: [backend-engineer]
+  - id: uses_generative_ai
+    when: project.features.generative_ai == true
+    add_agents: [agent-architect]
+    required_artifacts: [agent-specification, agent-evaluation-suite]
+  - id: has_external_integrations
+    when: project.features.external_integrations == true
+    add_agents: [automation-integration-engineer]
+    required_artifacts: [integration-map, failure-recovery-plan]
+  - id: processes_sensitive_data
+    when: project.risk.sensitive_data == true
+    add_agents: [security-reviewer, data-architect]
+    force_gate: data-and-privacy
+  - id: handles_payments
+    when: project.features.payments == true
+    add_agents: [backend-engineer, security-reviewer, devops-release-engineer]
+    force_gate: payment-readiness
+  - id: public_production
+    when: project.delivery.public_production == true
+    add_agents: [security-reviewer, devops-release-engineer]
+    require_human_approval: true
+  - id: client_delivery
+    when: project.delivery.context == client_project
+    add_agents: [documentation-handoff-specialist]
+    required_artifacts: [scope-baseline, acceptance-record, handoff-package]
+
+complexity:
+  scoring:
+    single_known_user: 0
+    small_known_team: 1
+    external_users: 2
+    multi_tenant: 3
+    persistent_data: 1
+    sensitive_data: 3
+    each_external_integration: 1
+    payment_or_billing: 3
+    autonomous_ai_action: 3
+    business_critical_operation: 3
+  levels:
+    simple: { min: 0, max: 3 }
+    standard: { min: 4, max: 8 }
+    complex: { min: 9, max: 14 }
+    critical: { min: 15, max: 99 }
+
+confidence:
+  start: 40
+  signals:
+    explicit_purpose: 25
+    measurable_outcome: 15
+    known_users: 10
+    named_constraints: 10
+    existing_artifacts: 10
+    vague_goal: -25
+    conflicting_requirements: -20
+    unknown_data_sensitivity: -15
+  thresholds:
+    high: 80
+    medium: 60
+    low: 0
+  low_confidence_action: ask_one_question_with_highest_information_gain
+
+tie_breakers:
+  - situation: Ferramenta interna que poderá ser vendida depois.
+    default: hybrid
+    reason: Preserva velocidade interna sem bloquear evolução para multi-tenant e mercado.
+  - situation: Automação usada pela equipe e exposta a clientes.
+    default: hybrid
+    reason: Combina adoção interna com requisitos externos de experiência e segurança.
+  - situation: Não está claro se existe demanda de mercado.
+    default: market-discovery-only
+    reason: Valida o problema antes de autorizar construção.

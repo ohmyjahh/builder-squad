@@ -1,0 +1,67 @@
+product:
+  name: Builder Squad
+  language: pt-BR
+  mode: task-first
+  status: development
+
+orchestration:
+  topology: hub-and-spoke-with-conditional-pipelines
+  entry_agent: builder-chief
+  default_execution: sequential
+  allow_parallel_when:
+    - tasks_are_independent
+    - file_ownership_is_disjoint
+    - dependencies_are_satisfied
+    - integration_plan_exists
+  max_parallel_agents: 4
+  max_automatic_retries: 2
+  stale_context_hours: 24
+  handoff_token_guidance: 700
+
+intake:
+  required_first_decision: project_purpose
+  allowed_purposes:
+    - internal
+    - market
+    - hybrid
+  confidence_thresholds:
+    high: 80
+    medium: 60
+    low: 0
+  low_confidence_action: ask_one_highest_information_gain_question
+
+memory:
+  strategy: canonical-file-artifacts
+  project_root: projects/{project_id}
+  status_file: status.yaml
+  manifest_file: project.yaml
+  decision_directory: decisions
+  handoff_directory: handoffs
+  task_directory: tasks
+
+quality:
+  require_gate_between_phases: true
+  verdicts:
+    pass: advance
+    concerns: require_risk_acceptance
+    fail: return_to_owner
+    blocked: request_external_resolution
+  maximum_unresolved_critical_findings: 0
+
+authority:
+  require_human_approval:
+    - destructive_change
+    - production_deploy
+    - public_release
+    - external_message
+    - purchase_or_payment
+    - secret_or_credential_handling
+    - material_scope_change
+    - legal_or_privacy_acceptance
+
+portability:
+  canonical_core_is_provider_agnostic: true
+  supported_adapters:
+    - codex
+    - claude-code
+  adapter_specific_state_outside_core: true

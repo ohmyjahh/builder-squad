@@ -1,0 +1,93 @@
+version: "1.0.0"
+
+scenarios:
+  - id: internal-lead-followup
+    input:
+      purpose: internal
+      kind: internal_system
+      delivery_context: own_business
+      features:
+        user_interface: true
+        persistent_data: true
+        backend_logic: true
+        generative_ai: false
+        external_integrations: true
+        payments: false
+      risk:
+        sensitive_data: true
+        business_critical: false
+    expected:
+      workflow: wf-internal-tool
+      includes: [process-analyst, ux-ui-designer, data-architect, backend-engineer, frontend-engineer, automation-integration-engineer, security-reviewer, qa-engineer]
+      excludes: [growth-sales-strategist, agent-architect]
+      required_gates: [intake-completeness, data-and-privacy, orchestration-quality]
+
+  - id: market-micro-saas
+    input:
+      purpose: market
+      kind: micro_saas
+      delivery_context: market_product
+      features:
+        user_interface: true
+        persistent_data: true
+        backend_logic: true
+        generative_ai: true
+        external_integrations: true
+        payments: true
+      risk:
+        sensitive_data: false
+        business_critical: true
+    expected:
+      workflow: wf-market-product
+      includes: [product-strategist, solution-architect, ux-ui-designer, data-architect, backend-engineer, frontend-engineer, agent-architect, automation-integration-engineer, qa-engineer, security-reviewer, devops-release-engineer, growth-sales-strategist]
+      excludes: [process-analyst]
+      required_gates: [market-evidence, agent-evaluation, payment-readiness, security-readiness, release-readiness]
+
+  - id: hybrid-internal-to-market
+    input:
+      purpose: hybrid
+      kind: internal_system
+      delivery_context: own_business
+      features:
+        user_interface: true
+        persistent_data: true
+        backend_logic: true
+        generative_ai: false
+        external_integrations: false
+        payments: false
+      risk:
+        sensitive_data: false
+        business_critical: false
+    expected:
+      workflow: wf-hybrid-evolution
+      includes: [process-analyst, product-strategist, solution-architect, ux-ui-designer, data-architect, backend-engineer, frontend-engineer, qa-engineer, security-reviewer]
+      required_decisions: [tenancy-readiness, data-separation, licensing]
+
+  - id: simple-public-landing
+    input:
+      purpose: market
+      kind: landing_experience
+      delivery_context: market_product
+      features:
+        user_interface: true
+        persistent_data: false
+        backend_logic: false
+        generative_ai: false
+        external_integrations: false
+        payments: false
+      risk:
+        sensitive_data: false
+        business_critical: false
+    expected:
+      workflow: wf-market-product
+      includes: [product-strategist, ux-ui-designer, frontend-engineer, qa-engineer, devops-release-engineer, growth-sales-strategist]
+      excludes: [data-architect, backend-engineer, agent-architect, automation-integration-engineer]
+
+  - id: invalid-missing-purpose
+    input:
+      purpose: null
+      kind: web_app
+    expected:
+      verdict: FAIL
+      state: DISCOVERY
+      action: ask_required_purpose_question

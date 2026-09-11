@@ -1,0 +1,95 @@
+workflow:
+  id: wf-intake-and-classify
+  name: Intake, classificação e roteamento
+  version: "1.0.0"
+  type: sequential-with-conditional-routing
+  entry_agent: builder-chief
+  trigger: "*start-project"
+  purpose: all
+
+inputs:
+  required:
+    - user_request
+  optional:
+    - existing_project_path
+    - source_artifacts
+
+phases:
+  - id: initialize
+    task: start-project.md
+    agent: builder-chief
+    outputs: [project_id, project_manifest, project_status, intake_session]
+    checkpoint:
+      gate: Projeto isolado e estado DISCOVERY válido.
+      veto: Estrutura existente sobrescrita ou solicitação original perdida.
+
+  - id: purpose
+    task: classify-project.md
+    agent: builder-chief
+    depends_on: [initialize]
+    interaction:
+      required: true
+      prompt: Este projeto é para uso interno, para colocar no mercado ou começa interno com intenção futura de venda?
+      options:
+        internal: Uso interno no negócio
+        market: Produto para clientes ou usuários externos
+        hybrid: Uso interno agora com intenção futura de venda
+    outputs: [purpose]
+    checkpoint:
+      gate: Finalidade explicitamente respondida ou confirmada pelo usuário.
+      veto: Finalidade inferida sem confirmação.
+
+  - id: progressive_intake
+    task: classify-project.md
+    agent: builder-chief
+    depends_on: [purpose]
+    loop:
+      while: confidence < 60 OR critical_information_missing == true
+      action: ask_highest_information_gain_question
+      max_questions_per_round: 3
+      on_limit: create_assumption_and_require_approval
+    outputs: [project_profile, complexity_score, risk_profile, confidence, missing_information]
+    checkpoint:
+      checklist: intake-completeness.md
+      gate: Perfil classificável e riscos de alto impacto identificados.
+      veto: Dado sensível, pagamento, produção ou autoridade desconhecidos.
+
+  - id: brief
+    task: create-canonical-brief.md
+    agent: builder-chief
+    depends_on: [progressive_intake]
+    outputs: [canonical_brief, brief_version, open_questions]
+    checkpoint:
+      checklist: handoff-quality.md
+      gate: Brief autocontido, versionado e sem mistura entre fato e hipótese.
+      veto: Resultado, usuário, finalidade ou critério de sucesso ausente.
+
+  - id: route
+    task: route-project.md
+    agent: builder-chief
+    depends_on: [brief]
+    outputs: [selected_workflow, ordered_route, skipped_agents, route_confidence, first_handoff]
+    branch:
+      internal: wf-internal-tool
+      market: wf-market-product
+      hybrid: wf-hybrid-evolution
+    checkpoint:
+      checklist: orchestration-quality.md
+      gate: Menor rota segura com dependências, gates e aprovações.
+      veto: Agente sem task, task sem saída ou risco sem owner.
+
+error_handling:
+  invalid_transition: reject_and_preserve_previous_state
+  low_confidence: ask_one_highest_information_gain_question
+  conflicting_answers: record_conflict_and_request_resolution
+  missing_authority: set_BLOCKED
+  max_automatic_retries: 2
+
+completion:
+  requires:
+    - project_id
+    - approved_or_risk_accepted_brief
+    - selected_workflow
+    - first_handoff
+    - orchestration_gate_passed
+  next: selected_workflow

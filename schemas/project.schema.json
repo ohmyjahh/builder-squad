@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://builder-squad.local/schemas/project.schema.json",
+  "title": "Builder Squad Project",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "name", "purpose", "kind", "delivery", "features", "risk"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "project_id": { "type": "string", "pattern": "^BS-[A-Z0-9][A-Z0-9-]{2,48}$" },
+    "name": { "type": "string", "minLength": 3, "maxLength": 100 },
+    "purpose": { "enum": ["internal", "market", "hybrid"] },
+    "kind": {
+      "enum": ["web_app", "internal_system", "micro_saas", "ai_agent", "automation", "integration", "landing_experience", "dashboard", "client_portal", "brownfield_improvement"]
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["context", "public_production"],
+      "properties": {
+        "context": { "enum": ["own_business", "client_project", "market_product", "experiment"] },
+        "public_production": { "type": "boolean" }
+      }
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["user_interface", "persistent_data", "backend_logic", "generative_ai", "external_integrations", "payments"],
+      "properties": {
+        "user_interface": { "type": "boolean" },
+        "persistent_data": { "type": "boolean" },
+        "backend_logic": { "type": "boolean" },
+        "generative_ai": { "type": "boolean" },
+        "external_integrations": { "type": "boolean" },
+        "payments": { "type": "boolean" }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sensitive_data", "business_critical", "level"],
+      "properties": {
+        "sensitive_data": { "type": "boolean" },
+        "business_critical": { "type": "boolean" },
+        "level": { "enum": ["low", "medium", "high", "critical"] }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

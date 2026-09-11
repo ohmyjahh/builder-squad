@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://builder-squad.local/schemas/task.schema.json",
+  "title": "Builder Squad Task Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "name", "owner", "purpose", "inputs", "steps", "outputs", "acceptance_criteria", "on_pass", "on_fail", "max_retries"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "id": { "type": "string", "pattern": "^TASK-[A-Z0-9-]+$" },
+    "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+    "owner": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+    "purpose": { "type": "string", "minLength": 10 },
+    "inputs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "preconditions": { "type": "array", "items": { "type": "string" } },
+    "steps": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "outputs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "acceptance_criteria": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "quality_gate": { "type": ["string", "null"] },
+    "on_pass": { "type": "string" },
+    "on_fail": { "type": "string" },
+    "max_retries": { "type": "integer", "minimum": 0, "maximum": 2 },
+    "human_approval": { "type": ["boolean", "string"] }
+  }
+}

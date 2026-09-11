@@ -1,0 +1,18 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+coverage/
+.cache/
+.tmp/
+*.log
+
+# Estado local de execução; templates versionados vivem em templates/
+projects/*
+!projects/.gitkeep
+
+# Credenciais e configurações privadas dos adaptadores
+adapters/**/local-config.*
+adapters/**/credentials.*
