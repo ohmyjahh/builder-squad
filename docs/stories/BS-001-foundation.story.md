@@ -1,6 +1,6 @@
 # Story BS-001 — Fundação do Builder Squad
 
-**Status:** In Progress  
+**Status:** Done
 **Epic:** Builder Squad V1  
 **Prioridade:** Crítica
 
@@ -31,17 +31,17 @@ Como criador do Builder Squad, quero uma fundação documental e estrutural vali
 - [x] Criar blueprint YAML.
 - [x] Validar consistência cruzada.
 - [x] Inicializar repositório Git independente.
-- [ ] Criar repositório privado no GitHub.
+- [x] Criar repositório privado no GitHub.
 
 ## Notas técnicas
 
-- O GitHub CLI foi encontrado sem autenticação válida em 2026-09-11.
-- O remoto será criado somente após reautenticação.
-- O nome provisório do repositório é `builder-squad`.
+- O GitHub CLI foi reautenticado na conta autorizada `ohmyjahh` em 2026-09-11.
+- Repositório privado: https://github.com/ohmyjahh/builder-squad.
+- O remote `origin` aponta para o repositório privado.
 
 ## Definition of Done
 
-- [ ] Todos os critérios de aceite atendidos.
+- [x] Todos os critérios de aceite atendidos.
 - [x] Links internos válidos.
 - [x] Story e File List atualizadas.
 - [x] Revisão estrutural sem achados críticos.

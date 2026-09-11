@@ -1,6 +1,6 @@
 # Story BS-011 — Release Candidate e Repositório Privado
 
-**Status:** In Progress  
+**Status:** Done
 **Epic:** Builder Squad V1  
 **Prioridade:** Crítica  
 **Dependência:** BS-010
@@ -17,18 +17,24 @@ Como proprietário do Builder Squad, quero uma release candidate versionada, ver
 - [x] Pacote comercial contém core, adapters, docs e exemplos.
 - [x] SHA256SUMS validado.
 - [x] Plano de piloto e revisão jurídica documentados.
-- [ ] Repositório privado criado na conta autorizada.
-- [ ] Remote origin configurado.
-- [ ] Branch main enviada.
-- [ ] Tag v0.9.0-rc.1 enviada.
+- [x] Repositório privado criado na conta autorizada.
+- [x] Remote origin configurado.
+- [x] Branch main enviada.
+- [x] Tag v0.9.0-rc.1 enviada.
 
 ## Definition of Done
 
 - [x] Testes locais PASS.
 - [x] Validação estrutural PASS.
 - [x] Package manifest e checksums.
-- [ ] GitHub acessível e privado.
-- [ ] Story e relatório atualizados com URL remota.
+- [x] GitHub acessível e privado.
+- [x] Story e relatório atualizados com URL remota.
+
+## Distribuição
+
+- Repositório privado: https://github.com/ohmyjahh/builder-squad.
+- Branch: `main`.
+- Tag: `v0.9.0-rc.1`.
 
 ## File List
 
@@ -43,4 +49,3 @@ Como proprietário do Builder Squad, quero uma release candidate versionada, ver
 - package-lock.json
 - scripts/package.mjs
 - docs/reports/BS-011-release-candidate.md
-

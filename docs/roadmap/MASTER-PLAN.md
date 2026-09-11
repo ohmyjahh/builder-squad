@@ -1,7 +1,7 @@
 # Mapa Mestre de Construção
 
 **Objetivo:** construir, validar e empacotar o Builder Squad como produto proprietário instalável.
-**Estado atual:** release candidate em preparação.
+**Estado atual:** release candidate privada publicada.
 
 ## Visão de progresso
 
@@ -19,7 +19,7 @@
 | 9. Adapters | Concluída | Codex e Claude Code |
 | 10. Experiência do comprador | Documentação concluída | teste externo ainda pendente |
 | 11. Projetos de referência | Concluída | 5 cenários |
-| 12. Distribuição | Em andamento | pacote, CI e GitHub |
+| 12. Distribuição | RC concluída | pacote, CI, GitHub privado, main e tag |
 
 ## Fase 0 — Fundação
 
@@ -29,7 +29,7 @@
 - [x] Registrar decisões estruturais em ADRs.
 - [x] Definir glossário, ontologia e critérios da V1.
 - [x] Isolar repositório Git local.
-- [ ] Criar repositório privado remoto após autenticação GitHub.
+- [x] Criar repositório privado remoto após autenticação GitHub.
 
 **Gate:** PASS.
 
@@ -201,9 +201,9 @@
 - [ ] Revisão jurídica final de licença e termos.
 - [x] Criar CI do repositório.
 - [x] Gerar release candidate com checksums.
-- [ ] Criar repositório privado e push.
+- [x] Criar repositório privado e push.
 - [ ] Executar piloto fechado.
 - [ ] Corrigir achados do piloto.
 - [ ] Marcar versão 1.0.0.
 
-**Gate atual:** release candidate pode ser gerada; distribuição remota depende de autenticação e V1 depende do piloto.
+**Gate atual:** release candidate privada distribuída; V1 depende do piloto e da revisão jurídica.

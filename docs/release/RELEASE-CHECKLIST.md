@@ -31,7 +31,7 @@
 - [x] Pacote 0.9.0-rc.1 gerado.
 - [x] SHA256SUMS verificado.
 - [x] CI definida.
-- [ ] Repositório privado criado.
+- [x] Repositório privado criado.
 - [ ] Branch protection configurada.
 - [ ] Release privada criada.
 

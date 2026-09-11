@@ -22,8 +22,8 @@
 |---|---|
 | Testes Node | PASS 21/21 |
 | Validação estrutural | PASS 20/20 |
-| YAML estrito | PASS 35/35 |
-| JSON estrito | PASS 9/9 |
+| YAML estrito | PASS 39/39 |
+| JSON estrito | PASS 10/10 |
 | JavaScript syntax check | PASS |
 | Agent → task | PASS 75/75 |
 | Workflow IDs | PASS 12/12 |

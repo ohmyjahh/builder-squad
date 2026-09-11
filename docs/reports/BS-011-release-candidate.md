@@ -3,15 +3,15 @@
 **Versão:** 0.9.0-rc.1  
 **Data:** 2026-09-11  
 **Veredito técnico:** PASS  
-**Veredito de distribuição remota:** BLOCKED até autenticação GitHub
+**Veredito de distribuição remota:** PASS
 
 ## Evidências locais
 
 - npm test: PASS 21/21.
 - npm run validate: PASS 20/20.
 - npm run doctor: PASS.
-- YAML: PASS 35/35.
-- JSON: PASS 9/9.
+- YAML: PASS 39/39.
+- JSON: PASS 10/10.
 - JavaScript syntax: PASS.
 - Git fsck: sem erro.
 - SHA256SUMS: verificado.
@@ -25,14 +25,20 @@
 - Integridade: SHA-256 por arquivo.
 - Visibilidade pretendida: privada.
 
+## Distribuição privada
+
+- Repositório: https://github.com/ohmyjahh/builder-squad.
+- Remote: `origin`.
+- Branch: `main`.
+- Tag: `v0.9.0-rc.1`.
+
 ## CI
 
 A esteira roda em Node 18.x e 24.x, executa instalação reprodutível, validação, testes, syntax check e geração do pacote.
 
-## Pendências externas
+## Pendências para 1.0.0
 
-- concluir login do GitHub CLI;
-- criar repositório privado;
-- enviar main e tag;
 - configurar proteção da branch se o plano da conta permitir;
-- executar piloto e revisão jurídica antes da 1.0.0.
+- executar piloto fechado;
+- concluir revisão jurídica;
+- corrigir eventuais achados impeditivos do piloto.

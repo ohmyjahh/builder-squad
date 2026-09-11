@@ -25,8 +25,8 @@ Como mantenedor do produto, quero provar que core, adapters, contratos, instala√
 
 - [x] Tests: PASS 21/21.
 - [x] Structural validation: PASS 20/20.
-- [x] YAML: PASS 35/35.
-- [x] JSON: PASS 9/9.
+- [x] YAML: PASS 39/39.
+- [x] JSON: PASS 10/10.
 - [x] Git object database: sem erro.
 - [x] Relat√≥rio de auditoria versionado.
 
@@ -45,4 +45,3 @@ Como mantenedor do produto, quero provar que core, adapters, contratos, instala√
 - docs/guides/*
 - docs/roadmap/MASTER-PLAN.md
 - docs/reports/BS-010-portability-audit.md
-
