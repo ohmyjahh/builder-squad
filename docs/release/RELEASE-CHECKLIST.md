@@ -2,7 +2,7 @@
 
 ## Identidade
 
-- [x] VERSION, package.json e squad.yaml usam 0.9.0-rc.1.
+- [x] VERSION, package.json e squad.yaml usam 0.9.0-rc.2.
 - [x] Changelog e release notes existem.
 - [x] Licença proprietária está presente.
 - [ ] Titular jurídico e termos comerciais foram revisados.
@@ -28,7 +28,7 @@
 ## Distribuição
 
 - [x] Script de pacote.
-- [x] Pacote 0.9.0-rc.1 gerado.
+- [x] Pacote 0.9.0-rc.2 gerado.
 - [x] SHA256SUMS verificado.
 - [x] CI definida.
 - [x] Repositório privado criado.

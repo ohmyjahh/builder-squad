@@ -2,7 +2,7 @@
 
 ## Produto
 
-Builder Squad 0.9.0-rc.1 — release candidate proprietário.
+Builder Squad 0.9.0-rc.2 — release candidate proprietário.
 
 ## O comprador recebe
 
@@ -44,4 +44,3 @@ A meta do piloto é instalação em até 15 minutos e primeiro brief em até 30 
 ## Aceite do comprador
 
 A entrega deve identificar versão, canal de suporte, termos, política de atualização e checksums.
-

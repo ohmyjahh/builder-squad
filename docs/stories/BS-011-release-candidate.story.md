@@ -11,7 +11,7 @@ Como proprietário do Builder Squad, quero uma release candidate versionada, ver
 
 ## Critérios de aceite
 
-- [x] Versão 0.9.0-rc.1 alinhada em manifest, package e VERSION.
+- [x] Versão 0.9.0-rc.2 alinhada em manifest, package e VERSION.
 - [x] Changelog, release notes, security e support presentes.
 - [x] CI testa Node mínimo e moderno.
 - [x] Pacote comercial contém core, adapters, docs e exemplos.
@@ -20,7 +20,7 @@ Como proprietário do Builder Squad, quero uma release candidate versionada, ver
 - [x] Repositório privado criado na conta autorizada.
 - [x] Remote origin configurado.
 - [x] Branch main enviada.
-- [x] Tag v0.9.0-rc.1 enviada.
+- [x] Tag v0.9.0-rc.2 enviada.
 
 ## Definition of Done
 
@@ -34,7 +34,8 @@ Como proprietário do Builder Squad, quero uma release candidate versionada, ver
 
 - Repositório privado: https://github.com/ohmyjahh/builder-squad.
 - Branch: `main`.
-- Tag: `v0.9.0-rc.1`.
+- Tag: `v0.9.0-rc.2`.
+- A RC.1 foi preservada como registro do primeiro ciclo; a RC.2 corrige a instalação sidecar em ambiente limpo.
 
 ## File List
 

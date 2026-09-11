@@ -31,7 +31,7 @@
 | Segredos de alta confiança | 0 achados |
 | Links locais principais | 0 quebrados |
 | Git fsck | sem erro |
-| Pacote 0.9.0-rc.1 | 269 arquivos verificados por SHA-256 |
+| Pacote 0.9.0-rc.2 | 270 arquivos verificados por SHA-256 |
 
 ## Portabilidade
 
@@ -59,4 +59,4 @@
 
 ## Decisão
 
-O sistema está tecnicamente apto a ser empacotado como versão 0.9.0-rc.1. A designação 1.0.0 permanece bloqueada até piloto e aceite.
+O sistema está tecnicamente apto a ser empacotado como versão 0.9.0-rc.2. A designação 1.0.0 permanece bloqueada até piloto e aceite.

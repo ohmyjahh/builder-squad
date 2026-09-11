@@ -1,6 +1,6 @@
 # Builder Squad
 
-**Versão:** 0.9.0-rc.1 — release candidate para piloto fechado.
+**Versão:** 0.9.0-rc.2 — release candidate para piloto fechado.
 
 Um time de agentes especialistas, conectado por workflows, tasks, memória e quality gates, para transformar uma demanda em app, sistema, agente ou automação pronto para uso interno, entrega a cliente ou validação no mercado.
 
@@ -134,7 +134,7 @@ docs/         PRD, arquitetura, guias, stories e relatórios
 6. [Troubleshooting](docs/guides/TROUBLESHOOTING.md)
 7. [Compatibilidade](docs/guides/COMPATIBILITY.md)
 8. [Dados e segurança](docs/guides/DATA-AND-SECURITY.md)
-9. [Release notes 0.9.0-rc.1](docs/release/RELEASE-NOTES-0.9.0-rc.1.md)
+9. [Release notes 0.9.0-rc.2](docs/release/RELEASE-NOTES-0.9.0-rc.2.md)
 
 ## Validação atual
 

@@ -1,6 +1,6 @@
 # Relatório BS-011 — Release Candidate
 
-**Versão:** 0.9.0-rc.1  
+**Versão:** 0.9.0-rc.2
 **Data:** 2026-09-11  
 **Veredito técnico:** PASS  
 **Veredito de distribuição remota:** PASS
@@ -15,11 +15,11 @@
 - JavaScript syntax: PASS.
 - Git fsck: sem erro.
 - SHA256SUMS: verificado.
-- Arquivos no pacote: 269.
+- Arquivos no pacote: 270.
 
 ## Pacote
 
-- Caminho: dist/builder-squad-v0.9.0-rc.1
+- Caminho: dist/builder-squad-v0.9.0-rc.2
 - Formato: diretório portátil.
 - Manifesto: RELEASE-MANIFEST.json.
 - Integridade: SHA-256 por arquivo.
@@ -30,7 +30,12 @@
 - Repositório: https://github.com/ohmyjahh/builder-squad.
 - Remote: `origin`.
 - Branch: `main`.
-- Tag: `v0.9.0-rc.1`.
+- Tag: `v0.9.0-rc.2`.
+
+## Histórico de CI
+
+- A 0.9.0-rc.1 revelou que `docs/release` não era copiado pelo instalador sidecar em ambiente limpo.
+- A 0.9.0-rc.2 inclui a pasta, adiciona a regressão correspondente e mantém a RC anterior como histórico imutável.
 
 ## CI
 

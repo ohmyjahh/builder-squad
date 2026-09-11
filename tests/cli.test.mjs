@@ -56,12 +56,14 @@ test("CLI inicializa, transiciona e cria handoff", () => {
 
 test("instalador cria sidecar sem alterar instruções do projeto", () => {
   const target = mkdtempSync(resolve(tmpdir(), "builder-squad-install-"));
+  const version = readFileSync(resolve(SQUAD_ROOT, "VERSION"), "utf8").trim();
   try {
     const installed = run("install.mjs", ["--adapter", "codex", "--target", target]);
     assert.equal(installed.status, 0, installed.stderr);
     assert.ok(existsSync(resolve(target, ".builder-squad", "agents", "builder-chief.md")));
     assert.ok(existsSync(resolve(target, ".builder-squad", "adapter", "AGENTS.builder-squad.md")));
     assert.ok(existsSync(resolve(target, ".builder-squad", "scripts", "validate.mjs")));
+    assert.ok(existsSync(resolve(target, ".builder-squad", "docs", "release", `RELEASE-NOTES-${version}.md`)));
     assert.ok(!existsSync(resolve(target, "AGENTS.md")));
 
     const validated = spawnSync(process.execPath, [resolve(target, ".builder-squad", "scripts", "validate.mjs")], { encoding: "utf8" });

@@ -1,10 +1,8 @@
-# Builder Squad 0.9.0-rc.1
-
-> Substituída pela 0.9.0-rc.2 após o primeiro ciclo de CI identificar um link ausente na instalação sidecar limpa.
+# Builder Squad 0.9.0-rc.2
 
 ## Resultado
 
-Primeiro release candidate completo do Builder Squad: um sistema de agentes task-first com intake, roteamento, execução, gates, memória, instalação e recuperação.
+Release candidate corrigida do Builder Squad: um sistema de agentes task-first com intake, roteamento, execução, gates, memória, instalação e recuperação.
 
 ## Destaques
 
@@ -14,15 +12,20 @@ Primeiro release candidate completo do Builder Squad: um sistema de agentes task
 - 12 workflows tratam construção, cliente, IA, brownfield, incidente, segurança, release, growth e retomada.
 - Instalação sidecar funciona em Codex e Claude Code.
 - Update, restore e uninstall preservam versões anteriores.
-- 21 testes e 20 validações estruturais aprovados.
+- 21 testes e 20 validações estruturais cobrem o produto.
+
+## Correção desde a RC.1
+
+- O instalador passou a incluir `docs/release`, mantendo válidos os links do README após uma instalação limpa.
+- Uma regressão automatizada confirma que as notas da versão instalada existem no sidecar.
 
 ## Instalação
 
-1. Execute npm run doctor.
-2. Execute npm test.
+1. Execute `npm run doctor`.
+2. Execute `npm test`.
 3. Instale o adapter no projeto.
 4. Acrescente a referência sugerida às instruções existentes.
-5. Inicie com @builder-chief *start-project.
+5. Inicie com `@builder-chief *start-project`.
 
 ## Limitações conhecidas
 
@@ -33,7 +36,7 @@ Primeiro release candidate completo do Builder Squad: um sistema de agentes task
 
 ## Upgrade
 
-Use update para preservar a instalação anterior. Consulte docs/guides/VERSIONING.md.
+Use `update` para preservar a instalação anterior. Consulte `docs/guides/VERSIONING.md`.
 
 ## Aceite da RC
 

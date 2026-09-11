@@ -2,6 +2,17 @@
 
 Todas as mudanças relevantes do Builder Squad são documentadas aqui. O projeto segue Semantic Versioning.
 
+## [0.9.0-rc.2] — 2026-09-11
+
+### Corrigido
+
+- O instalador sidecar agora inclui `docs/release`, preservando todos os links locais do README em uma instalação limpa.
+- O teste do instalador verifica explicitamente a presença das notas da versão instalada.
+
+### Estado
+
+Release candidate que substitui a 0.9.0-rc.1 para o piloto fechado. A RC anterior permanece registrada como histórico do primeiro ciclo de CI.
+
 ## [0.9.0-rc.1] — 2026-09-11
 
 ### Adicionado
