@@ -25,6 +25,21 @@ tags:
 components:
   agents:
     - builder-chief.md
+    - product-strategist.md
+    - process-analyst.md
+    - project-manager.md
+    - solution-architect.md
+    - ux-ui-designer.md
+    - data-architect.md
+    - backend-engineer.md
+    - frontend-engineer.md
+    - agent-architect.md
+    - automation-integration-engineer.md
+    - qa-engineer.md
+    - security-reviewer.md
+    - devops-release-engineer.md
+    - growth-sales-strategist.md
+    - documentation-handoff-specialist.md
   tasks:
     - start-project.md
     - classify-project.md
