@@ -49,6 +49,73 @@ components:
     - resume-project.md
     - correct-course.md
     - close-project.md
+    - validate-market-problem.md
+    - define-ideal-customer.md
+    - define-value-proposition.md
+    - scope-market-mvp.md
+    - define-monetization.md
+    - map-current-process.md
+    - design-future-process.md
+    - calculate-internal-roi.md
+    - plan-internal-adoption.md
+    - create-project-plan.md
+    - decompose-into-stories.md
+    - decompose-into-tasks.md
+    - identify-critical-path.md
+    - create-risk-register.md
+    - select-technical-stack.md
+    - design-system-architecture.md
+    - define-nonfunctional-requirements.md
+    - define-service-contracts.md
+    - record-architecture-decision.md
+    - map-user-journey.md
+    - design-user-flows.md
+    - create-interface-specification.md
+    - define-design-tokens.md
+    - review-usability-accessibility.md
+    - model-domain-data.md
+    - design-database-schema.md
+    - define-data-access.md
+    - plan-data-migration.md
+    - review-data-integrity.md
+    - plan-backend-implementation.md
+    - implement-backend-service.md
+    - implement-auth-and-permissions.md
+    - test-backend.md
+    - plan-frontend-implementation.md
+    - implement-user-interface.md
+    - integrate-frontend-services.md
+    - test-frontend.md
+    - design-ai-agent.md
+    - define-agent-context-and-tools.md
+    - create-agent-evaluation-suite.md
+    - review-agent-behavior.md
+    - map-integration.md
+    - design-automation.md
+    - implement-integration.md
+    - test-integration-resilience.md
+    - create-test-strategy.md
+    - review-story-readiness.md
+    - execute-quality-gate.md
+    - verify-regression.md
+    - create-threat-model.md
+    - review-application-security.md
+    - review-privacy-and-data.md
+    - issue-security-verdict.md
+    - create-release-plan.md
+    - configure-delivery-pipeline.md
+    - execute-approved-deploy.md
+    - execute-rollback.md
+    - verify-production.md
+    - design-market-offer.md
+    - define-pricing-hypothesis.md
+    - create-go-to-market-plan.md
+    - define-product-analytics.md
+    - review-growth-cycle.md
+    - create-user-guide.md
+    - create-operational-runbook.md
+    - prepare-client-handoff.md
+    - create-project-closure.md
   workflows:
     - wf-intake-and-classify.yaml
   checklists:
@@ -60,6 +127,7 @@ components:
     - canonical-brief.md
     - handoff.md
     - decision-record.md
+    - task-contract.md
   data:
     - project-ontology.yaml
     - routing-catalog.yaml
