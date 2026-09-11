@@ -1,0 +1,45 @@
+name: Defeito
+description: Reporte comportamento reproduzível do core sem incluir segredo.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Não inclua credenciais, dados pessoais nem vulnerabilidade explorável.
+  - type: input
+    id: version
+    attributes:
+      label: Versão
+      placeholder: 0.9.0-rc.1
+    validations:
+      required: true
+  - type: dropdown
+    id: adapter
+    attributes:
+      label: Adapter
+      options:
+        - Codex
+        - Claude Code
+        - Core/CLI
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reprodução
+      description: Passos mínimos, resultado esperado e observado.
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Doctor
+      description: Cole somente a saída sanitizada.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Segurança
+      options:
+        - label: Removi segredos e dados pessoais.
+          required: true
+

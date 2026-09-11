@@ -1,0 +1,39 @@
+name: Melhoria
+description: Proponha uma capacidade, task, workflow ou adapter.
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema
+      description: Que resultado está bloqueado?
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Camada
+      options:
+        - Agent
+        - Task
+        - Workflow
+        - Gate
+        - Template
+        - Automation
+        - Adapter
+        - CLI
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidência e frequência
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposta e tradeoffs
+

@@ -2,7 +2,7 @@ product:
   name: Builder Squad
   language: pt-BR
   mode: task-first
-  status: development
+  status: release-candidate
 
 orchestration:
   topology: hub-and-spoke-with-conditional-pipelines

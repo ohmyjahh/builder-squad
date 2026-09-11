@@ -199,8 +199,8 @@
 - [x] YAML, JSON e JavaScript verificados.
 - [x] Política de versão e migração.
 - [ ] Revisão jurídica final de licença e termos.
-- [ ] Criar CI do repositório.
-- [ ] Gerar release candidate com checksums.
+- [x] Criar CI do repositório.
+- [x] Gerar release candidate com checksums.
 - [ ] Criar repositório privado e push.
 - [ ] Executar piloto fechado.
 - [ ] Corrigir achados do piloto.
