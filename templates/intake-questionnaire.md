@@ -5,7 +5,9 @@
 
 ## Pergunta obrigatória de abertura
 
-Este projeto é:
+Este projeto é para uso interno, para colocar no mercado ou começa interno com intenção futura de venda?
+
+Classifique a resposta em uma das três opções:
 
 1. Para uso interno no seu negócio
 2. Para colocar no mercado

@@ -1,0 +1,24 @@
+automation:
+  id: auto-release-approval
+  version: "1.0.0"
+  trigger: state.READY_FOR_RELEASE
+  owner: devops-release-engineer
+preconditions:
+  - release_plan_PASS
+  - qa_verdict_available
+  - security_verdict_available
+  - immutable_artifact_available
+steps:
+  - compose_approval_summary
+  - present_impact_risk_migration_and_rollback
+  - wait_for_authorized_human
+  - bind_approval_to_artifact_and_environment
+  - transition_to_RELEASING
+guards:
+  - silence_is_not_approval
+  - changed_artifact_invalidates_approval
+  - rejection_cannot_be_bypassed
+failure:
+  approval_expired: return_READY_FOR_RELEASE
+audit: [approval_id, approver, artifact, environment, conditions, expires_at]
+

@@ -222,3 +222,37 @@ governance:
     - CONCERNS
     - FAIL
     - BLOCKED
+
+tooling:
+  runtime: node>=18
+  zero_runtime_dependencies: true
+  cli: scripts/builder-squad.mjs
+  commands:
+    - validate
+    - doctor
+    - route
+    - init
+    - status
+    - transition
+    - handoff
+    - package
+    - install
+  automations:
+    - intake-bootstrap.yaml
+    - route-selection.yaml
+    - state-transition.yaml
+    - handoff-dispatch.yaml
+    - quality-gate.yaml
+    - retry-recovery.yaml
+    - release-approval.yaml
+    - project-resume.yaml
+    - artifact-index.yaml
+  adapters:
+    - codex
+    - claude-code
+  schemas:
+    - project.schema.json
+    - status.schema.json
+    - task.schema.json
+    - handoff.schema.json
+    - decision.schema.json

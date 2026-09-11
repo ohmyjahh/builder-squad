@@ -1,0 +1,22 @@
+automation:
+  id: auto-retry-recovery
+  version: "1.0.0"
+  trigger: gate.FAIL
+  owner: builder-chief
+preconditions:
+  - cause_owner_identified
+  - finding_reproducible
+steps:
+  - increment_task_retry
+  - classify_cause
+  - create_minimal_correction_route
+  - preserve_previous_evidence
+  - rerun_changed_scope_and_regression
+branch:
+  retry_count_1_or_2: execute_correction
+  retry_count_above_2: set_BLOCKED_and_replan
+guards:
+  - no_repeat_without_changed_input
+  - no_broaden_scope_to_hide_failure
+audit: [retry_count, cause, correction, changed_input, outcome]
+

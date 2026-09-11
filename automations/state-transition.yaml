@@ -1,0 +1,23 @@
+automation:
+  id: auto-state-transition
+  version: "1.0.0"
+  trigger: task.or_gate.completed
+  owner: builder-chief
+preconditions:
+  - current_state_known
+  - target_state_known
+  - required_artifacts_present
+steps:
+  - validate_transition_against_state_machine
+  - validate_required_approval
+  - write_status_atomically
+  - append_state_history
+guards:
+  - reject_illegal_transition
+  - reject_release_without_approval_id
+  - reject_retry_above_two
+failure:
+  write_error: preserve_previous_status
+  illegal_transition: report_without_mutation
+audit: [from, to, task, owner, approval_id, reason, timestamp]
+

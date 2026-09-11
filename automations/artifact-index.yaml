@@ -1,0 +1,19 @@
+automation:
+  id: auto-artifact-index
+  version: "1.0.0"
+  trigger: artifact.created_or_superseded
+  owner: documentation-handoff-specialist
+preconditions:
+  - artifact_has_project_owner_status_and_version
+steps:
+  - calculate_content_hash
+  - classify_artifact
+  - mark_superseded_version
+  - update_canonical_index
+  - link_consuming_handoffs_and_gates
+guards:
+  - no_duplicate_current_version
+  - no_secret_in_index
+  - no_deleted_history_without_approval
+audit: [artifact_id, version, hash, owner, status, consumers]
+

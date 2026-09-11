@@ -1,0 +1,25 @@
+automation:
+  id: auto-quality-gate
+  version: "1.0.0"
+  trigger: phase.ready_for_review
+  owner: qa-engineer
+preconditions:
+  - review_scope_versioned
+  - applicable_checklist_resolved
+  - reviewer_independent_when_required
+steps:
+  - freeze_reviewed_version
+  - map_criteria_to_evidence
+  - execute_applicable_checks
+  - register_findings
+  - issue_single_verdict
+branch:
+  PASS: advance
+  CONCERNS: request_risk_acceptance
+  FAIL: return_to_cause_owner
+  BLOCKED: escalate_to_builder_chief
+guards:
+  - no_PASS_without_evidence
+  - no_critical_finding_as_normal_backlog
+audit: [scope, evidence_index, findings, verdict, next_owner]
+

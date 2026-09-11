@@ -1,0 +1,25 @@
+automation:
+  id: auto-handoff-dispatch
+  version: "1.0.0"
+  trigger: task.PASS
+  owner: builder-chief
+preconditions:
+  - destination_agent_exists
+  - destination_task_exists
+  - output_artifacts_versioned
+steps:
+  - render_handoff_template
+  - separate_facts_assumptions_decisions
+  - attach_inputs_by_reference
+  - define_outputs_and_acceptance
+  - scan_for_secrets
+  - persist_handoff
+  - dispatch_destination
+guards:
+  - no_chat_only_context
+  - no_secret_material
+  - no_scope_change_in_handoff
+failure:
+  invalid_contract: return_to_source_agent
+audit: [handoff_id, from, to, completed_task, artifact_versions]
+

@@ -1,0 +1,24 @@
+automation:
+  id: auto-intake-bootstrap
+  version: "1.0.0"
+  trigger: command.start-project
+  owner: builder-chief
+  mode: synchronous
+preconditions:
+  - user_request_available
+steps:
+  - preserve_original_request
+  - create_isolated_project_memory
+  - set_state_DISCOVERY
+  - ask_required_purpose_question
+  - dispatch_classify_project
+effects:
+  creates: [project.yaml, status.yaml, original-request.md, brief.md]
+  never:
+    - overwrite_existing_project
+    - infer_purpose_without_confirmation
+failure:
+  existing_target: stop_and_offer_new_identifier
+  missing_purpose: remain_DISCOVERY
+audit: [project_id, timestamp, original_request_hash]
+

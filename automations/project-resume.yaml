@@ -1,0 +1,22 @@
+automation:
+  id: auto-project-resume
+  version: "1.0.0"
+  trigger: command.resume-project
+  owner: builder-chief
+preconditions:
+  - project_identifier_available
+steps:
+  - load_manifest_status_decisions_and_handoffs
+  - verify_state_integrity
+  - detect_stale_context
+  - preserve_completed_work
+  - recalculate_changed_dependencies
+  - create_resume_handoff
+guards:
+  - no_repeat_of_completed_PASS_task
+  - no_reuse_of_expired_approval
+  - no_assumption_that_external_state_is_current
+failure:
+  conflicting_state: preserve_versions_and_request_resolution
+audit: [recovered_state, stale_items, skipped_work, next_task]
+

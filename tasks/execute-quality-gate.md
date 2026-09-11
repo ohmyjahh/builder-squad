@@ -43,6 +43,14 @@ Tomar uma decisão de qualidade reproduzível, baseada em evidência e independe
 - `FAIL`: há defeito ou lacuna controlável; retorna ao owner da origem.
 - `BLOCKED`: não é possível decidir por dependência externa, acesso ou ambiente indisponível.
 
+## Critérios de aceite
+
+- Todos os critérios aplicáveis apontam para evidência verificável.
+- Testes não executados e limitações do ambiente permanecem explícitos.
+- Defeitos possuem severidade, reprodução, owner e retorno.
+- Existe exatamente um veredito e uma próxima transição.
+- Riscos residuais possuem aceite pela autoridade correta quando necessário.
+
 ## Vetos
 
 - Aprovar com base apenas na declaração do implementador.

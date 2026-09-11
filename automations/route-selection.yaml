@@ -1,0 +1,25 @@
+automation:
+  id: auto-route-selection
+  version: "1.0.0"
+  trigger: gate.intake-completeness.PASS
+  owner: builder-chief
+preconditions:
+  - canonical_brief_versioned
+  - purpose_confirmed
+  - risk_profile_available
+steps:
+  - load_routing_catalog
+  - select_base_workflow
+  - apply_feature_and_risk_conditions
+  - remove_unnecessary_specialists
+  - calculate_complexity_and_confidence
+  - insert_gates_and_approvals
+  - create_first_handoff
+effects:
+  updates: [project.yaml, status.yaml]
+  creates: [route.json, handoffs/]
+failure:
+  low_confidence: ask_highest_information_gain_question
+  conflicting_route: run_correct-course
+audit: [selected_workflow, agents, skipped_agents, confidence, reasons]
+

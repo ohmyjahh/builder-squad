@@ -1,0 +1,25 @@
+{
+  "name": "@builder-squad/core",
+  "version": "0.1.0",
+  "description": "Sistema multiagente task-first para construir produtos digitais com governança.",
+  "type": "module",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "builder-squad": "./scripts/builder-squad.mjs"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "doctor": "node scripts/doctor.mjs",
+    "route": "node scripts/route.mjs",
+    "init:project": "node scripts/init-project.mjs",
+    "transition": "node scripts/transition.mjs",
+    "handoff": "node scripts/create-handoff.mjs",
+    "package:squad": "node scripts/package.mjs"
+  }
+}
+
