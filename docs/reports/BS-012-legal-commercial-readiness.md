@@ -63,6 +63,7 @@
 - CI aprovada: `https://github.com/ohmyjahh/builder-squad/actions/runs/34714145951`;
 - artefato: `builder-squad-v0.9.0-rc.3.tar.gz`;
 - SHA-256 do artefato: `b7be177d69e396c023750752d1483fc224c2f177452b321455084c4fdea4f313`.
+- proteção da `main`: pendente por indisponibilidade do recurso no plano atual do repositório privado; o código permaneceu privado.
 
 ## Bloqueios externos
 

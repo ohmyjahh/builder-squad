@@ -34,8 +34,12 @@
 - [x] SHA256SUMS verificado.
 - [x] CI definida.
 - [x] Repositório privado criado.
-- [ ] Branch protection configurada.
+- [ ] Branch protection configurada — bloqueada pelo plano atual do GitHub para este repositório privado (HTTP 403 em 2026-09-12).
 - [x] Release privada criada.
+
+### Limite da plataforma
+
+A proteção da `main` foi tentada após a publicação. O GitHub informou que o recurso exige upgrade do plano ou que o repositório seja público. Manter o código privado tem prioridade; nenhuma dessas mudanças foi feita automaticamente.
 
 ## Piloto
 
