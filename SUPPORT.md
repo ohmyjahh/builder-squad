@@ -8,10 +8,10 @@ A licença comercial não inclui suporte individual de instalação. A ativaçã
 
 Relatos de defeito reproduzível e vulnerabilidade podem ser recebidos para manutenção do Produto, mas não representam consultoria, implantação, SLA ou obrigação de configurar o ambiente do comprador. Atendimento individual poderá ser contratado separadamente se vier a ser oferecido.
 
-## Classificação
+## Classificação de relatos aceitos
 
 - **Defeito:** comportamento do core diverge da documentação.
-- **Instalação:** doctor, adapter, runtime ou permissão.
+- **Defeito no instalador self-service:** falha reproduzível no doctor, adapter ou script documentado; não inclui configuração individual do ambiente.
 - **Uso:** dúvida sobre workflow, task, gate ou template.
 - **Customização:** extensão do produto para um contexto específico.
 - **Consultoria:** execução ou decisão especializada no projeto do comprador.

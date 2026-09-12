@@ -40,7 +40,7 @@ Como titular do Builder Squad, quero um pacote jurídico-comercial coerente, ras
 - [x] Plano de clearance e registro da marca criado.
 - [x] Documentos incluídos no pacote e na instalação sidecar.
 - [x] Validador impede release sem pacote jurídico mínimo.
-- [ ] Testes, doctor, package e checksums passam.
+- [x] Testes, doctor, package e checksums passam.
 - [ ] Nova release candidate publicada no repositório privado.
 
 ## Limites de conclusão
@@ -56,8 +56,8 @@ Não podem ser marcados como concluídos sem ato externo verificável:
 ## Definition of Done
 
 - [ ] Todos os critérios executáveis internamente concluídos.
-- [ ] Pendências externas registradas sem linguagem de falsa aprovação.
-- [ ] File List atualizada.
+- [x] Pendências externas registradas sem linguagem de falsa aprovação.
+- [x] File List atualizada.
 - [ ] Commit convencional, tag e CI aprovados.
 
 ## File List

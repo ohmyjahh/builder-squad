@@ -48,7 +48,12 @@
 - minutas não usam linguagem de registro ou aprovação inexistente.
 - validação estrutural local: PASS 24/24;
 - testes automatizados locais: PASS 21/21;
-- doctor: PASS.
+- doctor: PASS;
+- sintaxe JavaScript: PASS;
+- parse estrito: 35 arquivos YAML e 10 arquivos JSON;
+- dependências de produção: zero;
+- integridade Git: PASS, sem objetos corrompidos;
+- pacote de distribuição: 289 arquivos com checksums SHA-256 verificados.
 
 ## Bloqueios externos
 

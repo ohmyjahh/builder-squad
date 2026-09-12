@@ -18,7 +18,7 @@ Oferta-base planejada: R$497, com preço total, parcelamento e condições efeti
 - CLI com 12 comandos;
 - 5 projetos de referência;
 - quickstart, manuais e troubleshooting;
-- instalação, atualização, restauração e desinstalação;
+- ferramentas self-service de instalação, atualização, restauração e desinstalação;
 - testes, validador, doctor e pacote com checksums.
 - licença comercial para até 5 usuários e 5 ambientes;
 - uso em projetos próprios e de clientes;
