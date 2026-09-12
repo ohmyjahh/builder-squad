@@ -10,9 +10,9 @@ Fazer o comprador chegar ao primeiro valor sem precisar entender toda a arquitet
 - quickstart;
 - instalador sidecar;
 - adapters Codex e Claude Code;
-- três exemplos completos;
+- cinco exemplos completos;
 - validação e testes;
-- changelog, segurança, suporte e licença.
+- changelog, segurança, manutenção e pacote jurídico.
 
 ## Jornada recomendada
 
@@ -36,9 +36,9 @@ O comprador acompanha um handoff real, um especialista e um quality gate. Meta: 
 
 Use um dos projetos de exemplo e replique o ciclo até aceite e encerramento.
 
-## Suporte
+## Operação self-service
 
-Classifique solicitações em instalação, uso, customização, defeito e consultoria. Defeito do produto entra no workflow brownfield/bug; consultoria ou implementação personalizada não deve ser prometida implicitamente.
+A compra não inclui suporte individual de instalação. O comprador usa quickstart, doctor, troubleshooting e exemplos. Relato de defeito pode alimentar o workflow brownfield/bug; consultoria, implantação e configuração são serviços separados e não devem ser prometidos implicitamente.
 
 ## Métricas do produto
 
@@ -49,4 +49,3 @@ Classifique solicitações em instalação, uso, customização, defeito e consu
 - tickets por etapa;
 - uso dos workflows interno, mercado e híbrido;
 - taxa de atualização bem-sucedida.
-

@@ -64,6 +64,9 @@ test("instalador cria sidecar sem alterar instruções do projeto", () => {
     assert.ok(existsSync(resolve(target, ".builder-squad", "adapter", "AGENTS.builder-squad.md")));
     assert.ok(existsSync(resolve(target, ".builder-squad", "scripts", "validate.mjs")));
     assert.ok(existsSync(resolve(target, ".builder-squad", "docs", "release", `RELEASE-NOTES-${version}.md`)));
+    assert.ok(existsSync(resolve(target, ".builder-squad", "docs", "legal", "COMMERCIAL-LICENSE.md")));
+    assert.ok(existsSync(resolve(target, ".builder-squad", "docs", "legal", "PRIVACY-POLICY.md")));
+    assert.ok(existsSync(resolve(target, ".builder-squad", "docs", "commercial", "PRODUCT-DELIVERY-MANIFEST.md")));
     assert.ok(!existsSync(resolve(target, "AGENTS.md")));
 
     const validated = spawnSync(process.execPath, [resolve(target, ".builder-squad", "scripts", "validate.mjs")], { encoding: "utf8" });

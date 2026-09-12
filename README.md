@@ -1,6 +1,6 @@
 # Builder Squad
 
-**Versão:** 0.9.0-rc.2 — release candidate para piloto fechado.
+**Versão:** 0.9.0-rc.3 — release candidate para piloto fechado e revisão jurídica externa.
 
 Um time de agentes especialistas, conectado por workflows, tasks, memória e quality gates, para transformar uma demanda em app, sistema, agente ou automação pronto para uso interno, entrega a cliente ou validação no mercado.
 
@@ -121,8 +121,23 @@ schemas/      contratos legíveis por máquina
 scripts/      CLI, validação, instalação e empacotamento
 adapters/     integração com Codex e Claude Code
 examples/     projetos de referência
-docs/         PRD, arquitetura, guias, stories e relatórios
+docs/         PRD, arquitetura, guias, jurídico, stories e relatórios
 ```
+
+## Licença e uso comercial
+
+O Builder Squad é proprietário de SOW HOUSE PRODUCOES E TREINAMENTOS LTDA, CNPJ 54.474.144/0001-09. A licença padrão permite até 5 usuários e 5 ambientes, uso em projetos próprios e de clientes, uso perpétuo da versão adquirida e 12 meses de atualizações. A instalação é self-service e não inclui suporte individual.
+
+É proibido compartilhar, redistribuir, sublicenciar ou revender o Builder Squad. Projetos resultantes podem ser explorados pelo comprador nos limites da lei, das licenças de terceiros e dos termos dos provedores usados.
+
+Consulte:
+
+- [Licença Comercial](docs/legal/COMMERCIAL-LICENSE.md)
+- [Termos de Uso e Venda](docs/legal/TERMS-OF-USE-AND-SALE.md)
+- [Política de Privacidade](docs/legal/PRIVACY-POLICY.md)
+- [Política de Reembolso](docs/legal/REFUND-AND-CANCELLATION-POLICY.md)
+- [Aviso de IA e Dados](docs/legal/AI-AND-DATA-NOTICE.md)
+- [Pacote jurídico completo](docs/legal/README.md)
 
 ## Comece aqui
 
@@ -134,7 +149,8 @@ docs/         PRD, arquitetura, guias, stories e relatórios
 6. [Troubleshooting](docs/guides/TROUBLESHOOTING.md)
 7. [Compatibilidade](docs/guides/COMPATIBILITY.md)
 8. [Dados e segurança](docs/guides/DATA-AND-SECURITY.md)
-9. [Release notes 0.9.0-rc.2](docs/release/RELEASE-NOTES-0.9.0-rc.2.md)
+9. [Release notes 0.9.0-rc.3](docs/release/RELEASE-NOTES-0.9.0-rc.3.md)
+10. [Licença e documentos jurídicos](docs/legal/README.md)
 
 ## Validação atual
 
@@ -142,4 +158,4 @@ docs/         PRD, arquitetura, guias, stories e relatórios
 - Validações estruturais: 20/20.
 - Agents → tasks: 75/75 referências.
 - Blueprint → workflows: 12/12.
-- Licença: proprietária, consulte [LICENSE.md](LICENSE.md).
+- Licença: proprietária, consulte [LICENSE.md](LICENSE.md) e o [pacote jurídico](docs/legal/README.md).

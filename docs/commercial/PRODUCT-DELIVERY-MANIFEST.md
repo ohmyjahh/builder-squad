@@ -2,7 +2,9 @@
 
 ## Produto
 
-Builder Squad 0.9.0-rc.2 — release candidate proprietário.
+Builder Squad 0.9.0-rc.3 — release candidate proprietário.
+
+Oferta-base planejada: R$497, com preço total, parcelamento e condições efetivas confirmados no checkout.
 
 ## O comprador recebe
 
@@ -18,6 +20,12 @@ Builder Squad 0.9.0-rc.2 — release candidate proprietário.
 - quickstart, manuais e troubleshooting;
 - instalação, atualização, restauração e desinstalação;
 - testes, validador, doctor e pacote com checksums.
+- licença comercial para até 5 usuários e 5 ambientes;
+- uso em projetos próprios e de clientes;
+- uso perpétuo da versão adquirida;
+- 12 meses de atualizações;
+- instalação self-service, sem suporte individual incluído;
+- licença, termos, privacidade, reembolso e aviso de IA/dados.
 
 ## O produto acelera
 
@@ -43,4 +51,10 @@ A meta do piloto é instalação em até 15 minutos e primeiro brief em até 30 
 
 ## Aceite do comprador
 
-A entrega deve identificar versão, canal de suporte, termos, política de atualização e checksums.
+A entrega deve identificar versão, canal para relato de defeitos, termos, política de atualização, certificado de licença e checksums. O checkout deve preservar evidência das versões aceitas.
+
+## Limites de prontidão
+
+- O pacote documental está preparado como minuta operacional.
+- Revisão jurídica e contábil permanecem atos externos obrigatórios antes da venda pública em escala.
+- Registro de software e marca no INPI são processos separados e não devem ser apresentados como concedidos antes de certificado.

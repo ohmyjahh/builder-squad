@@ -1,5 +1,7 @@
 # Quickstart do Builder Squad
 
+O fluxo é self-service. A licença padrão não inclui suporte individual de instalação; use doctor, troubleshooting e exemplos para diagnosticar o ambiente.
+
 ## 1. Diagnostique a instalação
 
 Na raiz do Builder Squad:
@@ -72,3 +74,6 @@ Nunca force uma transição editando o status para contornar um gate.
 
 Use `@builder-chief *resume-project`. O squad lê a memória, verifica mudanças e aprovações vencidas, preserva trabalho concluído e cria o próximo handoff.
 
+## 8. Consulte licença e limites
+
+Antes de incluir outro usuário ou entregar um projeto a cliente, consulte a [Licença Comercial](../legal/COMMERCIAL-LICENSE.md). O cliente pode receber o projeto final, mas não recebe o Builder Squad sem licença própria.

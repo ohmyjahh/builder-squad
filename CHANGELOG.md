@@ -2,6 +2,26 @@
 
 Todas as mudanças relevantes do Builder Squad são documentadas aqui. O projeto segue Semantic Versioning.
 
+## [0.9.0-rc.3] — 2026-09-12
+
+### Adicionado
+
+- Pacote jurídico com licença comercial, termos de uso e venda, privacidade, reembolso, IA/dados e DPA.
+- Aviso de copyright, inventário de terceiros e cadeia de titularidade.
+- Certificado de licença e registro de aceite do comprador.
+- Dossiê preparatório para registro de software e plano de clearance de marca no INPI.
+- Validações automatizadas de presença e consistência da identidade jurídica.
+
+### Alterado
+
+- Titular definido como SOW HOUSE PRODUCOES E TREINAMENTOS LTDA, CNPJ 54.474.144/0001-09.
+- Instalação definida como self-service, sem suporte individual incluído.
+- Instalador e pacote passam a incluir documentação jurídica e comercial.
+
+### Estado
+
+Release candidate apta para revisão jurídica externa e piloto privado. A versão 1.0.0 continua condicionada às evidências externas registradas.
+
 ## [0.9.0-rc.2] — 2026-09-11
 
 ### Corrigido

@@ -8,7 +8,7 @@ import { SQUAD_ROOT } from "./lib/paths.mjs";
 
 const include = [
   "agents", "tasks", "workflows", "templates", "checklists", "data", "schemas",
-  "config", "automations", "adapters", "scripts", "squads", "tests", "docs/guides", "docs/release", "docs/commercial", "examples",
+  "config", "automations", "adapters", "scripts", "squads", "tests", "docs/guides", "docs/release", "docs/commercial", "docs/legal", "examples",
   "squad.yaml", "package.json", "package-lock.json", "VERSION", "README.md", "AGENTS.md", "LICENSE.md",
   "CHANGELOG.md", "SECURITY.md", "SUPPORT.md", "CONTRIBUTING.md", ".gitattributes"
 ];

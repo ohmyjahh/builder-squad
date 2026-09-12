@@ -2,10 +2,12 @@
 
 ## Identidade
 
-- [x] VERSION, package.json e squad.yaml usam 0.9.0-rc.2.
+- [x] VERSION, package.json e squad.yaml usam 0.9.0-rc.3.
 - [x] Changelog e release notes existem.
 - [x] Licença proprietária está presente.
-- [ ] Titular jurídico e termos comerciais foram revisados.
+- [x] Titular jurídico identificado e minutas comerciais criadas.
+- [ ] Minutas foram revisadas e aprovadas por advogado.
+- [ ] Adequação fiscal e CNAE foram confirmados por contador.
 
 ## Qualidade
 
@@ -28,7 +30,7 @@
 ## Distribuição
 
 - [x] Script de pacote.
-- [x] Pacote 0.9.0-rc.2 gerado.
+- [x] Pacote 0.9.0-rc.3 gerado.
 - [x] SHA256SUMS verificado.
 - [x] CI definida.
 - [x] Repositório privado criado.

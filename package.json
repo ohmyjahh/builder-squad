@@ -1,6 +1,6 @@
 {
   "name": "@builder-squad/core",
-  "version": "0.9.0-rc.2",
+  "version": "0.9.0-rc.3",
   "description": "Sistema multiagente task-first para construir produtos digitais com governança.",
   "type": "module",
   "private": true,

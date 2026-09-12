@@ -38,5 +38,12 @@ O core é baseado em arquivos e não possui backend próprio. Os provedores e fe
 
 ## Posso revender?
 
-Não sem licença comercial específica. Consulte LICENSE.md.
+Não. A licença padrão permite usar o Squad em projetos próprios e de clientes, mas não compartilhar, sublicenciar ou revender o próprio Builder Squad. Consulte [Licença Comercial](../legal/COMMERCIAL-LICENSE.md).
 
+## A compra inclui ajuda para instalar?
+
+Não. A instalação é self-service com quickstart, doctor, troubleshooting e exemplos. Consultoria ou implantação individual só existe se for contratada separadamente.
+
+## Por quanto tempo recebo atualizações?
+
+A licença padrão inclui 12 meses de atualizações. O uso da versão adquirida permanece perpétuo enquanto a licença for cumprida.

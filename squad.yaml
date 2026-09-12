@@ -1,10 +1,10 @@
 name: builder-squad
-version: "0.9.0-rc.2"
+version: "0.9.0-rc.3"
 short-title: "Builder Squad"
 description: >-
   Sistema multiagente task-first para diagnosticar, planejar, construir, validar
   e preparar para operação ou mercado apps, sistemas, agentes e automações.
-author: "Rafa"
+author: "SOW HOUSE PRODUCOES E TREINAMENTOS LTDA"
 license: UNLICENSED
 slashPrefix: builder
 

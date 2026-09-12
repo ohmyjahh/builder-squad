@@ -9,7 +9,7 @@
 
 ## Como relatar
 
-Não publique vulnerabilidades exploráveis em issue aberta. Use o canal privado de suporte informado na entrega ou na área de membros e inclua:
+Não publique vulnerabilidades exploráveis em issue aberta. Use o canal privado de suporte informado na entrega ou, provisoriamente, sowhouse2024@gmail.com e inclua:
 
 - versão;
 - componente afetado;

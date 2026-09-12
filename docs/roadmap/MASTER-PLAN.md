@@ -1,7 +1,7 @@
 # Mapa Mestre de Construção
 
 **Objetivo:** construir, validar e empacotar o Builder Squad como produto proprietário instalável.
-**Estado atual:** release candidate privada publicada.
+**Estado atual:** release candidate com pacote jurídico-comercial em fechamento.
 
 ## Visão de progresso
 
@@ -20,6 +20,7 @@
 | 10. Experiência do comprador | Documentação concluída | teste externo ainda pendente |
 | 11. Projetos de referência | Concluída | 5 cenários |
 | 12. Distribuição | RC concluída | pacote, CI, GitHub privado, main e tag |
+| 13. Jurídico e comercial | Em fechamento | minutas, PI, aceite e nova RC |
 
 ## Fase 0 — Fundação
 
@@ -207,3 +208,21 @@
 - [ ] Marcar versão 1.0.0.
 
 **Gate atual:** release candidate privada distribuída; V1 depende do piloto e da revisão jurídica.
+
+## Fase 13 — Fechamento jurídico e comercial
+
+- [x] Identificar titular e CNPJ.
+- [x] Definir licença empresarial e usos permitidos.
+- [x] Criar licença, termos, privacidade e reembolso.
+- [x] Criar aviso de IA, dados e provedores.
+- [x] Criar copyright, terceiros e cadeia de titularidade.
+- [x] Criar DPA, certificado de licença e registro de aceite.
+- [x] Criar dossiê de software e plano de marca no INPI.
+- [x] Integrar documentos ao instalador, pacote e validador.
+- [ ] Obter revisão jurídica e contábil externas.
+- [ ] Assinar cessões cabíveis.
+- [ ] Preencher fornecedores comerciais reais.
+- [ ] Protocolar registros escolhidos.
+- [ ] Executar piloto fechado.
+
+**Gate atual:** preparação interna completa após a RC.3; atos externos permanecem explicitamente pendentes.

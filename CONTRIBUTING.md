@@ -2,6 +2,8 @@
 
 Este é um produto proprietário. Contribuições externas dependem de autorização do mantenedor e não concedem direito de redistribuição.
 
+Antes de incorporar contribuição externa, deve existir declaração de origem e instrumento de cessão ou licença compatível. Conteúdo criado com apoio de IA deve ser identificado quando material e revisado quanto a direitos de terceiros.
+
 ## Fluxo técnico
 
 1. Abra ou associe uma story.

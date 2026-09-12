@@ -138,6 +138,63 @@ export function runValidation(root = SQUAD_ROOT) {
   const missingAdapters = adapterRequirements.filter((path) => !existsSync(join(root, path)));
   results.push(result("adapters.files", missingAdapters.length === 0, missingAdapters.join(", ") || "Codex e Claude Code completos"));
 
+  const legalRequirements = [
+    "LICENSE.md",
+    "docs/legal/README.md",
+    "docs/legal/LEGAL-DATA-SHEET.md",
+    "docs/legal/COMMERCIAL-LICENSE.md",
+    "docs/legal/TERMS-OF-USE-AND-SALE.md",
+    "docs/legal/PRIVACY-POLICY.md",
+    "docs/legal/REFUND-AND-CANCELLATION-POLICY.md",
+    "docs/legal/AI-AND-DATA-NOTICE.md",
+    "docs/legal/COPYRIGHT-AND-IP-NOTICE.md",
+    "docs/legal/THIRD-PARTY-NOTICES.md",
+    "docs/legal/IP-CHAIN-OF-TITLE.md",
+    "docs/legal/IP-ASSIGNMENT-DECLARATION-TEMPLATE.md",
+    "docs/legal/LICENSE-CERTIFICATE-TEMPLATE.md",
+    "docs/legal/BUYER-ACCEPTANCE-RECORD-TEMPLATE.md",
+    "docs/legal/DATA-PROCESSING-ADDENDUM-TEMPLATE.md",
+    "docs/legal/SUBPROCESSOR-REGISTER.md",
+    "docs/legal/SOFTWARE-REGISTRATION-DOSSIER.md",
+    "docs/legal/TRADEMARK-CLEARANCE-AND-FILING-PLAN.md",
+    "docs/legal/EXTERNAL-APPROVALS.md"
+  ];
+  const missingLegal = legalRequirements.filter((path) => !existsSync(join(root, path)));
+  results.push(result("legal.package", missingLegal.length === 0, missingLegal.join(", ") || `${legalRequirements.length}/${legalRequirements.length} documentos presentes`));
+
+  const legalIdentity = "SOW HOUSE PRODUCOES E TREINAMENTOS LTDA";
+  const legalDocument = "54.474.144/0001-09";
+  const identitySources = [
+    "LICENSE.md",
+    "docs/legal/LEGAL-DATA-SHEET.md",
+    "docs/legal/COMMERCIAL-LICENSE.md",
+    "docs/legal/TERMS-OF-USE-AND-SALE.md",
+    "docs/legal/PRIVACY-POLICY.md",
+    "docs/legal/COPYRIGHT-AND-IP-NOTICE.md"
+  ];
+  const invalidIdentity = identitySources.filter((path) => {
+    const text = readFileSync(join(root, path), "utf8");
+    return !text.includes(legalIdentity) || !text.includes(legalDocument);
+  });
+  results.push(result("legal.identity", invalidIdentity.length === 0, invalidIdentity.join(", ") || "Titular e CNPJ consistentes nas fontes principais"));
+
+  const licenseText = readFileSync(join(root, "docs/legal/COMMERCIAL-LICENSE.md"), "utf8");
+  const termsText = readFileSync(join(root, "docs/legal/TERMS-OF-USE-AND-SALE.md"), "utf8");
+  const selfServicePolicy = licenseText.includes("Suporte individual de instalação: não incluído")
+    && termsText.includes("instalação é self-service");
+  results.push(result("legal.self_service", selfServicePolicy, selfServicePolicy ? "Instalação self-service e ausência de suporte individual explícitas" : "Política self-service inconsistente"));
+
+  const packageMetadata = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+  const versionFile = readFileSync(join(root, "VERSION"), "utf8").trim();
+  const manifestVersion = manifest.match(/^version:\s*["']?([^"'\s]+)["']?\s*$/m)?.[1];
+  const releaseNotePath = join(root, "docs/release", `RELEASE-NOTES-${packageMetadata.version}.md`);
+  const productDelivery = readFileSync(join(root, "docs/commercial/PRODUCT-DELIVERY-MANIFEST.md"), "utf8");
+  const versionAligned = packageMetadata.version === versionFile
+    && manifestVersion === versionFile
+    && existsSync(releaseNotePath)
+    && productDelivery.includes(versionFile);
+  results.push(result("release.version", versionAligned, versionAligned ? `${versionFile} alinhada e documentada` : "Versão divergente entre manifest, package, VERSION, release notes ou entrega"));
+
   const schemaFiles = filesIn.call(null, "schemas", ".json");
   const invalidSchemas = [];
   const schemas = new Map();
