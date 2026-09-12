@@ -1,6 +1,6 @@
 # Story BS-012 — Fechamento Jurídico e Comercial
 
-**Status:** In Progress
+**Status:** Done
 **Epic:** Builder Squad V1
 **Prioridade:** Crítica
 **Dependência:** BS-011
@@ -41,7 +41,7 @@ Como titular do Builder Squad, quero um pacote jurídico-comercial coerente, ras
 - [x] Documentos incluídos no pacote e na instalação sidecar.
 - [x] Validador impede release sem pacote jurídico mínimo.
 - [x] Testes, doctor, package e checksums passam.
-- [ ] Nova release candidate publicada no repositório privado.
+- [x] Nova release candidate publicada no repositório privado.
 
 ## Limites de conclusão
 
@@ -55,10 +55,10 @@ Não podem ser marcados como concluídos sem ato externo verificável:
 
 ## Definition of Done
 
-- [ ] Todos os critérios executáveis internamente concluídos.
+- [x] Todos os critérios executáveis internamente concluídos.
 - [x] Pendências externas registradas sem linguagem de falsa aprovação.
 - [x] File List atualizada.
-- [ ] Commit convencional, tag e CI aprovados.
+- [x] Commit convencional, tag e CI aprovados.
 
 ## File List
 

@@ -35,7 +35,7 @@
 - [x] CI definida.
 - [x] Repositório privado criado.
 - [ ] Branch protection configurada.
-- [ ] Release privada criada.
+- [x] Release privada criada.
 
 ## Piloto
 

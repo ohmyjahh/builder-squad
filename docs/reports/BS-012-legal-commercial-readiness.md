@@ -55,6 +55,15 @@
 - integridade Git: PASS, sem objetos corrompidos;
 - pacote de distribuição: 289 arquivos com checksums SHA-256 verificados.
 
+## Distribuição verificada
+
+- commit do pacote: `f29b2b0c9cb8da55d4f6f3735cfb6fe4a8e8edb9`;
+- tag imutável: `v0.9.0-rc.3`;
+- release privada: `https://github.com/ohmyjahh/builder-squad/releases/tag/v0.9.0-rc.3`;
+- CI aprovada: `https://github.com/ohmyjahh/builder-squad/actions/runs/34714145951`;
+- artefato: `builder-squad-v0.9.0-rc.3.tar.gz`;
+- SHA-256 do artefato: `b7be177d69e396c023750752d1483fc224c2f177452b321455084c4fdea4f313`.
+
 ## Bloqueios externos
 
 - parecer jurídico;
@@ -67,4 +76,4 @@
 
 ## Conclusão
 
-O pacote está preparado para revisão e piloto privado. Ele não deve ser chamado de juridicamente aprovado, marca registrada, software registrado ou versão 1.0.0 antes das respectivas evidências.
+O pacote foi auditado internamente e distribuído como prerelease privada para revisão e piloto. Ele não deve ser chamado de juridicamente aprovado, marca registrada, software registrado ou versão 1.0.0 antes das respectivas evidências.
