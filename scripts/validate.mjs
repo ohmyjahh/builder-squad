@@ -318,10 +318,11 @@ export function runValidation(root = SQUAD_ROOT) {
     const internalAssetsExcluded = [packagingSource, installSource].every((text) => (
       !text.includes('"docs/copy"')
       && !text.includes('"docs/funnel"')
-      && !text.includes('"docs/operations"')
-      && !text.includes('"docs/commercial"')
-      && text.includes('"docs/commercial/PRODUCT-DELIVERY-MANIFEST.md"')
-    ));
+    && !text.includes('"docs/operations"')
+    && !text.includes('"docs/commercial"')
+    && text.includes('"docs/commercial/PRODUCT-DELIVERY-MANIFEST.md"')
+    && text.includes('"tests/commercial-funnel.test.mjs"')
+  ));
     results.push(result("commercial.internal_distribution", internalAssetsExcluded, internalAssetsExcluded ? "Estratégia e copy internas excluídas do pacote do comprador" : "Ativo comercial interno pode vazar no pacote"));
   }
 

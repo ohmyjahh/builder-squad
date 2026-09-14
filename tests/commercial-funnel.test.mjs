@@ -95,6 +95,7 @@ test("ativos internos do funil não entram na entrega do comprador", () => {
     assert.doesNotMatch(source, /"docs\/operations"/);
     assert.doesNotMatch(source, /"docs\/commercial"/);
     assert.match(source, /docs\/commercial\/PRODUCT-DELIVERY-MANIFEST\.md/);
+    assert.match(source, /tests\/commercial-funnel\.test\.mjs/);
   }
 });
 

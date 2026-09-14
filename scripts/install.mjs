@@ -1,12 +1,17 @@
 #!/usr/bin/env node
 import { cpSync, existsSync, mkdirSync, renameSync, statSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
-import { dirname, parse, resolve } from "node:path";
+import { dirname, parse, relative, resolve } from "node:path";
 import { fail, parseArgs, required } from "./lib/cli.mjs";
 import { SQUAD_ROOT } from "./lib/paths.mjs";
 
 const coreEntries = ["agents", "tasks", "workflows", "templates", "checklists", "data", "schemas", "config", "automations", "adapters", "scripts", "squads", "docs/guides", "docs/release", "docs/commercial/PRODUCT-DELIVERY-MANIFEST.md", "docs/legal", "squad.yaml", "package.json", "package-lock.json", "VERSION", "AGENTS.md", "README.md", "LICENSE.md", "CHANGELOG.md", "SECURITY.md", "SUPPORT.md"];
 const adapters = new Set(["codex", "claude-code"]);
+const internalOnlyEntries = new Set(["tests/commercial-funnel.test.mjs"]);
+
+function shouldShip(source) {
+  return !internalOnlyEntries.has(relative(SQUAD_ROOT, source));
+}
 
 function validateTarget(value) {
   const target = resolve(value);
@@ -35,7 +40,7 @@ try {
     if (existsSync(source)) {
       const destination = resolve(installRoot, entry);
       mkdirSync(dirname(destination), { recursive: true });
-      cpSync(source, destination, { recursive: true });
+      cpSync(source, destination, { recursive: true, filter: shouldShip });
     }
   }
 

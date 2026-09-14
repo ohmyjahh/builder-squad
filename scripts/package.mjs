@@ -2,7 +2,7 @@
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, statSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { basename, dirname, join, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import { parseArgs } from "./lib/cli.mjs";
 import { SQUAD_ROOT } from "./lib/paths.mjs";
 
@@ -12,6 +12,11 @@ const include = [
   "squad.yaml", "package.json", "package-lock.json", "VERSION", "README.md", "AGENTS.md", "LICENSE.md",
   "CHANGELOG.md", "SECURITY.md", "SUPPORT.md", "CONTRIBUTING.md", ".gitattributes"
 ];
+const internalOnlyEntries = new Set(["tests/commercial-funnel.test.mjs"]);
+
+function shouldShip(source) {
+  return !internalOnlyEntries.has(relative(SQUAD_ROOT, source));
+}
 
 function filesRecursively(path) {
   const result = [];
@@ -40,7 +45,7 @@ try {
     if (!existsSync(source)) continue;
     const destination = resolve(target, entry);
     mkdirSync(dirname(destination), { recursive: true });
-    cpSync(source, destination, { recursive: true, errorOnExist: true });
+    cpSync(source, destination, { recursive: true, errorOnExist: true, filter: shouldShip });
   }
 
   const git = spawnSync("git", ["rev-parse", "HEAD"], { cwd: SQUAD_ROOT, encoding: "utf8" });
