@@ -58,7 +58,7 @@ Como titular do Builder Squad, quero uma arquitetura comercial completa e execut
 - [x] Todos os critérios executáveis internamente concluídos.
 - [x] Conteúdo completo pronto para copiar e implementar.
 - [x] Quality gate de ética comercial aprovado.
-- [ ] Validação, testes, package e checksums aprovados.
+- [x] Validação, testes, package e checksums aprovados.
 - [x] File List atualizada.
 - [ ] Commit convencional, tag, CI e release privada aprovados.
 
