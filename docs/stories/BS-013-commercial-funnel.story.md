@@ -24,27 +24,27 @@ Como titular do Builder Squad, quero uma arquitetura comercial completa e execut
 
 ## Critérios de aceite
 
-- [ ] Escada de produtos, papéis, preços e transições definidos.
-- [ ] Promessa, mecanismo único, message house, objeções e provas necessárias documentados.
-- [ ] VSL principal de tráfego frio escrita.
-- [ ] VSL de upsell do Builder Squad escrita.
-- [ ] Roteiro da sessão programada e pitch da comunidade escritos.
-- [ ] Página principal, página de upsell, inscrição e página da comunidade especificadas.
-- [ ] Checkout com oferta, aceite jurídico, consentimento e eventos especificado.
-- [ ] Onboarding self-service dos produtos especificado.
-- [ ] Máquina de estados, taxonomia de eventos, segmentos, suppressions e exits definidos.
-- [ ] Abandono do checkout de entrada coberto por e-mail e WhatsApp.
-- [ ] Aceite, recusa e abandono do upsell cobertos.
-- [ ] Abandono de inscrição e de entrada no grupo cobertos.
-- [ ] Convite, aquecimento, lembretes e comparecimento ao workshop cobertos.
-- [ ] No-show e replay cobertos sem falsa urgência.
-- [ ] Carrinho da comunidade coberto do anúncio ao encerramento real.
-- [ ] Calendário semanal relativo e regra de virada da edição definidos.
-- [ ] Mensagens têm opt-out, consentimento, frequência e supressão explícitos.
-- [ ] Evento gravado, perguntas anteriores e prova social são apresentados com transparência.
-- [ ] Métricas, metas de piloto, testes A/B e dashboards definidos.
-- [ ] Playbook operacional, RACI, QA e contingências definidos.
-- [ ] Validador e testes impedem lacunas éticas e estruturais críticas.
+- [x] Escada de produtos, papéis, preços e transições definidos.
+- [x] Promessa, mecanismo único, message house, objeções e provas necessárias documentados.
+- [x] VSL principal de tráfego frio escrita.
+- [x] VSL de upsell do Builder Squad escrita.
+- [x] Roteiro da sessão programada e pitch da comunidade escritos.
+- [x] Página principal, página de upsell, inscrição e página da comunidade especificadas.
+- [x] Checkout com oferta, aceite jurídico, consentimento e eventos especificado.
+- [x] Onboarding self-service dos produtos especificado.
+- [x] Máquina de estados, taxonomia de eventos, segmentos, suppressions e exits definidos.
+- [x] Abandono do checkout de entrada coberto por e-mail e WhatsApp.
+- [x] Aceite, recusa e abandono do upsell cobertos.
+- [x] Abandono de inscrição e de entrada no grupo cobertos.
+- [x] Convite, aquecimento, lembretes e comparecimento ao workshop cobertos.
+- [x] No-show e replay cobertos sem falsa urgência.
+- [x] Carrinho da comunidade coberto do anúncio ao encerramento real.
+- [x] Calendário semanal relativo e regra de virada da edição definidos.
+- [x] Mensagens têm opt-out, consentimento, frequência e supressão explícitos.
+- [x] Evento gravado, perguntas anteriores e prova social são apresentados com transparência.
+- [x] Métricas, metas de piloto, testes A/B e dashboards definidos.
+- [x] Playbook operacional, RACI, QA e contingências definidos.
+- [x] Validador e testes impedem lacunas éticas e estruturais críticas.
 
 ## Limites de conclusão
 
@@ -55,22 +55,26 @@ Como titular do Builder Squad, quero uma arquitetura comercial completa e execut
 
 ## Definition of Done
 
-- [ ] Todos os critérios executáveis internamente concluídos.
-- [ ] Conteúdo completo pronto para copiar e implementar.
-- [ ] Quality gate de ética comercial aprovado.
+- [x] Todos os critérios executáveis internamente concluídos.
+- [x] Conteúdo completo pronto para copiar e implementar.
+- [x] Quality gate de ética comercial aprovado.
 - [ ] Validação, testes, package e checksums aprovados.
-- [ ] File List atualizada.
+- [x] File List atualizada.
 - [ ] Commit convencional, tag, CI e release privada aprovados.
 
 ## File List
 
 - `docs/commercial/*`
+- `docs/legal/THIRD-PARTY-NOTICES.md`
 - `docs/funnel/*`
 - `docs/copy/*`
 - `docs/operations/*`
+- `docs/release/*`
 - `docs/reports/*`
 - `docs/roadmap/MASTER-PLAN.md`
 - `docs/stories/BS-013-commercial-funnel.story.md`
+- `scripts/install.mjs`
+- `scripts/package.mjs`
 - `scripts/validate.mjs`
 - `tests/*`
 - `README.md`

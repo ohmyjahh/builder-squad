@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import { cpSync, existsSync, mkdirSync, renameSync, statSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
-import { parse, resolve } from "node:path";
+import { dirname, parse, resolve } from "node:path";
 import { fail, parseArgs, required } from "./lib/cli.mjs";
 import { SQUAD_ROOT } from "./lib/paths.mjs";
 
-const coreEntries = ["agents", "tasks", "workflows", "templates", "checklists", "data", "schemas", "config", "automations", "adapters", "scripts", "squads", "docs/guides", "docs/release", "docs/commercial", "docs/legal", "squad.yaml", "package.json", "package-lock.json", "VERSION", "AGENTS.md", "README.md", "LICENSE.md", "CHANGELOG.md", "SECURITY.md", "SUPPORT.md"];
+const coreEntries = ["agents", "tasks", "workflows", "templates", "checklists", "data", "schemas", "config", "automations", "adapters", "scripts", "squads", "docs/guides", "docs/release", "docs/commercial/PRODUCT-DELIVERY-MANIFEST.md", "docs/legal", "squad.yaml", "package.json", "package-lock.json", "VERSION", "AGENTS.md", "README.md", "LICENSE.md", "CHANGELOG.md", "SECURITY.md", "SUPPORT.md"];
 const adapters = new Set(["codex", "claude-code"]);
 
 function validateTarget(value) {
@@ -32,7 +32,11 @@ try {
 
   for (const entry of coreEntries) {
     const source = resolve(SQUAD_ROOT, entry);
-    if (existsSync(source)) cpSync(source, resolve(installRoot, entry), { recursive: true });
+    if (existsSync(source)) {
+      const destination = resolve(installRoot, entry);
+      mkdirSync(dirname(destination), { recursive: true });
+      cpSync(source, destination, { recursive: true });
+    }
   }
 
   const adapterSource = resolve(SQUAD_ROOT, "adapters", adapter);

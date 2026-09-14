@@ -1,0 +1,134 @@
+schema_version: "1.0"
+id: builder-commercial-message-catalog
+default_locale: pt-BR
+
+email:
+  source_entry_upsell: docs/copy/email/ENTRY-AND-UPSELL-SEQUENCES.md
+  source_workshop: docs/copy/email/WORKSHOP-SEQUENCES.md
+  source_community: docs/copy/email/COMMUNITY-CART-AND-ONBOARDING.md
+  templates:
+    - id: email.entry_abandonment_01
+      class: marketing
+      required_tokens: [primeiro_nome, entry_checkout_resume_url, unsubscribe_url]
+    - id: email.entry_abandonment_02
+      class: marketing
+      required_tokens: [primeiro_nome, entry_offer_url, unsubscribe_url]
+    - id: email.entry_abandonment_03
+      class: marketing
+      required_tokens: [primeiro_nome, entry_checkout_resume_url, unsubscribe_url]
+    - id: email.entry_access
+      class: transactional
+      required_tokens: [primeiro_nome, order_id, order_total, buyer_email, entry_access_url, purchase_documents_url]
+    - id: email.entry_activation_01
+      class: lifecycle
+      required_tokens: [primeiro_nome, entry_first_project_url, unsubscribe_url]
+    - id: email.squad_abandonment_01
+      class: marketing
+      required_tokens: [primeiro_nome, squad_checkout_resume_url, unsubscribe_url]
+    - id: email.squad_abandonment_02
+      class: marketing
+      required_tokens: [primeiro_nome, squad_checkout_resume_url, unsubscribe_url]
+    - id: email.squad_access
+      class: transactional
+      required_tokens: [primeiro_nome, order_id, license_id, package_version, order_total, squad_onboarding_url]
+    - id: email.squad_download_nudge
+      class: lifecycle
+      required_tokens: [primeiro_nome, squad_download_url]
+    - id: email.squad_self_service_diagnostic
+      class: lifecycle
+      required_tokens: [primeiro_nome, squad_doctor_guide_url]
+    - id: email.squad_first_brief
+      class: lifecycle
+      required_tokens: [primeiro_nome, squad_first_brief_guide_url]
+    - id: email.workshop_invite_01
+      class: marketing
+      required_tokens: [primeiro_nome, edition_date, workshop_registration_url, unsubscribe_url]
+    - id: email.workshop_registration_abandonment_01
+      class: marketing
+      required_tokens: [primeiro_nome, edition_date, workshop_registration_resume_url, unsubscribe_url]
+    - id: email.workshop_registration_abandonment_02
+      class: marketing
+      required_tokens: [primeiro_nome, edition_date, workshop_registration_resume_url, unsubscribe_url]
+    - id: email.workshop_confirmation
+      class: transactional
+      required_tokens: [primeiro_nome, edition_date, calendar_url]
+      optional_tokens: [group_url]
+    - id: email.workshop_warmup_01
+      class: lifecycle
+      required_tokens: [primeiro_nome, edition_date, workshop_exercise_url, unsubscribe_url]
+    - id: email.workshop_warmup_02
+      class: lifecycle
+      required_tokens: [primeiro_nome, workshop_confirmation_url, unsubscribe_url]
+    - id: email.workshop_today_01
+      class: lifecycle
+      required_tokens: [primeiro_nome, edition_date, event_room_url, workshop_confirmation_url, unsubscribe_url]
+    - id: email.workshop_no_show_replay
+      class: marketing
+      required_tokens: [primeiro_nome, replay_close_date, replay_url, unsubscribe_url]
+    - id: email.workshop_replay_closing
+      class: marketing
+      required_tokens: [primeiro_nome, replay_url, unsubscribe_url]
+    - id: email.community_offer_summary
+      class: marketing
+      required_tokens: [primeiro_nome, cart_close_date, onboarding_date, community_offer_url, unsubscribe_url]
+    - id: email.community_objection_execution
+      class: marketing
+      required_tokens: [primeiro_nome, cart_close_date, community_offer_url, unsubscribe_url]
+    - id: email.community_closing_day
+      class: marketing
+      required_tokens: [primeiro_nome, onboarding_date, community_checkout_url, unsubscribe_url]
+    - id: email.community_closing_1h
+      class: marketing
+      required_tokens: [primeiro_nome, community_checkout_url, unsubscribe_url]
+    - id: email.community_checkout_abandonment
+      class: marketing
+      required_tokens: [primeiro_nome, cart_close_date, community_checkout_resume_url, unsubscribe_url]
+    - id: email.community_access
+      class: transactional
+      required_tokens: [primeiro_nome, order_id, order_total, access_start_date, access_end_date, onboarding_date, community_access_url, purchase_documents_url]
+    - id: email.community_onboarding_nudge
+      class: lifecycle
+      required_tokens: [primeiro_nome, community_onboarding_url]
+    - id: email.community_cart_closed
+      class: marketing
+      required_tokens: [primeiro_nome, workshop_exercise_url, unsubscribe_url]
+
+whatsapp_private:
+  source: docs/copy/whatsapp/PRIVATE-MESSAGES.md
+  templates:
+    - id: whatsapp.entry_abandonment_01
+      class: marketing
+      requires_explicit_opt_in: true
+    - id: whatsapp.workshop_invite_01
+      class: marketing
+      requires_explicit_opt_in: true
+    - id: whatsapp.squad_abandonment_01
+      class: marketing
+      requires_explicit_opt_in: true
+    - id: whatsapp.group_join_01
+      class: utility_candidate
+      requires_explicit_opt_in: true
+    - id: whatsapp.event_reminder_15m
+      class: utility_candidate
+      requires_explicit_opt_in: true
+    - id: whatsapp.workshop_replay_01
+      class: marketing
+      requires_explicit_opt_in: true
+    - id: whatsapp.community_closing_4h
+      class: marketing
+      requires_explicit_opt_in: true
+    - id: whatsapp.community_checkout_abandonment
+      class: provider_review
+      requires_explicit_opt_in: true
+    - id: whatsapp.opt_out_confirmation
+      class: preference_confirmation
+      requires_explicit_opt_in: false
+    - id: whatsapp.edition_cancelled
+      class: utility_candidate
+      requires_explicit_opt_in: false
+
+group:
+  source: docs/copy/whatsapp/GROUP-WARMUP-AND-CART.md
+  automation_capability: pending_vendor_validation
+  bot_personas_allowed: false
+  historical_content_requires_label: true

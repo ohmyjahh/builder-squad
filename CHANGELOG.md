@@ -2,6 +2,29 @@
 
 Todas as mudanças relevantes do Builder Squad são documentadas aqui. O projeto segue Semantic Versioning.
 
+## [0.10.0-rc.1] — 2026-09-14
+
+### Adicionado
+
+- Arquitetura completa da escada Builder IA → Builder Squad → Comunidade Builder.
+- Campaign brief, posicionamento, mecanismo, message house e registro de claims.
+- VSL de aquisição, VSL de upsell e roteiro da sessão programada com pitch.
+- Copy de páginas, checkouts, 28 e-mails, 10 templates privados de WhatsApp e 13 mensagens de grupo.
+- Máquina comercial com 17 estados, 23 transições, 37 eventos, 11 flows e 36 envios referenciados.
+- Calendário semanal, cue sheet, consentimento, suppressions, tracking e experimentos.
+- Onboarding self-service, playbook operacional, QA e recuperação de incidentes.
+- Sete testes do funil e oito validações comerciais.
+
+### Alterado
+
+- Instalador e empacotador incluem apenas o manifesto comercial destinado ao comprador.
+- Estratégia, copy, automações de marketing e operação interna ficam fora do pacote distribuído.
+- Validação passa a conferir preço, referências de mensagens, opt-in do WhatsApp, disclosure do evento e ausência de suporte individual de instalação.
+
+### Estado
+
+Arquitetura e copy vendor-neutral preparadas. Implantação depende de módulos e agenda reais, seleção da stack, gravações, revisão profissional e QA end-to-end.
+
 ## [0.9.0-rc.3] — 2026-09-12
 
 ### Adicionado

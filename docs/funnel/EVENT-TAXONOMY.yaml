@@ -1,0 +1,108 @@
+schema_version: "1.0"
+id: builder-commercial-events
+
+common_properties:
+  required:
+    - event_id
+    - event_name
+    - occurred_at
+    - contact_id
+    - source
+  rules:
+    event_id: globally_unique_and_idempotent
+    occurred_at: iso_8601_utc
+    contact_id: internal_pseudonymous_identifier
+    email: never_include_in_analytics_payload
+    phone: never_include_in_analytics_payload
+
+events:
+  acquisition:
+    - name: ad_clicked
+      required: [campaign_id, ad_id, landing_variant]
+    - name: entry_vsl_progress
+      required: [session_id, percent]
+      allowed_percent: [25, 50, 75, 90]
+    - name: entry_cta_clicked
+      required: [session_id, cta_id]
+    - name: entry_checkout_started
+      required: [checkout_id, offer_version, amount_brl]
+    - name: entry_purchase_approved
+      required: [order_id, offer_version, amount_brl, terms_version]
+    - name: entry_purchase_refused
+      required: [order_id, reason_class]
+    - name: entry_refund_requested
+      required: [order_id, requested_at]
+    - name: entry_refunded
+      required: [order_id, completed_at]
+  upsell:
+    - name: upsell_page_viewed
+      required: [order_id, offer_version]
+    - name: upsell_vsl_progress
+      required: [order_id, percent]
+      allowed_percent: [25, 50, 75, 90]
+    - name: squad_checkout_started
+      required: [checkout_id, offer_version, amount_brl]
+    - name: squad_purchase_approved
+      required: [order_id, license_id, terms_version, amount_brl]
+    - name: squad_offer_declined
+      required: [entry_order_id, offer_version]
+    - name: squad_package_downloaded
+      required: [license_id, package_version]
+    - name: squad_doctor_passed
+      required: [license_id, package_version, adapter]
+    - name: squad_first_brief_created
+      required: [license_id, project_purpose]
+  workshop:
+    - name: workshop_invitation_eligible
+      required: [edition_id]
+    - name: workshop_registration_started
+      required: [edition_id, source]
+    - name: workshop_registered
+      required: [edition_id, consent_version]
+    - name: workshop_group_link_clicked
+      required: [edition_id]
+    - name: workshop_group_joined
+      required: [edition_id, joined_at]
+    - name: workshop_room_entered
+      required: [edition_id, session_id]
+    - name: workshop_attended
+      required: [edition_id, watched_minutes]
+    - name: workshop_no_show_classified
+      required: [edition_id, classified_at]
+    - name: workshop_replay_started
+      required: [edition_id, session_id]
+    - name: workshop_replay_completed
+      required: [edition_id, watched_minutes]
+  community:
+    - name: community_offer_viewed
+      required: [edition_id, offer_version]
+    - name: community_checkout_started
+      required: [edition_id, checkout_id, amount_brl]
+    - name: community_purchase_approved
+      required: [edition_id, order_id, terms_version, amount_brl]
+    - name: community_cart_closed
+      required: [edition_id, closed_at]
+    - name: community_onboarding_completed
+      required: [order_id, completed_at]
+  consent:
+    - name: email_marketing_opt_in
+      required: [consent_version, collection_point]
+    - name: email_marketing_opt_out
+      required: [request_source]
+    - name: whatsapp_marketing_opt_in
+      required: [consent_version, collection_point, business_name]
+    - name: whatsapp_marketing_opt_out
+      required: [request_source]
+    - name: whatsapp_block_or_report
+      required: [detected_at]
+    - name: privacy_request_received
+      required: [request_type, request_id]
+
+privacy_controls:
+  analytics_retention_days: 395
+  raw_delivery_log_retention_days: 180
+  consent_ledger_retention: legal_and_contractual_policy
+  store_message_content: false
+  store_group_chat_content: false
+  sensitive_data_collection: prohibited
+  export_access: role_based

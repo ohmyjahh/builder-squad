@@ -1,0 +1,152 @@
+schema_version: "1.0"
+id: builder-commercial-lifecycle
+timezone: America/Fortaleza
+initial_state: cold_visitor
+
+states:
+  cold_visitor:
+    terminal: false
+  entry_checkout_started:
+    terminal: false
+  entry_buyer:
+    terminal: false
+  entry_refund_pending:
+    terminal: false
+  upsell_viewer:
+    terminal: false
+  squad_checkout_started:
+    terminal: false
+  squad_buyer:
+    terminal: false
+  workshop_invited:
+    terminal: false
+  workshop_registration_started:
+    terminal: false
+  workshop_registered:
+    terminal: false
+  workshop_group_joined:
+    terminal: false
+  workshop_attendee:
+    terminal: false
+  workshop_no_show:
+    terminal: false
+  community_checkout_started:
+    terminal: false
+  community_buyer:
+    terminal: false
+  community_cart_closed:
+    terminal: true
+  marketing_suppressed:
+    terminal: true
+
+transitions:
+  - from: cold_visitor
+    event: entry_checkout_started
+    to: entry_checkout_started
+  - from: entry_checkout_started
+    event: entry_purchase_approved
+    to: entry_buyer
+  - from: entry_buyer
+    event: upsell_page_viewed
+    to: upsell_viewer
+  - from: upsell_viewer
+    event: squad_checkout_started
+    to: squad_checkout_started
+  - from: upsell_viewer
+    event: workshop_invitation_eligible
+    to: workshop_invited
+  - from: squad_checkout_started
+    event: squad_purchase_approved
+    to: squad_buyer
+  - from: squad_buyer
+    event: workshop_invitation_eligible
+    to: workshop_invited
+  - from: workshop_invited
+    event: workshop_registration_started
+    to: workshop_registration_started
+  - from: workshop_registration_started
+    event: workshop_registered
+    to: workshop_registered
+  - from: workshop_registered
+    event: workshop_group_joined
+    to: workshop_group_joined
+  - from: workshop_registered
+    event: workshop_attended
+    to: workshop_attendee
+  - from: workshop_group_joined
+    event: workshop_attended
+    to: workshop_attendee
+  - from: workshop_registered
+    event: workshop_no_show_classified
+    to: workshop_no_show
+  - from: workshop_group_joined
+    event: workshop_no_show_classified
+    to: workshop_no_show
+  - from: workshop_attendee
+    event: community_checkout_started
+    to: community_checkout_started
+  - from: workshop_no_show
+    event: community_checkout_started
+    to: community_checkout_started
+  - from: community_checkout_started
+    event: community_purchase_approved
+    to: community_buyer
+  - from: workshop_attendee
+    event: community_cart_closed
+    to: community_cart_closed
+  - from: workshop_no_show
+    event: community_cart_closed
+    to: community_cart_closed
+  - from: community_checkout_started
+    event: community_cart_closed
+    to: community_cart_closed
+  - from: entry_buyer
+    event: entry_refund_requested
+    to: entry_refund_pending
+  - from: upsell_viewer
+    event: entry_refund_requested
+    to: entry_refund_pending
+  - from: squad_buyer
+    event: entry_refund_requested
+    to: entry_refund_pending
+
+global_transitions:
+  - event: marketing_opt_out
+    to: marketing_suppressed
+  - event: whatsapp_block_or_report
+    to: marketing_suppressed
+  - event: email_hard_bounce
+    to: marketing_suppressed
+
+guards:
+  workshop_invitation_eligible:
+    all:
+      - entry_purchase_status == approved
+      - edition_id != null
+  whatsapp_marketing_send:
+    all:
+      - whatsapp_opt_in == true
+      - whatsapp_suppressed == false
+      - template_status == approved
+  community_offer_send:
+    all:
+      - edition_cart_status == open
+      - community_purchase_status != approved
+  current_edition_assignment:
+    all:
+      - local_time <= edition_cutoff
+  next_edition_assignment:
+    any:
+      - local_time > edition_cutoff
+      - current_edition_status != accepting_registrations
+
+invariants:
+  - one_active_edition_per_contact
+  - transactional_messages_ignore_marketing_opt_in_but_must_match_transaction
+  - marketing_messages_require_valid_legal_basis_and_opt_out
+  - whatsapp_messages_require_explicit_channel_opt_in
+  - product_purchase_exits_matching_sales_sequence
+  - recorded_event_is_never_labeled_live
+  - historical_questions_are_labeled_historical
+  - closed_cart_cannot_reopen_for_single_contact
+  - no_installation_support_is_promised

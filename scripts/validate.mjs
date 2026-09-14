@@ -184,6 +184,115 @@ export function runValidation(root = SQUAD_ROOT) {
     && termsText.includes("instalação é self-service");
   results.push(result("legal.self_service", selfServicePolicy, selfServicePolicy ? "Instalação self-service e ausência de suporte individual explícitas" : "Política self-service inconsistente"));
 
+  const commercialRequirements = [
+    "docs/commercial/CAMPAIGN-BRIEF.md",
+    "docs/commercial/POSITIONING-AND-MESSAGE-HOUSE.md",
+    "docs/commercial/PRODUCT-LADDER-AND-OFFER.md",
+    "docs/commercial/PROOF-CLAIMS-AND-OBJECTIONS-REGISTER.md",
+    "docs/copy/email/ENTRY-AND-UPSELL-SEQUENCES.md",
+    "docs/copy/email/WORKSHOP-SEQUENCES.md",
+    "docs/copy/email/COMMUNITY-CART-AND-ONBOARDING.md",
+    "docs/copy/pages/PAGES-AND-CHECKOUT-COPY.md",
+    "docs/copy/vsl/COLD-TRAFFIC-VSL.md",
+    "docs/copy/vsl/BUILDER-SQUAD-UPSELL-VSL.md",
+    "docs/copy/vsl/WORKSHOP-SESSION-AND-PITCH.md",
+    "docs/copy/whatsapp/PRIVATE-MESSAGES.md",
+    "docs/copy/whatsapp/GROUP-WARMUP-AND-CART.md",
+    "docs/funnel/AUTOMATION-BLUEPRINT.yaml",
+    "docs/funnel/EVENT-TAXONOMY.yaml",
+    "docs/funnel/LIFECYCLE-STATE-MACHINE.yaml",
+    "docs/funnel/MESSAGE-CATALOG.yaml",
+    "docs/funnel/MASTER-FUNNEL.md",
+    "docs/funnel/README.md",
+    "docs/funnel/SEGMENTS-CONSENT-AND-SUPPRESSIONS.md",
+    "docs/funnel/TECHNICAL-IMPLEMENTATION-SPEC.md",
+    "docs/funnel/TRACKING-METRICS-AND-EXPERIMENTS.md",
+    "docs/funnel/WEEKLY-EDITION-CALENDAR.md",
+    "docs/funnel/WORKSHOP-INTERACTION-CUE-SHEET.md",
+    "docs/funnel/ETHICAL-EVENT-AND-MESSAGING-POLICY.md",
+    "docs/operations/FUNNEL-INCIDENT-AND-RECOVERY.md",
+    "docs/operations/FUNNEL-OPERATIONS-PLAYBOOK.md",
+    "docs/operations/FUNNEL-QA-CHECKLIST.md",
+    "docs/operations/SELF-SERVICE-ONBOARDING.md",
+    "docs/reports/BS-013-commercial-funnel-readiness.md",
+    "docs/reports/BS-013-commercial-ethics-gate.md"
+  ];
+  const missingCommercial = commercialRequirements.filter((path) => !existsSync(join(root, path)));
+  results.push(result("commercial.files", missingCommercial.length === 0, missingCommercial.join(", ") || `${commercialRequirements.length}/${commercialRequirements.length} ativos presentes`));
+
+  const automationBlueprint = readFileSync(join(root, "docs/funnel/AUTOMATION-BLUEPRINT.yaml"), "utf8");
+  const messageCatalog = readFileSync(join(root, "docs/funnel/MESSAGE-CATALOG.yaml"), "utf8");
+  const sendReferences = [...automationBlueprint.matchAll(/send:\s*([a-z0-9_.]+)/g)].map((match) => match[1]);
+  const catalogIds = [...messageCatalog.matchAll(/- id:\s*([a-z0-9_.]+)/g)].map((match) => match[1]);
+  const uniqueCatalogIds = new Set(catalogIds);
+  const missingMessageRefs = [...new Set(sendReferences.filter((id) => !uniqueCatalogIds.has(id)))];
+  const messageRefsValid = sendReferences.length === new Set(sendReferences).size
+    && catalogIds.length === uniqueCatalogIds.size
+    && missingMessageRefs.length === 0;
+  results.push(result("commercial.message_refs", messageRefsValid, messageRefsValid ? `${sendReferences.length} envios resolvidos em ${catalogIds.length} templates únicos` : `Referências ausentes ou duplicadas: ${missingMessageRefs.join(", ")}`));
+
+  const productLadder = readFileSync(join(root, "docs/commercial/PRODUCT-LADDER-AND-OFFER.md"), "utf8");
+  const offerPricesValid = productLadder.includes("R$297")
+    && productLadder.includes("R$497")
+    && productLadder.includes("R$997/12 meses")
+    && productLadder.includes("um único plano de 12 meses")
+    && productLadder.includes("sem renovação automática");
+  results.push(result("commercial.offer", offerPricesValid, offerPricesValid ? "Escada R$297 → R$497 → R$997/12 meses coerente" : "Escada, preço ou renovação inconsistentes"));
+
+  const ethicalPolicy = readFileSync(join(root, "docs/funnel/ETHICAL-EVENT-AND-MESSAGING-POLICY.md"), "utf8");
+  const cueSheet = readFileSync(join(root, "docs/funnel/WORKSHOP-INTERACTION-CUE-SHEET.md"), "utf8");
+  const ethicalControlsValid = ethicalPolicy.includes("não pode fingir transmissão ao vivo")
+    && ethicalPolicy.includes("bots usando nome")
+    && ethicalPolicy.includes("perguntas históricas rotuladas")
+    && messageCatalog.includes("bot_personas_allowed: false")
+    && cueSheet.includes("não gerar presença, cidade, dúvida, aplauso, compra ou depoimento por bot");
+  results.push(result("commercial.ethics", ethicalControlsValid, ethicalControlsValid ? "Fake live, bot-persona, falsa urgência e prova fabricada vetados" : "Controles éticos incompletos"));
+
+  const whatsappMarketingIds = [
+    "whatsapp.entry_abandonment_01",
+    "whatsapp.workshop_invite_01",
+    "whatsapp.squad_abandonment_01",
+    "whatsapp.workshop_replay_01",
+    "whatsapp.community_closing_4h",
+    "whatsapp.community_checkout_abandonment"
+  ];
+  const whatsappConsentValid = whatsappMarketingIds.every((id) => {
+    const start = messageCatalog.indexOf(`- id: ${id}`);
+    const block = start >= 0 ? messageCatalog.slice(start, messageCatalog.indexOf("\n    - id:", start + 1) === -1 ? undefined : messageCatalog.indexOf("\n    - id:", start + 1)) : "";
+    return block.includes("requires_explicit_opt_in: true");
+  });
+  results.push(result("commercial.whatsapp_consent", whatsappConsentValid, whatsappConsentValid ? "Templates promocionais exigem opt-in explícito" : "Template promocional sem opt-in explícito"));
+
+  const recordedDisclosureSources = [
+    "docs/copy/pages/PAGES-AND-CHECKOUT-COPY.md",
+    "docs/copy/vsl/WORKSHOP-SESSION-AND-PITCH.md",
+    "docs/copy/whatsapp/GROUP-WARMUP-AND-CART.md",
+    "docs/funnel/MASTER-FUNNEL.md"
+  ];
+  const recordedDisclosureValid = recordedDisclosureSources.every((path) => {
+    const text = readFileSync(join(root, path), "utf8").toLowerCase();
+    return text.includes("previamente gravado") && text.includes("programada");
+  });
+  results.push(result("commercial.recorded_event", recordedDisclosureValid, recordedDisclosureValid ? "Formato gravado e programado divulgado nas fontes críticas" : "Disclosure do evento inconsistente"));
+
+  const commercialOnboarding = readFileSync(join(root, "docs/operations/SELF-SERVICE-ONBOARDING.md"), "utf8");
+  const lifecycleStateMachine = readFileSync(join(root, "docs/funnel/LIFECYCLE-STATE-MACHINE.yaml"), "utf8");
+  const commercialSelfService = commercialOnboarding.includes("sem prometer instalação assistida")
+    && commercialOnboarding.includes("Não há suporte individual de instalação")
+    && lifecycleStateMachine.includes("no_installation_support_is_promised");
+  results.push(result("commercial.self_service", commercialSelfService, commercialSelfService ? "Onboarding comercial não promete suporte individual" : "Onboarding comercial conflita com self-service"));
+
+  const packagingSource = readFileSync(join(root, "scripts/package.mjs"), "utf8");
+  const installSource = readFileSync(join(root, "scripts/install.mjs"), "utf8");
+  const internalAssetsExcluded = [packagingSource, installSource].every((text) => (
+    !text.includes('"docs/copy"')
+    && !text.includes('"docs/funnel"')
+    && !text.includes('"docs/operations"')
+    && !text.includes('"docs/commercial"')
+    && text.includes('"docs/commercial/PRODUCT-DELIVERY-MANIFEST.md"')
+  ));
+  results.push(result("commercial.internal_distribution", internalAssetsExcluded, internalAssetsExcluded ? "Estratégia e copy internas excluídas do pacote do comprador" : "Ativo comercial interno pode vazar no pacote"));
+
   const packageMetadata = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
   const versionFile = readFileSync(join(root, "VERSION"), "utf8").trim();
   const manifestVersion = manifest.match(/^version:\s*["']?([^"'\s]+)["']?\s*$/m)?.[1];

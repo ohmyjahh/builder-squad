@@ -1,0 +1,204 @@
+schema_version: "1.0"
+id: builder-commercial-automation-blueprint
+timezone: America/Fortaleza
+mode: vendor-neutral
+step_timing: trigger_relative_unless_at_is_used
+
+global_controls:
+  idempotency_key: event_id
+  email_frequency_cap:
+    default_per_24h: 1
+    event_day_max_per_24h: 2
+  whatsapp_private_frequency_cap:
+    per_24h: 1
+    per_7d: 4
+  group_admin_posts:
+    default_per_day: 2
+    event_day_max: 4
+  quiet_hours:
+    start: "20:30"
+    end: "08:00"
+    exceptions: [transactional_security, event_requested_by_user]
+  required_suppressions:
+    - global_marketing_opt_out
+    - channel_opt_out
+    - hard_bounce
+    - block_or_report
+    - refund_or_chargeback_review
+    - matching_product_already_purchased
+
+flows:
+  - id: entry_checkout_abandonment
+    trigger: entry_checkout_started
+    cancel_on: [entry_purchase_approved, entry_refunded, global_marketing_opt_out]
+    steps:
+      - at_offset: PT30M
+        send: email.entry_abandonment_01
+      - at_offset: P1D
+        if: entry_purchase_status != approved
+        send: email.entry_abandonment_02
+      - at_offset: P2D
+        if: entry_purchase_status != approved
+        send: email.entry_abandonment_03
+      - at_offset: PT2H
+        if: whatsapp_opt_in == true and entry_purchase_status != approved
+        send: whatsapp.entry_abandonment_01
+
+  - id: entry_post_purchase
+    trigger: entry_purchase_approved
+    cancel_on: [entry_refunded]
+    steps:
+      - at_offset: PT0S
+        send: email.entry_access
+      - at_offset: PT0S
+        action: show_upsell_page
+      - at_offset: PT15M
+        if: whatsapp_opt_in == true
+        send: whatsapp.workshop_invite_01
+      - at_offset: PT45M
+        if: workshop_registered != true
+        send: email.workshop_invite_01
+      - at_offset: P1D
+        send: email.entry_activation_01
+
+  - id: squad_checkout_abandonment
+    trigger: squad_checkout_started
+    cancel_on: [squad_purchase_approved, entry_refunded, global_marketing_opt_out]
+    steps:
+      - at_offset: PT45M
+        send: email.squad_abandonment_01
+      - at_offset: P1D
+        if: squad_purchase_status != approved
+        send: email.squad_abandonment_02
+      - at_offset: PT2H
+        if: whatsapp_opt_in == true and squad_purchase_status != approved
+        send: whatsapp.squad_abandonment_01
+
+  - id: squad_post_purchase
+    trigger: squad_purchase_approved
+    cancel_on: [squad_refunded]
+    steps:
+      - at_offset: PT0S
+        send: email.squad_access
+      - at_offset: P1D
+        if: squad_package_downloaded != true
+        send: email.squad_download_nudge
+      - at_offset: P3D
+        if: squad_doctor_passed != true
+        send: email.squad_self_service_diagnostic
+      - at_offset: P6D
+        if: squad_first_brief_created != true
+        send: email.squad_first_brief
+
+  - id: workshop_registration_abandonment
+    trigger: workshop_registration_started
+    cancel_on: [workshop_registered, edition_registration_closed, global_marketing_opt_out]
+    steps:
+      - at_offset: PT1H
+        send: email.workshop_registration_abandonment_01
+      - at_offset: P1D
+        if: workshop_registered != true
+        send: email.workshop_registration_abandonment_02
+
+  - id: workshop_registered
+    trigger: workshop_registered
+    cancel_on: [workshop_attended, edition_cancelled, global_marketing_opt_out]
+    steps:
+      - at_offset: PT0S
+        send: email.workshop_confirmation
+      - at_offset: PT10M
+        if: whatsapp_opt_in == true and workshop_group_joined != true
+        send: whatsapp.group_join_01
+      - at: edition_minus_P2D_at_09_00
+        send: email.workshop_warmup_01
+      - at: edition_minus_P1D_at_09_00
+        send: email.workshop_warmup_02
+      - at: edition_minus_PT3H
+        send: email.workshop_today_01
+      - at: edition_minus_PT15M
+        if: whatsapp_opt_in == true
+        send: whatsapp.event_reminder_15m
+      - at: edition_time
+        action: classify_room_entry_window
+
+  - id: workshop_no_show
+    trigger: workshop_no_show_classified
+    cancel_on: [workshop_replay_completed, community_purchase_approved, community_cart_closed]
+    steps:
+      - at_offset: PT30M
+        send: email.workshop_no_show_replay
+      - at_offset: PT10H
+        if: whatsapp_opt_in == true
+        send: whatsapp.workshop_replay_01
+      - at: replay_minus_PT4H
+        if: workshop_replay_completed != true
+        send: email.workshop_replay_closing
+
+  - id: community_cart_attendee
+    trigger: community_offer_viewed
+    cancel_on: [community_purchase_approved, community_cart_closed, global_marketing_opt_out]
+    steps:
+      - at_offset: PT15M
+        send: email.community_offer_summary
+      - at: edition_plus_P1D_at_09_00
+        send: email.community_objection_execution
+      - at: edition_plus_P2D_at_09_00
+        send: email.community_closing_day
+      - at: cart_minus_PT4H
+        if: whatsapp_opt_in == true
+        send: whatsapp.community_closing_4h
+      - at: cart_minus_PT1H
+        send: email.community_closing_1h
+
+  - id: community_checkout_abandonment
+    trigger: community_checkout_started
+    cancel_on: [community_purchase_approved, community_cart_closed, global_marketing_opt_out]
+    steps:
+      - at_offset: PT30M
+        send: email.community_checkout_abandonment
+      - at_offset: PT90M
+        if: whatsapp_opt_in == true
+        send: whatsapp.community_checkout_abandonment
+
+  - id: community_cart_closed_followup
+    trigger: community_cart_closed
+    cancel_on: [community_purchase_approved, global_marketing_opt_out]
+    steps:
+      - at_offset: PT9H
+        if: community_purchase_status != approved
+        send: email.community_cart_closed
+
+  - id: community_post_purchase
+    trigger: community_purchase_approved
+    cancel_on: [community_refunded]
+    steps:
+      - at_offset: PT0S
+        send: email.community_access
+      - at_offset: P1D
+        if: community_onboarding_completed != true
+        send: email.community_onboarding_nudge
+
+edition_schedule:
+  group_create: Wednesday 09:00 for next Tuesday
+  registration_cutoff: Tuesday 18:30
+  same_day_assignment_cutoff: Tuesday 15:00
+  event_start: Tuesday 19:00
+  attendee_threshold_minutes: 20
+  no_show_classification: Tuesday 20:45
+  replay_close: Wednesday 23:59
+  community_cart_close: Thursday 23:59
+  group_archive: Friday 18:00
+
+failure_policy:
+  provider_timeout:
+    retry: 2
+    backoff: exponential
+    then: dead_letter_queue
+  duplicate_event:
+    action: ignore_and_log
+  missing_consent:
+    action: suppress_channel_and_alert
+  stale_edition:
+    action: reassign_before_send
+  closed_cart:
+    action: cancel_pending_sales_messages

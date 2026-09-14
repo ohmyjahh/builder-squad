@@ -2,13 +2,13 @@
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, statSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import { parseArgs } from "./lib/cli.mjs";
 import { SQUAD_ROOT } from "./lib/paths.mjs";
 
 const include = [
   "agents", "tasks", "workflows", "templates", "checklists", "data", "schemas",
-  "config", "automations", "adapters", "scripts", "squads", "tests", "docs/guides", "docs/release", "docs/commercial", "docs/legal", "examples",
+  "config", "automations", "adapters", "scripts", "squads", "tests", "docs/guides", "docs/release", "docs/commercial/PRODUCT-DELIVERY-MANIFEST.md", "docs/legal", "examples",
   "squad.yaml", "package.json", "package-lock.json", "VERSION", "README.md", "AGENTS.md", "LICENSE.md",
   "CHANGELOG.md", "SECURITY.md", "SUPPORT.md", "CONTRIBUTING.md", ".gitattributes"
 ];
@@ -38,7 +38,9 @@ try {
   for (const entry of include) {
     const source = resolve(SQUAD_ROOT, entry);
     if (!existsSync(source)) continue;
-    cpSync(source, resolve(target, entry), { recursive: true, errorOnExist: true });
+    const destination = resolve(target, entry);
+    mkdirSync(dirname(destination), { recursive: true });
+    cpSync(source, destination, { recursive: true, errorOnExist: true });
   }
 
   const git = spawnSync("git", ["rev-parse", "HEAD"], { cwd: SQUAD_ROOT, encoding: "utf8" });

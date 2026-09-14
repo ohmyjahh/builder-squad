@@ -1,7 +1,7 @@
 # Mapa Mestre de Construção
 
 **Objetivo:** construir, validar e empacotar o Builder Squad como produto proprietário instalável.
-**Estado atual:** release candidate com pacote jurídico-comercial em fechamento.
+**Estado atual:** produto em release candidate e ciclo interno de oferta/funil em validação.
 
 ## Visão de progresso
 
@@ -20,7 +20,8 @@
 | 10. Experiência do comprador | Documentação concluída | teste externo ainda pendente |
 | 11. Projetos de referência | Concluída | 5 cenários |
 | 12. Distribuição | RC concluída | pacote, CI, GitHub privado, main e tag |
-| 13. Jurídico e comercial | Em fechamento | minutas, PI, aceite e nova RC |
+| 13. Jurídico e comercial | Preparação concluída | minutas, PI, aceite e RC.3; aprovações externas pendentes |
+| 14. Oferta e funil | Preparação concluída | oferta, copy, lifecycle, automações e operação vendor-neutral |
 
 ## Fase 0 — Fundação
 
@@ -226,3 +227,23 @@
 - [ ] Executar piloto fechado.
 
 **Gate atual:** preparação interna completa após a RC.3; atos externos permanecem explicitamente pendentes.
+
+## Fase 14 — Oferta e funil comercial
+
+- [x] Definir Builder IA R$297 → Builder Squad R$497 → Comunidade Builder R$997/12 meses.
+- [x] Definir promessa, mecanismo, message house, objeções e registro de provas.
+- [x] Criar VSL principal, upsell e sessão/pitch.
+- [x] Criar páginas, checkouts e microcopy de consentimento.
+- [x] Criar lifecycle, eventos, calendário, segmentos, exits e suppressions.
+- [x] Criar 28 e-mails e 10 templates privados de WhatsApp.
+- [x] Criar aquecimento e carrinho do grupo semanal.
+- [x] Criar disclosure de exibição programada e cue sheet sem bot-persona.
+- [x] Criar onboarding self-service, playbook, QA e recuperação.
+- [x] Separar ativos internos do pacote entregue ao comprador.
+- [ ] Confirmar módulos e prazo real do Builder IA.
+- [ ] Aprovar calendário de 90 dias da Comunidade.
+- [ ] Escolher e integrar checkout, CRM/ESP, BSP e plataforma do evento.
+- [ ] Gravar e editar os vídeos.
+- [ ] Executar QA de produção e piloto controlado.
+
+**Gate atual:** arquitetura, copy e operação internas completas; implantação bloqueada por stack, ativos reais, revisão profissional e QA externo.
