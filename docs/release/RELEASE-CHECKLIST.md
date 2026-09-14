@@ -2,7 +2,7 @@
 
 ## Identidade
 
-- [x] VERSION, package.json e squad.yaml usam 0.10.0-rc.1.
+- [x] VERSION, package.json e squad.yaml usam 0.10.0-rc.2.
 - [x] Changelog e release notes existem.
 - [x] Licença proprietária está presente.
 - [x] Titular jurídico identificado e minutas comerciais criadas.
@@ -30,12 +30,12 @@
 ## Distribuição
 
 - [x] Script de pacote.
-- [x] Pacote 0.10.0-rc.1 gerado.
-- [x] SHA256SUMS verificado.
+- [ ] Pacote 0.10.0-rc.2 gerado.
+- [ ] SHA256SUMS verificado.
 - [x] CI definida.
 - [x] Repositório privado criado.
 - [ ] Branch protection configurada — bloqueada pelo plano atual do GitHub para este repositório privado (HTTP 403 em 2026-09-12).
-- [ ] Release privada 0.10.0-rc.1 criada.
+- [ ] Release privada 0.10.0-rc.2 criada.
 
 ### Limite da plataforma
 

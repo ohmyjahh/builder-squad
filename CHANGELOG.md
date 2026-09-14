@@ -2,7 +2,7 @@
 
 Todas as mudanças relevantes do Builder Squad são documentadas aqui. O projeto segue Semantic Versioning.
 
-## [0.10.0-rc.1] — 2026-09-14
+## [0.10.0-rc.2] — 2026-09-14
 
 ### Adicionado
 
@@ -25,6 +25,12 @@ Todas as mudanças relevantes do Builder Squad são documentadas aqui. O projeto
 ### Estado
 
 Arquitetura e copy vendor-neutral preparadas. Implantação depende de módulos e agenda reais, seleção da stack, gravações, revisão profissional e QA end-to-end.
+
+## [0.10.0-rc.1] — 2026-09-14
+
+### Estado
+
+- Tag de validação preservada sem release: o CI identificou que o pacote do comprador exigia ativos internos deliberadamente excluídos. Substituída pela `0.10.0-rc.2` após a correção e o teste de regressão.
 
 ## [0.9.0-rc.3] — 2026-09-12
 

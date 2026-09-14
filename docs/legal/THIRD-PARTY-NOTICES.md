@@ -1,7 +1,7 @@
 # Avisos de Terceiros
 
 **Auditoria documental:** 2026-09-12
-**Versão-alvo:** 0.10.0-rc.1
+**Versão-alvo:** 0.10.0-rc.2
 
 ## Core distribuído
 

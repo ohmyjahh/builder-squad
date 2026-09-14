@@ -4,7 +4,7 @@
 **Epic:** Builder Squad V1
 **Prioridade:** Crítica
 **Dependência:** BS-012
-**Versão-alvo:** 0.10.0-rc.1
+**Versão-alvo:** 0.10.0-rc.2
 
 ## História
 
@@ -58,7 +58,7 @@ Como titular do Builder Squad, quero uma arquitetura comercial completa e execut
 - [x] Todos os critérios executáveis internamente concluídos.
 - [x] Conteúdo completo pronto para copiar e implementar.
 - [x] Quality gate de ética comercial aprovado.
-- [x] Validação, testes, package e checksums aprovados.
+- [ ] Validação, testes, package e checksums aprovados.
 - [x] File List atualizada.
 - [ ] Commit convencional, tag, CI e release privada aprovados.
 

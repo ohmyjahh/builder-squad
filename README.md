@@ -1,6 +1,6 @@
 # Builder Squad
 
-**Versão:** 0.10.0-rc.1 — release candidate para piloto fechado e revisão jurídica externa.
+**Versão:** 0.10.0-rc.2 — release candidate para piloto fechado e revisão jurídica externa.
 
 Um time de agentes especialistas, conectado por workflows, tasks, memória e quality gates, para transformar uma demanda em app, sistema, agente ou automação pronto para uso interno, entrega a cliente ou validação no mercado.
 
@@ -149,7 +149,7 @@ Consulte:
 6. [Troubleshooting](docs/guides/TROUBLESHOOTING.md)
 7. [Compatibilidade](docs/guides/COMPATIBILITY.md)
 8. [Dados e segurança](docs/guides/DATA-AND-SECURITY.md)
-9. [Release notes 0.10.0-rc.1](docs/release/RELEASE-NOTES-0.10.0-rc.1.md)
+9. [Release notes 0.10.0-rc.2](docs/release/RELEASE-NOTES-0.10.0-rc.2.md)
 10. [Licença e documentos jurídicos](docs/legal/README.md)
 
 ## Validação atual

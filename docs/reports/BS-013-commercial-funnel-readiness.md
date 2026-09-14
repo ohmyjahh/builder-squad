@@ -1,7 +1,7 @@
 # Relatório BS-013 — Prontidão do Funil Comercial
 
 **Data:** 2026-09-14  
-**Versão-alvo:** 0.10.0-rc.1  
+**Versão-alvo:** 0.10.0-rc.2
 **Veredito de arquitetura e copy:** PREPARED  
 **Veredito de implantação:** BLOCKED_BY_STACK_AND_ASSETS  
 **Veredito de produção:** NO-GO até QA externo
@@ -55,7 +55,7 @@
 - 44 arquivos YAML e 10 arquivos JSON parseados com sucesso;
 - JavaScript com sintaxe válida, diff sem whitespace inválido e zero dependências externas instaladas;
 - instalação sidecar validada sem depender dos ativos internos deliberadamente excluídos;
-- pacote do comprador com 290 arquivos, `SHA256SUMS` interno e checksum do arquivo compactado aprovados.
+- pacote do comprador será reemitido e verificado para a versão-alvo antes da publicação.
 
 ## Bloqueios reais
 

@@ -2,7 +2,7 @@
 
 ## Produto
 
-Builder Squad 0.10.0-rc.1 — release candidate proprietário.
+Builder Squad 0.10.0-rc.2 — release candidate proprietário.
 
 Oferta-base planejada: R$497, com preço total, parcelamento e condições efetivas confirmados no checkout.
 

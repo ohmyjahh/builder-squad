@@ -56,7 +56,7 @@
 >
 > O Squad funciona com Codex e Claude Code nos adapters documentados e possui instalação, diagnóstico, atualização, restauração e desinstalação self-service.
 
-**Tela:** números estruturais com a etiqueta “verificados na versão 0.10.0-rc.1”. Atualizar se a versão mudar.
+**Tela:** números estruturais com a etiqueta “verificados na versão 0.10.0-rc.2”. Atualizar se a versão mudar.
 
 ## 06:45–07:55 — O que não é
 

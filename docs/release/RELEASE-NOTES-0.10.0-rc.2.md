@@ -1,8 +1,10 @@
-# Builder Squad 0.10.0-rc.1
+# Builder Squad 0.10.0-rc.2
 
 ## Resultado
 
 Release candidate que adiciona ao repositório privado o ciclo comercial completo da linha Builder e fortalece a separação entre ativos internos da SOW HOUSE e o pacote entregue ao comprador.
+
+Esta versão substitui a tag de validação `0.10.0-rc.1`, que não foi publicada como release após o CI detectar uma dependência indevida dos ativos comerciais internos no validador do pacote.
 
 ## Produto entregue ao comprador
 
