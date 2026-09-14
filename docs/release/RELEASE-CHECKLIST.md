@@ -30,8 +30,8 @@
 ## Distribuição
 
 - [x] Script de pacote.
-- [ ] Pacote 0.10.0-rc.2 gerado.
-- [ ] SHA256SUMS verificado.
+- [x] Pacote 0.10.0-rc.2 gerado.
+- [x] SHA256SUMS verificado.
 - [x] CI definida.
 - [x] Repositório privado criado.
 - [ ] Branch protection configurada — bloqueada pelo plano atual do GitHub para este repositório privado (HTTP 403 em 2026-09-12).
