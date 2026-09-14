@@ -78,6 +78,14 @@ A capacidade de criar e operar grupos por API oficial não foi presumida. Até v
 
 Escolher a stack e preencher os ativos reais. Depois, implementar na ordem checkout → consentimento → e-mail → WhatsApp → edição → Comunidade → analytics, executar staging e obter `GO`.
 
+## Publicação
+
+- release privada: `https://github.com/ohmyjahh/builder-squad/releases/tag/v0.10.0-rc.2`;
+- CI aprovado: `https://github.com/ohmyjahh/builder-squad/actions/runs/34844313966`;
+- tag: `v0.10.0-rc.2` no commit `17f44b3367a28663aa73ef6a38fca23598519cc6`;
+- pacote: `builder-squad-v0.10.0-rc.2.tar.gz`;
+- SHA-256: `d7a4320de6c13bb523ccb861e13dc65aeb09ba3166b2a57950428a983bdd51aa`.
+
 ## Conclusão
 
 O ciclo está pronto no nível que pode ser concluído sem inventar módulos, agenda, fornecedores ou evidências. Não deve ser chamado de funil em produção até que os bloqueios sejam resolvidos e o checklist end-to-end passe.

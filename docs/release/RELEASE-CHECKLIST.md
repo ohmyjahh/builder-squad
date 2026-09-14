@@ -35,7 +35,7 @@
 - [x] CI definida.
 - [x] Repositório privado criado.
 - [ ] Branch protection configurada — bloqueada pelo plano atual do GitHub para este repositório privado (HTTP 403 em 2026-09-12).
-- [ ] Release privada 0.10.0-rc.2 criada.
+- [x] Release privada 0.10.0-rc.2 criada.
 
 ### Limite da plataforma
 

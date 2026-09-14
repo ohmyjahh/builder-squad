@@ -1,6 +1,6 @@
 # Story BS-013 — Oferta e Funil Comercial
 
-**Status:** In Progress
+**Status:** Done
 **Epic:** Builder Squad V1
 **Prioridade:** Crítica
 **Dependência:** BS-012
@@ -60,7 +60,7 @@ Como titular do Builder Squad, quero uma arquitetura comercial completa e execut
 - [x] Quality gate de ética comercial aprovado.
 - [x] Validação, testes, package e checksums aprovados.
 - [x] File List atualizada.
-- [ ] Commit convencional, tag, CI e release privada aprovados.
+- [x] Commit convencional, tag, CI e release privada aprovados.
 
 ## File List
 
