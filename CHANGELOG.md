@@ -20,6 +20,7 @@ Todas as mudanças relevantes do Builder Squad são documentadas aqui. O projeto
 - Instalador e empacotador incluem apenas o manifesto comercial destinado ao comprador.
 - Estratégia, copy, automações de marketing e operação interna ficam fora do pacote distribuído.
 - Validação passa a conferir preço, referências de mensagens, opt-in do WhatsApp, disclosure do evento e ausência de suporte individual de instalação.
+- Validador diferencia o repositório interno completo do pacote do comprador e valida os dois formatos sem exigir ativos deliberadamente privados.
 
 ### Estado
 

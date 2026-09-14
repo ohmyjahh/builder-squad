@@ -75,6 +75,7 @@ test("instalador cria sidecar sem alterar instruções do projeto", () => {
 
     const validated = spawnSync(process.execPath, [resolve(target, ".builder-squad", "scripts", "validate.mjs")], { encoding: "utf8" });
     assert.equal(validated.status, 0, validated.stderr || validated.stdout);
+    assert.match(validated.stdout, /Resultado: PASS \(32\/32\)/);
   } finally {
     rmSync(target, { recursive: true, force: true });
   }

@@ -54,6 +54,7 @@
 - suíte automatizada: 28/28 testes aprovados;
 - 44 arquivos YAML e 10 arquivos JSON parseados com sucesso;
 - JavaScript com sintaxe válida, diff sem whitespace inválido e zero dependências externas instaladas;
+- instalação sidecar validada sem depender dos ativos internos deliberadamente excluídos;
 - pacote do comprador com 290 arquivos, `SHA256SUMS` interno e checksum do arquivo compactado aprovados.
 
 ## Bloqueios reais

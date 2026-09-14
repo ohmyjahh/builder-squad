@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import { extractManifestComponents, filesIn, SQUAD_ROOT, walkFiles } from "./lib/paths.mjs";
 
 const directories = {
@@ -218,80 +218,112 @@ export function runValidation(root = SQUAD_ROOT) {
     "docs/reports/BS-013-commercial-ethics-gate.md"
   ];
   const missingCommercial = commercialRequirements.filter((path) => !existsSync(join(root, path)));
-  results.push(result("commercial.files", missingCommercial.length === 0, missingCommercial.join(", ") || `${commercialRequirements.length}/${commercialRequirements.length} ativos presentes`));
-
-  const automationBlueprint = readFileSync(join(root, "docs/funnel/AUTOMATION-BLUEPRINT.yaml"), "utf8");
-  const messageCatalog = readFileSync(join(root, "docs/funnel/MESSAGE-CATALOG.yaml"), "utf8");
-  const sendReferences = [...automationBlueprint.matchAll(/send:\s*([a-z0-9_.]+)/g)].map((match) => match[1]);
-  const catalogIds = [...messageCatalog.matchAll(/- id:\s*([a-z0-9_.]+)/g)].map((match) => match[1]);
-  const uniqueCatalogIds = new Set(catalogIds);
-  const missingMessageRefs = [...new Set(sendReferences.filter((id) => !uniqueCatalogIds.has(id)))];
-  const messageRefsValid = sendReferences.length === new Set(sendReferences).size
-    && catalogIds.length === uniqueCatalogIds.size
-    && missingMessageRefs.length === 0;
-  results.push(result("commercial.message_refs", messageRefsValid, messageRefsValid ? `${sendReferences.length} envios resolvidos em ${catalogIds.length} templates únicos` : `Referências ausentes ou duplicadas: ${missingMessageRefs.join(", ")}`));
-
-  const productLadder = readFileSync(join(root, "docs/commercial/PRODUCT-LADDER-AND-OFFER.md"), "utf8");
-  const offerPricesValid = productLadder.includes("R$297")
-    && productLadder.includes("R$497")
-    && productLadder.includes("R$997/12 meses")
-    && productLadder.includes("um único plano de 12 meses")
-    && productLadder.includes("sem renovação automática");
-  results.push(result("commercial.offer", offerPricesValid, offerPricesValid ? "Escada R$297 → R$497 → R$997/12 meses coerente" : "Escada, preço ou renovação inconsistentes"));
-
-  const ethicalPolicy = readFileSync(join(root, "docs/funnel/ETHICAL-EVENT-AND-MESSAGING-POLICY.md"), "utf8");
-  const cueSheet = readFileSync(join(root, "docs/funnel/WORKSHOP-INTERACTION-CUE-SHEET.md"), "utf8");
-  const ethicalControlsValid = ethicalPolicy.includes("não pode fingir transmissão ao vivo")
-    && ethicalPolicy.includes("bots usando nome")
-    && ethicalPolicy.includes("perguntas históricas rotuladas")
-    && messageCatalog.includes("bot_personas_allowed: false")
-    && cueSheet.includes("não gerar presença, cidade, dúvida, aplauso, compra ou depoimento por bot");
-  results.push(result("commercial.ethics", ethicalControlsValid, ethicalControlsValid ? "Fake live, bot-persona, falsa urgência e prova fabricada vetados" : "Controles éticos incompletos"));
-
-  const whatsappMarketingIds = [
-    "whatsapp.entry_abandonment_01",
-    "whatsapp.workshop_invite_01",
-    "whatsapp.squad_abandonment_01",
-    "whatsapp.workshop_replay_01",
-    "whatsapp.community_closing_4h",
-    "whatsapp.community_checkout_abandonment"
-  ];
-  const whatsappConsentValid = whatsappMarketingIds.every((id) => {
-    const start = messageCatalog.indexOf(`- id: ${id}`);
-    const block = start >= 0 ? messageCatalog.slice(start, messageCatalog.indexOf("\n    - id:", start + 1) === -1 ? undefined : messageCatalog.indexOf("\n    - id:", start + 1)) : "";
-    return block.includes("requires_explicit_opt_in: true");
-  });
-  results.push(result("commercial.whatsapp_consent", whatsappConsentValid, whatsappConsentValid ? "Templates promocionais exigem opt-in explícito" : "Template promocional sem opt-in explícito"));
-
-  const recordedDisclosureSources = [
-    "docs/copy/pages/PAGES-AND-CHECKOUT-COPY.md",
-    "docs/copy/vsl/WORKSHOP-SESSION-AND-PITCH.md",
-    "docs/copy/whatsapp/GROUP-WARMUP-AND-CART.md",
-    "docs/funnel/MASTER-FUNNEL.md"
-  ];
-  const recordedDisclosureValid = recordedDisclosureSources.every((path) => {
-    const text = readFileSync(join(root, path), "utf8").toLowerCase();
-    return text.includes("previamente gravado") && text.includes("programada");
-  });
-  results.push(result("commercial.recorded_event", recordedDisclosureValid, recordedDisclosureValid ? "Formato gravado e programado divulgado nas fontes críticas" : "Disclosure do evento inconsistente"));
-
-  const commercialOnboarding = readFileSync(join(root, "docs/operations/SELF-SERVICE-ONBOARDING.md"), "utf8");
-  const lifecycleStateMachine = readFileSync(join(root, "docs/funnel/LIFECYCLE-STATE-MACHINE.yaml"), "utf8");
-  const commercialSelfService = commercialOnboarding.includes("sem prometer instalação assistida")
-    && commercialOnboarding.includes("Não há suporte individual de instalação")
-    && lifecycleStateMachine.includes("no_installation_support_is_promised");
-  results.push(result("commercial.self_service", commercialSelfService, commercialSelfService ? "Onboarding comercial não promete suporte individual" : "Onboarding comercial conflita com self-service"));
-
-  const packagingSource = readFileSync(join(root, "scripts/package.mjs"), "utf8");
-  const installSource = readFileSync(join(root, "scripts/install.mjs"), "utf8");
-  const internalAssetsExcluded = [packagingSource, installSource].every((text) => (
-    !text.includes('"docs/copy"')
-    && !text.includes('"docs/funnel"')
-    && !text.includes('"docs/operations"')
-    && !text.includes('"docs/commercial"')
-    && text.includes('"docs/commercial/PRODUCT-DELIVERY-MANIFEST.md"')
+  const customerDistribution = missingCommercial.length === commercialRequirements.length
+    && existsSync(join(root, "docs/commercial/PRODUCT-DELIVERY-MANIFEST.md"));
+  const commercialBundleComplete = missingCommercial.length === 0;
+  results.push(result(
+    "commercial.files",
+    commercialBundleComplete || customerDistribution,
+    customerDistribution
+      ? "N/A no pacote do comprador; ativos internos excluídos intencionalmente"
+      : (missingCommercial.join(", ") || `${commercialRequirements.length}/${commercialRequirements.length} ativos presentes`)
   ));
-  results.push(result("commercial.internal_distribution", internalAssetsExcluded, internalAssetsExcluded ? "Estratégia e copy internas excluídas do pacote do comprador" : "Ativo comercial interno pode vazar no pacote"));
+
+  if (customerDistribution) {
+    for (const [name, detail] of [
+      ["commercial.message_refs", "N/A no pacote do comprador"],
+      ["commercial.offer", "N/A no pacote do comprador"],
+      ["commercial.ethics", "N/A no pacote do comprador"],
+      ["commercial.whatsapp_consent", "N/A no pacote do comprador"],
+      ["commercial.recorded_event", "N/A no pacote do comprador"],
+      ["commercial.self_service", "N/A no pacote do comprador"],
+      ["commercial.internal_distribution", "Ativos internos ausentes como previsto"]
+    ]) results.push(result(name, true, detail));
+  } else if (!commercialBundleComplete) {
+    for (const name of [
+      "commercial.message_refs",
+      "commercial.offer",
+      "commercial.ethics",
+      "commercial.whatsapp_consent",
+      "commercial.recorded_event",
+      "commercial.self_service",
+      "commercial.internal_distribution"
+    ]) results.push(result(name, false, "Bundle comercial interno parcial; restaure os arquivos ausentes"));
+  } else {
+
+    const automationBlueprint = readFileSync(join(root, "docs/funnel/AUTOMATION-BLUEPRINT.yaml"), "utf8");
+    const messageCatalog = readFileSync(join(root, "docs/funnel/MESSAGE-CATALOG.yaml"), "utf8");
+    const sendReferences = [...automationBlueprint.matchAll(/send:\s*([a-z0-9_.]+)/g)].map((match) => match[1]);
+    const catalogIds = [...messageCatalog.matchAll(/- id:\s*([a-z0-9_.]+)/g)].map((match) => match[1]);
+    const uniqueCatalogIds = new Set(catalogIds);
+    const missingMessageRefs = [...new Set(sendReferences.filter((id) => !uniqueCatalogIds.has(id)))];
+    const messageRefsValid = sendReferences.length === new Set(sendReferences).size
+      && catalogIds.length === uniqueCatalogIds.size
+      && missingMessageRefs.length === 0;
+    results.push(result("commercial.message_refs", messageRefsValid, messageRefsValid ? `${sendReferences.length} envios resolvidos em ${catalogIds.length} templates únicos` : `Referências ausentes ou duplicadas: ${missingMessageRefs.join(", ")}`));
+
+    const productLadder = readFileSync(join(root, "docs/commercial/PRODUCT-LADDER-AND-OFFER.md"), "utf8");
+    const offerPricesValid = productLadder.includes("R$297")
+      && productLadder.includes("R$497")
+      && productLadder.includes("R$997/12 meses")
+      && productLadder.includes("um único plano de 12 meses")
+      && productLadder.includes("sem renovação automática");
+    results.push(result("commercial.offer", offerPricesValid, offerPricesValid ? "Escada R$297 → R$497 → R$997/12 meses coerente" : "Escada, preço ou renovação inconsistentes"));
+
+    const ethicalPolicy = readFileSync(join(root, "docs/funnel/ETHICAL-EVENT-AND-MESSAGING-POLICY.md"), "utf8");
+    const cueSheet = readFileSync(join(root, "docs/funnel/WORKSHOP-INTERACTION-CUE-SHEET.md"), "utf8");
+    const ethicalControlsValid = ethicalPolicy.includes("não pode fingir transmissão ao vivo")
+      && ethicalPolicy.includes("bots usando nome")
+      && ethicalPolicy.includes("perguntas históricas rotuladas")
+      && messageCatalog.includes("bot_personas_allowed: false")
+      && cueSheet.includes("não gerar presença, cidade, dúvida, aplauso, compra ou depoimento por bot");
+    results.push(result("commercial.ethics", ethicalControlsValid, ethicalControlsValid ? "Fake live, bot-persona, falsa urgência e prova fabricada vetados" : "Controles éticos incompletos"));
+
+    const whatsappMarketingIds = [
+      "whatsapp.entry_abandonment_01",
+      "whatsapp.workshop_invite_01",
+      "whatsapp.squad_abandonment_01",
+      "whatsapp.workshop_replay_01",
+      "whatsapp.community_closing_4h",
+      "whatsapp.community_checkout_abandonment"
+    ];
+    const whatsappConsentValid = whatsappMarketingIds.every((id) => {
+      const start = messageCatalog.indexOf(`- id: ${id}`);
+      const block = start >= 0 ? messageCatalog.slice(start, messageCatalog.indexOf("\n    - id:", start + 1) === -1 ? undefined : messageCatalog.indexOf("\n    - id:", start + 1)) : "";
+      return block.includes("requires_explicit_opt_in: true");
+    });
+    results.push(result("commercial.whatsapp_consent", whatsappConsentValid, whatsappConsentValid ? "Templates promocionais exigem opt-in explícito" : "Template promocional sem opt-in explícito"));
+
+    const recordedDisclosureSources = [
+      "docs/copy/pages/PAGES-AND-CHECKOUT-COPY.md",
+      "docs/copy/vsl/WORKSHOP-SESSION-AND-PITCH.md",
+      "docs/copy/whatsapp/GROUP-WARMUP-AND-CART.md",
+      "docs/funnel/MASTER-FUNNEL.md"
+    ];
+    const recordedDisclosureValid = recordedDisclosureSources.every((path) => {
+      const text = readFileSync(join(root, path), "utf8").toLowerCase();
+      return text.includes("previamente gravado") && text.includes("programada");
+    });
+    results.push(result("commercial.recorded_event", recordedDisclosureValid, recordedDisclosureValid ? "Formato gravado e programado divulgado nas fontes críticas" : "Disclosure do evento inconsistente"));
+
+    const commercialOnboarding = readFileSync(join(root, "docs/operations/SELF-SERVICE-ONBOARDING.md"), "utf8");
+    const lifecycleStateMachine = readFileSync(join(root, "docs/funnel/LIFECYCLE-STATE-MACHINE.yaml"), "utf8");
+    const commercialSelfService = commercialOnboarding.includes("sem prometer instalação assistida")
+      && commercialOnboarding.includes("Não há suporte individual de instalação")
+      && lifecycleStateMachine.includes("no_installation_support_is_promised");
+    results.push(result("commercial.self_service", commercialSelfService, commercialSelfService ? "Onboarding comercial não promete suporte individual" : "Onboarding comercial conflita com self-service"));
+
+    const packagingSource = readFileSync(join(root, "scripts/package.mjs"), "utf8");
+    const installSource = readFileSync(join(root, "scripts/install.mjs"), "utf8");
+    const internalAssetsExcluded = [packagingSource, installSource].every((text) => (
+      !text.includes('"docs/copy"')
+      && !text.includes('"docs/funnel"')
+      && !text.includes('"docs/operations"')
+      && !text.includes('"docs/commercial"')
+      && text.includes('"docs/commercial/PRODUCT-DELIVERY-MANIFEST.md"')
+    ));
+    results.push(result("commercial.internal_distribution", internalAssetsExcluded, internalAssetsExcluded ? "Estratégia e copy internas excluídas do pacote do comprador" : "Ativo comercial interno pode vazar no pacote"));
+  }
 
   const packageMetadata = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
   const versionFile = readFileSync(join(root, "VERSION"), "utf8").trim();
@@ -374,6 +406,6 @@ export function printValidation(results) {
   return failed.length === 0;
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && realpathSync(fileURLToPath(import.meta.url)) === realpathSync(process.argv[1])) {
   process.exitCode = printValidation(runValidation()) ? 0 : 1;
 }
